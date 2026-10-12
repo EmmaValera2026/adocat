@@ -31,9 +31,24 @@ const { page } = Astro.props as { page: any };
   description="Plataforma interactiva d'ADOCAT per compartir la realitat del col·lectiu docent a Catalunya. Apte per a professors del SOC, formadors en línia, teleformació, tutors pedagògics, orientadors i professionals en cerca de centre de Formació per a l'Ocupació. Unifica les necessitats sectorials i prioritats del sector."
 >
   <main class="w-full bg-white min-h-screen">
+    <!-- ХЛЕБНЫЕ КРОШКИ (СТРЕЛКИ НАВИГАЦИИ КАК НА ФОТО SMЕG) -->
+<nav class="w-full max-w-6xl mx-auto px-6 pt-8 pb-2 text-left" aria-label="Breadcrumb">
+  <ol class="inline-flex items-center space-x-1 md:space-x-2 text-[16px] font-sans tracking-wider uppercase text-stone-400">
+    <!-- Главная -->
+    <li class="inline-flex items-center">
+      <a href="/" class="hover:text-stone-900 transition-colors">Inici</a>
+    </li>
+    
+    <!-- Текущая страница -->
+    <li class="flex items-center space-x-1 md:space-x-2">
+      <span class="text-stone-300 font-light">/</span>
+      <span class="text-stone-600 font-medium select-none">ACTUALITAT</span>
+    </li>
+  </ol>
+</nav>
     
     <!-- Шапка страницы новостей (Приведено к официальному тексту по Пункту 5) -->
-    <section class="max-w-7xl mx-auto pt-32 pb-12 px-4 md:px-8 border-b border-gray-100">
+    <section class="max-w-7xl mx-auto pt-12 pb-12 px-4 md:px-8 border-b border-gray-100">
       <div class="text-left space-y-4 max-w-3xl">
         <div class="inline-flex items-center gap-2 bg-brand-green/10 text-brand-green px-3 py-1 rounded-sm text-xs font-bold uppercase tracking-wider">
           Actualitat de la FP
@@ -90,37 +105,47 @@ const { page } = Astro.props as { page: any };
 
       </div>
     </section>
-    <!-- 🎛️ БЛОК ПЕРЕКЛЮЧЕНИЯ СТРАНИЦ (ПАГИНАЦИЯ) -->
-    {page.lastPage > 1 && (
-      <section class="max-w-7xl mx-auto px-4 md:px-8 pb-12 flex justify-center items-center gap-4 text-xs font-black uppercase tracking-widest">
-        
-        {page.url.prev ? (
-          <a href={page.url.prev} class="border-2 border-gray-200 bg-white hover:border-brand-dark text-brand-dark px-4 py-3 rounded-xs transition-colors shadow-xs">
-            &larr; Anterior
-          </a>
-        ) : (
-          <span class="border-2 border-gray-100 bg-gray-50 text-gray-300 px-4 py-3 rounded-xs cursor-not-allowed select-none">
-            &larr; Anterior
-          </span>
-        )}
 
-        <span class="text-gray-400 font-bold px-2">
-          Pàgina {page.currentPage} de {page.lastPage}
-        </span>
-
-        {page.url.next ? (
-          <a href={page.url.next} class="border-2 border-gray-200 bg-white hover:border-brand-dark text-brand-dark px-4 py-3 rounded-xs transition-colors shadow-xs">
-            Següent &rarr;
-          </a>
-        ) : (
-          <span class="border-2 border-gray-100 bg-gray-50 text-gray-300 px-4 py-3 rounded-xs cursor-not-allowed select-none">
-            Següent &rarr;
-          </span>
-        )}
-
-      </section>
+    <!-- 🎛️ БЛОК ПЕРЕКЛЮЧЕНИЯ СТРАНИЦ В ДИНАМИЧЕСКОМ ФАЙЛЕ (СТРОГО ПО ЦЕНТРУ) -->
+{page.lastPage > 1 && (
+  <section class="w-full max-w-7xl mx-auto px-4 md:px-8 pt-12 pb-16 flex justify-center items-center gap-4 text-[10px] font-black uppercase tracking-widest clear-both">
+    
+    {page.url.prev ? (
+      <a 
+        href={page.url.prev} 
+        class="border-2 border-gray-200 bg-white hover:border-brand-dark text-brand-dark h-10 w-32 inline-flex items-center justify-center rounded-xs transition-colors shadow-xs text-center cursor-pointer"
+      >
+        &larr; Anterior
+      </a>
+    ) : (
+      <span 
+        class="border-2 border-gray-100 bg-gray-50 text-gray-300 h-10 w-32 inline-flex items-center justify-center rounded-xs cursor-not-allowed select-none text-center"
+      >
+        &larr; Anterior
+      </span>
     )}
 
+    <span class="text-gray-400 font-bold px-2 whitespace-nowrap text-xs normal-case tracking-normal">
+      Pàgina {page.currentPage} de {page.lastPage}
+    </span>
+
+    {page.url.next ? (
+      <a 
+        href={page.url.next} 
+        class="border-2 border-gray-200 bg-white hover:border-brand-dark text-brand-dark h-10 w-32 inline-flex items-center justify-center rounded-xs transition-colors shadow-xs text-center cursor-pointer"
+      >
+        Següent &rarr;
+      </a>
+    ) : (
+      <span 
+        class="border-2 border-gray-100 bg-gray-50 text-gray-300 h-10 w-32 inline-flex items-center justify-center rounded-xs cursor-not-allowed select-none text-center"
+      >
+        Següent &rarr;
+      </span>
+    )}
+
+  </section>
+)}
 
     <!-- 📨 ОБНОВЛЕННЫЙ ИНТЕРАКТИВНЫЙ БЛОК ПОДПИСКИ (Обновлено по Приоритету 1, 2 и 3) -->
     <section class="bg-gray-50 border-t border-gray-200 py-16 w-full">
