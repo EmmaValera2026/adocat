@@ -1,0 +1,271 @@
+---
+import '../styles/global.css';
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout 
+  title="Àrea de Persones Associades - ADOCAT"
+  description="Plataforma interactiva d'ADOCAT per compartir la realitat del col·lectiu docent a Catalunya. Apte per a professors del SOC, formadors en línia, teleformació, tutors pedagògics, orientadors i professionals en cerca de centre de Formació per a l'Ocupació. Unifica les necessitats sectorials i prioritats del sector."
+>
+  <main class="w-full bg-white min-h-screen pb-20 pt-28 px-4 md:px-8 text-brand-dark">
+    <div class="max-w-8xl mx-auto space-y-8">
+      
+    <!-- 🔒 MODERN INTERFÍCIE D'AUTORITZACIÓ (Actualitzat segons els Prioritats 1 i 2) -->
+    <section id="auth-container" class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center max-w-6xl mx-auto pt-6 animate-fade-in">
+          
+          <!-- ЛЕВАЯ КОЛОНКА: СТАТУСНЫЙ ИНФО-БЛОК -->
+          <div class="md:col-span-6 text-left space-y-6">
+            <h1 class="text-3xl md:text-4xl font-black uppercase text-brand-dark tracking-tight leading-tight">
+              Àrea privada de<br /><span class="text-brand-green">suport i orientació</span>
+            </h1>
+    
+            <p class="text-base text-gray-600 font-medium leading-relaxed text-justify">
+              Benvingut/da a l'espai de comunicació per a les persones associades i amigues d'ADOCAT. Una àrea orientada a l'intercanvi d'informació professional, l'orientació compartida i l'enfortiment de la comunitat docent.
+            </p>
+    
+            <ul class="space-y-3 font-semibold text-gray-700 text-sm md:text-base">
+              <li class="flex items-start gap-2">
+              <span class="text-brand-green font-black">✓</span> 
+                Consulta del teu perfil docent i respostes del qüestionari.
+              </li>
+              <li class="flex items-start gap-2">
+              <span class="text-brand-green font-black">✓</span> 
+                Estat de la teva sol·licitud d'interès i futur control de quotes.
+              </li>
+              <li class="flex items-start gap-2">
+              <span class="text-brand-green font-black">✓</span> 
+                Historial de les teves consultes, propostes i incidències enviades.
+              </li>
+            </ul>
+
+            <p class="text-[11px] italic text-gray-400 font-medium pt-4 border-t border-gray-100">
+              * Espai orientat a professionals i docents de la Formació Professional per a l'Ocupació a Catalunya interessats a col·laborar amb l'associació.
+            </p>
+          </div>
+
+          <!-- 🔵 ПРАВАЯ КОЛОНКА: ИНТЕРАКТИВНАЯ КАРТОЧКА (Sign In / Sign Up на чистом CSS) -->
+          <div class="md:col-span-6 bg-white border border-gray-200 p-6 rounded-xs shadow-xs w-full text-left relative">
+    
+            <!-- Скрытые переключатели состояния вкладки -->
+            <input type="radio" id="tab-login" name="auth-tabs" class="peer/login hidden" checked />
+            <input type="radio" id="tab-register" name="auth-tabs" class="peer/register hidden" />
+
+            <!-- Навигационные кнопки вкладок -->
+            <div class="grid grid-cols-2 gap-2 border-b border-gray-100 pb-3 mb-4 font-black uppercase text-xs tracking-wider">
+              <label for="tab-login" class="pb-2 border-b-2 text-center cursor-pointer transition-all peer-checked/login:border-brand-dark peer-checked/login:text-brand-dark text-gray-400 hover:text-gray-600 label-login">
+                Inicia sessió
+              </label>
+              <label for="tab-register" class="pb-2 border-b-2 text-center cursor-pointer transition-all peer-checked/register:border-brand-green peer-checked/register:text-brand-green text-gray-400 hover:text-gray-600 label-register">
+                Registra't
+              </label>
+            </div>
+
+            <!-- 🔑 ФОРМА ВХОДА (SIGN IN - Открыта по умолчанию) -->
+            <div class="space-y-4 form-login-block block peer-checked/register:hidden">
+              <div class="space-y-1">
+                <span class="text-[9px] font-black uppercase text-gray-400 tracking-wider block">Àrea de persones associades</span>
+                <h3 class="text-xl font-black text-brand-dark uppercase tracking-tight">Accés a l'espai privat</h3>
+              </div>
+      
+              <!-- Подключите ваш внешний скрипт auth.js на обработку этой формы -->
+              <form id="auth-form" class="space-y-3">
+                <div>
+                  <label for="auth-email" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Correu electrònic</label>
+                  <input type="email" id="auth-email" autocomplete="new-password" required placeholder="mail@example.com" class="w-full border-2 border-gray-100 bg-gray-50/50 p-2.5 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors" />
+                </div>
+                <div>
+                  <label for="auth-password" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Contrasenya</label>
+                  <input type="password" id="auth-password" autocomplete="new-password" required placeholder="********" class="w-full border-2 border-gray-100 bg-gray-50/50 p-2.5 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors" />
+                </div>
+                <button type="submit" class="w-full bg-brand-dark hover:bg-black text-white font-black text-xs uppercase tracking-widest py-3.5 rounded-xs transition-all mt-2 cursor-pointer">
+                  Entrar a l'àrea privada &rarr;
+                </button>
+              </form>
+            </div>
+
+            <!-- 📩 ФОРМА РЕГИСТРАЦИИ (SIGN UP - Открывается при клике на вкладку Registra't) -->
+            <div class="space-y-4 form-register-block hidden peer-checked/register:block">
+              <div class="space-y-1">
+                <span class="text-[9px] font-black uppercase text-gray-400 tracking-wider block">Sol·licitud d'informació</span>
+                <h3 class="text-xl font-black text-brand-dark uppercase tracking-tight">Registre d'interès</h3>
+                <p class="text-xs text-gray-500 font-medium">
+                  Deixa’ns el teu nom i correу electrònic i t’informarem dels passos per formar part d’ADOCAT.
+                </p>
+              </div>
+
+              <!-- Подключите ваш внешний скрипт регистрации на этот ID формы -->
+              <form id="user-register-form" class="space-y-3">
+                <div>
+                  <label for="acc-name" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Nom complet</label>
+                  <input type="text" id="acc-name" autocomplete="new-password" required placeholder="El teu nom i cognoms" class="w-full border-2 border-gray-100 bg-gray-50/50 p-2.5 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors" />
+                </div>
+
+                <div>
+                  <label for="acc-mail" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Correu electrònic</label>
+                  <input type="email" id="acc-mail" autocomplete="new-password" required placeholder="exemple@correu.com" class="w-full border-2 border-gray-100 bg-gray-50/50 p-2.5 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors" />
+                </div>
+
+                <div>
+                  <label for="acc-phone" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Telèfon de contacte</label>
+                  <input type="tel" id="acc-phone" autocomplete="new-password" required placeholder="666 666 666" class="w-full border-2 border-gray-100 bg-gray-50/50 p-2.5 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors" />
+                </div>
+
+                <!-- src/pages/ваша_страница.astro -->
+
+<div class="space-y-1.5">
+  <label for="acc-password" class="text-[10px] font-black uppercase tracking-wider text-gray-400 block ml-1">Contrasenya</label>
+  <div class="relative flex items-center">
+    <input type="password" id="acc-password" autocomplete="new-password" required class="w-full p-3.5 pr-11 bg-gray-50/50 border border-gray-200 text-sm font-semibold rounded-xl focus:outline-none focus:border-brand-green" placeholder="••••••••" />
+    <button type="button" class="toggle-password absolute right-3 text-gray-400 hover:text-gray-600 focus:outline-none text-base cursor-pointer select-none" aria-label="Mostrar contrasenya">👁️</button>
+  </div>
+</div>
+
+<div class="space-y-1.5">
+  <label for="acc-password-confirm" class="text-[10px] font-black uppercase tracking-wider text-gray-400 block ml-1">Confirma la contrasenya</label>
+  <div class="relative flex items-center">
+    <input type="password" id="acc-password-confirm" autocomplete="new-password" required class="w-full p-3.5 pr-11 bg-gray-50/50 border border-gray-200 text-sm font-semibold rounded-xl focus:outline-none focus:border-brand-green" placeholder="••••••••" />
+    <button type="button" class="toggle-password absolute right-3 text-gray-400 hover:text-gray-600 focus:outline-none text-base cursor-pointer select-none" aria-label="Mostrar contrasenya">👁️</button>
+  </div>
+  <p class="text-[10px] text-gray-400 font-medium ml-1 leading-tight">
+    * La contrasenya ha de contenir un mínim de 8 caràcters, incloent lletres majúscules, minúscules, números i símbols.
+  </p>
+</div>
+
+<!-- 🤝 4 formas de participación del Punto 7 -->
+<div>
+  <label for="acc-implicacion" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Com vols participar?</label>
+  <select id="acc-implicacion" class="w-full border-2 border-gray-100 bg-gray-50/50 p-2.5 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors cursor-pointer">
+    <option value="socio">Vull associar-me</option>
+    <option value="pada">Vull conèixer les PADA (Persones Amigues d'ADOCAT)</option>
+    <option value="comissio">Vull participar en una comissió</option>
+    <option value="entitat">Som una entitat i volem col·laborar</option>
+  </select>
+</div>
+
+<!-- 🔒 Чекбокс защиты данных (Пункт 14) -->
+<div class="flex items-start gap-2 pt-1">
+  <input type="checkbox" id="acc-privacy" class="mt-0.5 w-4 h-4 accent-brand-green cursor-pointer" required />
+  <label for="acc-privacy" class="text-[10px] text-gray-500 font-medium cursor-pointer select-none leading-tight ml-1">
+    Accepto la <a href="/legal#privacitat" class="underline hover:text-brand-green transition-colors">política de privacitat</a> i autoritzo el tractament de les dades.
+  </label>
+</div>
+
+<!-- 🔴 ЛОКАЛЬНЫЙ БЛОК ОШИБКИ РЕГИСТРАЦИИ (ВМЕСТО ALERT) -->
+<div id="register-error" class="hidden text-xs text-red-600 font-bold bg-red-50 border border-red-200 p-3.5 rounded-xl text-center mt-2 animate-fade-in"></div>
+
+<button type="submit" id="acc-submit-btn" class="w-full bg-brand-green hover:bg-brand-hover text-white font-black text-xs uppercase tracking-widest py-3.5 rounded-xs transition-colors shadow-xs cursor-pointer mt-2">
+  Enviar sol·licitud &rarr;
+</button>
+
+          </form>
+        </div>
+      </div>
+    </section>
+
+    
+
+        
+    <!-- 👤 ОСНОВНОЙ КОНТЕНТ КАБИНЕТА (СКРЫТ ДО АВТОРИЗАЦИИ) -->
+    <div id="profile-container" class="hidden space-y-8">
+        
+        <!-- ШАПКА КАБИНЕТА (Обновлено под инклюзивный стандарт по Пункту 1) -->
+        <section class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-gray-100 pb-6 text-left">
+          <div>
+            <span class="text-xs font-black uppercase text-gray-400 tracking-wider">Àrea de persones associades</span>
+            <h1 id="user-welcome" class="text-3xl font-black uppercase tracking-tight text-brand-dark mt-1">Benvingut, ...</h1>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="px-3 py-1 border text-xs font-black uppercase tracking-wider rounded-xs border-emerald-200 bg-emerald-50 text-brand-green">
+              ✓ Persona Associada Activa
+            </span>
+            <button id="logout-btn" class="px-3 py-1 border border-gray-300 hover:border-brand-dark text-gray-400 hover:text-brand-dark text-[10px] font-black uppercase tracking-wider rounded-xs transition-colors cursor-pointer">
+              Tancar Sessió
+            </button>
+          </div>
+        </section>
+
+        <!-- 📊 СЕТКА ИНФОРМАЦИОННЫХ БЛОКОВ -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <!-- Карточка: Данные регистрации (Приведено к инклюзивным стандартам по Пункту 1 и 4) -->
+          <div class="bg-gray-50 border border-gray-200 p-6 rounded-xs space-y-4 text-left shadow-xs md:col-span-1">
+            <h3 class="text-xs font-black uppercase text-gray-400 tracking-wider border-b border-gray-200 pb-2">Dades de registre</h3>
+            <div class="space-y-2 text-sm font-semibold">
+              <p class="text-gray-500 text-xs">ID DE REGISTRE: <span id="user-id" class="text-brand-dark font-mono font-bold block text-sm mt-0.5">...</span></p>
+              <p class="text-gray-500 text-xs">CORREU: <span id="user-email" class="text-brand-dark block text-sm mt-0.5">...</span></p>
+              <p class="text-gray-500 text-xs">PROVÍNCIA: <span class="text-brand-dark block text-sm mt-0.5">Barcelona</span></p>
+              <p class="text-gray-500 text-xs">STATUS: <span class="text-emerald-700 block text-sm mt-0.5">Registre d'interès rebut</span></p>
+            </div>
+          </div>
+
+          <!-- Блок: Официальные документы и информационные сертификаты -->
+          <div class="border border-gray-200 p-6 rounded-xs space-y-4 text-left shadow-xs md:col-span-2 flex flex-col justify-between bg-white">
+            <div class="space-y-3">
+              <h3 class="text-xs font-black uppercase text-gray-400 tracking-wider border-b border-gray-200 pb-2">Documentació informativa i registres</h3>
+              <p class="text-sm text-gray-600 font-medium leading-relaxed">
+                Des d'aquí pots accedir de forma immediata als teus documents informatius i registres de participació generats per la plataforma d'ADOCAT per a la teva consulta personal.
+              </p>
+            </div>
+
+            <!-- Список доступных документов для скачивания -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <div class="border border-gray-100 p-4 rounded-xs bg-gray-50/50 flex flex-col justify-between items-start space-y-3">
+                <div>
+                  <h4 class="text-xs font-black text-brand-dark uppercase tracking-wide">Sol·licitud de registre</h4>
+                  <p class="text-[11px] text-gray-400 font-medium mt-0.5">Full de sol·licitud d'informació i registre intern d'interès.</p>
+                </div>
+                <button id="btn-cta-socio" class="text-xs font-black bg-brand-dark hover:bg-black text-white px-3 py-2 rounded-xs uppercase tracking-wider transition-colors cursor-pointer w-full text-center shadow-xs">
+                  📄 Visualitzar Document
+                </button>
+              </div>
+
+              <div class="border border-gray-100 p-4 rounded-xs bg-gray-50/50 flex flex-col justify-between items-start space-y-3">
+                <div>
+                  <h4 class="text-xs font-black text-brand-dark uppercase tracking-wide">Informe d'activitat</h4>
+                  <p class="text-[11px] text-gray-400 font-medium mt-0.5">Historial de participació en l'enquesta sectorial i recursos.</p>
+                </div>
+                <button id="btn-cta-colaborar" class="text-xs font-black bg-brand-green hover:bg-brand-hover text-white px-3 py-2 rounded-xs uppercase tracking-wider transition-colors cursor-pointer w-full text-center shadow-xs">
+                  📜 Consultar Informe
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 🛡️ НИЖНИЙ БЛОК: СТАТУС ПОДДЕРЖКИ И ОБРАТНОЙ СВЯЗИ -->
+        <section class="bg-gray-50 border border-gray-200 p-6 rounded-xs text-left grid md:grid-cols-12 gap-4 items-center">
+          <div class="md:col-span-9 space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+              <h4 class="text-sm font-black text-brand-dark uppercase tracking-wider">Estatus de suport comunitari actiu</h4>
+            </div>
+            <p class="text-xs md:text-sm text-gray-600 font-medium leading-relaxed">
+              El teu perfil compta amb l'accés complet als canals d'orientació informativa i espais col·laboratius d'ADOCAT. Qualsevol consulta sectorial, dubte ordinari o proposta d'activitat didàctica pot ser comunicada directament a l'equip a través d'aquest panell central.
+            </p>
+          </div>
+          <div class="md:col-span-3 text-right w-full shrink-0">
+            <button id="btn-notificar-canvi" class="bg-brand-dark hover:bg-black text-white font-black text-xs uppercase tracking-widest py-3.5 px-4 rounded-xl shadow-md transition-all inline-block w-full text-center cursor-pointer">
+              Enviar consulta o proposta
+            </button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- Локальное модальное окно для изоляции документов на этой вкладке -->
+  <div id="compte-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
+    <div id="compte-modal-bg" class="absolute inset-0 bg-black/60 backdrop-blur-xs"></div>
+    <div id="compte-modal-card" class="bg-white text-brand-dark w-full max-w-2xl p-6 md:p-8 rounded-xs shadow-xl relative z-10 scale-95 transition-all duration-300 max-h-[85vh] overflow-y-auto">
+      <button id="close-compte-modal" class="absolute top-4 right-4 text-gray-400 hover:text-black font-black text-lg cursor-pointer">&times;</button>
+      <div id="compte-modal-content" class="mt-4"></div>
+    </div>
+  </div>
+</Layout>
+
+
+
+<script>
+  import "../js/auth.js";
+</script>

@@ -1,0 +1,64 @@
+/* ==========================================================================
+   1. CORE DE TAILWIND Y PLUGINS
+   ========================================================================== */
+@import "tailwindcss";
+
+@plugin "@tailwindcss/typography"; /* El que añadimos antes */
+@plugin "@tailwindcss/forms";      /* Estilos base para formularios limpios */
+@plugin "tailwindcss-animate";     /* Animaciones listas para usar */
+
+@theme {
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --color-brand-bg: #e4eee9;       
+  --color-brand-green: #00bf63;    
+  --color-brand-hover: #00a655;    
+  --color-brand-dark: #1a1a1a;  
+  --color-border-dark: #111827;       
+}
+
+
+.quiz-container-bento, .quiz-card {
+  @apply bg-white border border-gray-200 rounded-xs p-6 shadow-xs transition-all duration-300;
+}
+
+
+.btn-primary {
+  @apply w-full bg-brand-green hover:bg-brand-hover text-white font-bold text-sm uppercase tracking-wider py-3 px-6 rounded-xs transition-colors cursor-pointer text-center block border-none;
+}
+
+
+.quiz-btn-option {
+  @apply w-full text-left px-4 py-3 rounded-xs border border-gray-200 bg-gray-50 hover:bg-emerald-50/50 hover:border-brand-green transition-all text-sm font-medium text-brand-dark cursor-pointer;
+}
+
+input[type="text"], input[type="email"], input[type="tel"] {
+  @apply w-full px-4 py-2.5 rounded-xs border border-gray-300 bg-white text-sm text-brand-dark transition-colors;
+}
+
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus {
+  @apply outline-none border-brand-green;
+}
+
+
+#cta-modal-card {
+  @apply rounded-xs bg-white border border-gray-200 shadow-2xl;
+}
+
+.admin-password-field {
+  @apply px-4 py-2 bg-white/10 border border-white/20 text-white text-sm transition-colors;
+}
+
+.admin-password-field:focus {
+  @apply outline-none border-brand-green;
+}
+
+#tab-login {
+   @apply border-border-dark ; 
+}
+
+#tab-register {
+   @apply border-brand-green ; 
+}

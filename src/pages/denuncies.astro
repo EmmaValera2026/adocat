@@ -1,0 +1,118 @@
+---
+import '../styles/global.css';
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout 
+  title="Consultes i Incidències Sectorials - ADOCAT"
+  description="Plataforma interactiva d'ADOCAT per compartir la realitat del col·lectiu docent a Catalunya. Apte per a professors del SOC, formadors en línia, teleformació, tutors pedagògics, orientadors i professionals en cerca de centre de Formació per a l'Ocupació. Unifica les necessitats sectorials i prioritats del sector."
+>
+  <!-- Добавляем верхний отступ pt-32, чтобы контент не перекрывался меню -->
+  <main class="w-full bg-white min-h-screen pb-20 pt-32 px-4 md:px-8">
+    <div class="max-w-4xl mx-auto space-y-10">
+      
+      <!-- 📋 ШАПКА СТРАНИЦЫ (Обновлено под Пункт 9) -->
+      <section class="text-left space-y-4 border-b border-gray-100 pb-8">
+        <div class="inline-flex items-center gap-2 bg-gray-100 text-gray-700 border border-gray-200 px-3 py-1 rounded-sm text-xs font-bold uppercase tracking-wider">
+          Canal Informatiu i de Suport
+        </div>
+        <h1 class="text-3xl md:text-5xl font-black tracking-tight text-brand-dark uppercase leading-none">
+          Consultes i incidències
+        </h1>
+        <p class="text-base text-gray-500 font-medium leading-relaxed text-justify">
+          Comparteix una consulta, necessitat o incidència relacionada amb la teva activitat docent. ADOCAT valorarà com pot orientar-la o derivar-la, segons els recursos disponibles.
+        </p>
+      </section>
+
+      <!-- 🛡️ БЛОК ИНФОРМАЦИОННЫХ ГАРАНТИЙ -->
+      <section class="bg-gray-50 border-l-4 border-brand-green p-5 rounded-xs text-left space-y-2">
+        <h4 class="text-sm font-black text-brand-dark uppercase tracking-wider">Com funciona la gestió de la informació?</h4>
+        <p class="text-xs md:text-sm text-gray-600 font-medium leading-relaxed text-justify">
+          Les dades recopilades en aquest formulari són trameses de forma segura a l'equip de coordinació d'ADOCAT. S'utilitzaran exclusivament de manera interna per avaluar les necessitats del sector i orientar les nostres prioritats de suport. El tractament de la informació compta com a garanties verificades de privacitat.
+        </p>
+      </section>
+
+      <!-- 📝 ФОРМА ОТПРАВКИ ОБРАЩЕНИЯ -->
+      <section class="bg-white border border-gray-200 p-6 md:p-8 rounded-xs shadow-xs" id="denuncia-form-container">
+        <form id="complaint-secure-form" class="space-y-6 text-left">
+          
+          <!-- Селектор: Тип обращения -->
+          <div>
+            <label for="denuncia-tipus" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Motiu del contacte principal *</label>
+            <select 
+              id="denuncia-tipus" 
+              required
+              class="w-full border-2 border-gray-100 bg-gray-50/50 p-3 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors cursor-pointer text-gray-700"
+            >
+              <option value="" disabled selected>Selecciona una opció...</option>
+              <option value="consulta">Tinc una consulta</option>
+              <option value="proposta">Vull compartir una necessitat o proposta</option>
+              <option value="irregularitat">Vull comunicar una possible irregularitat</option>
+            </select>
+          </div>
+
+          <!-- Поле: Название центра -->
+          <div>
+            <label for="denuncia-centre" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Nom del centre de formació o entitat vinculada *</label>
+            <input 
+              type="text" 
+              id="denuncia-centre" 
+              required
+              placeholder="Ex: Acadèmia o Centre d'Estudis SL" 
+              class="w-full border-2 border-gray-100 bg-gray-50/50 p-3 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors"
+            />
+          </div>
+
+          <!-- Поле: Подробное описание -->
+          <div>
+            <label for="denuncia-descripcio" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Descripció de la consulta o els fets *</label>
+            <textarea 
+              id="denuncia-descripcio" 
+              rows="5" 
+              required
+              placeholder="Explica breument la teva consulta, proposta o situació, facilitant les dades rellevants que vulguis compartir..." 
+              class="w-full border-2 border-gray-100 bg-gray-50/50 p-3 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors resize-none"
+            ></textarea>
+          </div>
+
+          <!-- Поле: Контакты -->
+          <div class="border-t border-gray-100 pt-4 space-y-4">
+            <div>
+              <h4 class="text-xs font-black text-brand-dark uppercase tracking-wider mb-1">Dades de resposta per al seguiment</h4>
+              <p class="text-xs text-gray-400 font-medium leading-relaxed">
+                Facilita un correu electrònic o telèfon per tal que l'equip de l'associació pugui contactar amb tu per orientar la teva incidència o consulta.
+              </p>
+            </div>
+            <div>
+              <label for="denuncia-contacte" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Dades de contacte *</label>
+              <input 
+                type="text" 
+                id="denuncia-contacte" 
+                required
+                placeholder="Ex: correu@exemple.com o 600000000" 
+                class="w-full border-2 border-gray-100 bg-gray-50/50 p-3 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors"
+              />
+            </div>
+          </div>
+
+          <!-- 🔒 Обязательный чекбокс защиты данных по Пункту 4 и 14 регламента -->
+          <div class="flex items-start gap-2.5 pt-2">
+            <input type="checkbox" id="denuncia-rgpd" class="mt-1 w-4 h-4 accent-brand-green cursor-pointer" required />
+            <label for="denuncia-rgpd" class="text-[11px] text-gray-500 font-medium cursor-pointer select-none leading-tight">
+              Accepto la clàusula de <a href="/legal#privacitat" class="underline hover:text-brand-green transition-colors">protecció de dades (RGPD)</a> i autoritzo el tractament de la informació aportada amb total confidencialitat.
+            </label>
+          </div>
+
+          <!-- Кнопка отправки -->
+          <div class="pt-2">
+            <button type="submit" class="w-full bg-brand-dark hover:bg-black text-white font-black text-xs uppercase tracking-widest py-4 rounded-xs transition-colors shadow-xs cursor-pointer">
+              Enviar formulari de contacte &rarr;
+            </button>
+          </div>
+
+        </form>
+      </section>
+
+    </div>
+  </main>
+</Layout>

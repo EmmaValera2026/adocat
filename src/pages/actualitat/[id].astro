@@ -1,0 +1,54 @@
+---
+export const prerender = true;
+import '../../styles/global.css';
+import Layout from "../../layouts/Layout.astro";
+import { getCollection, render } from 'astro:content';
+import defaultLogo from '../../assets/logo-full-adocat.png';
+
+export async function getStaticPaths() {
+  const allNoticies = await getCollection('noticies');
+  return allNoticies.map((post: any) => {
+    return {
+      params: { id: post.id },
+      props: { post },
+    };
+  });
+}
+
+const { post } = Astro.props as { post: any };
+const { Content } = await render(post);
+---
+
+<Layout title={`${post.data.title} - ADOCAT`} description={post.data.description}>
+  <main class="w-full bg-white min-h-screen pb-20 pt-23 px-4 md:px-8">
+    <div class="max-w-3xl mx-auto space-y-6 text-left">
+      <div>
+        <!-- Путь обновлен на /actualitat для предотвращения ошибки 404 -->
+        <a href="/actualitat" class="text-xs font-black uppercase tracking-widest text-gray-400 hover:text-brand-green transition-colors inline-flex items-center gap-1.5">
+          &larr; Tornar a notícies
+        </a>
+      </div>
+
+      <div class="flex items-center gap-3 text-xs font-bold uppercase tracking-wider pt-2">
+        <span class={`px-2 py-0.5 border rounded-xs ${post.data.categoryClass}`}>{post.data.category}</span>
+        <span class="text-gray-400 font-medium">{post.data.date}</span>
+      </div>
+      
+      <h1 class="text-3xl md:text-4xl font-black tracking-tight text-brand-dark uppercase leading-tight">
+        {post.data.title}
+      </h1>
+      
+      <p class="text-base text-gray-500 font-medium leading-relaxed italic border-b border-gray-100 pb-6">
+        {post.data.description}
+      </p>
+
+      <div class="w-full max-h-96 aspect-video overflow-hidden rounded-xs border border-gray-200 shadow-xs my-4">
+        <img src={post.data.img_url || post.data.img_file || post.data.img || defaultLogo.src} alt={post.data.title} class="w-full h-full object-cover" />
+      </div>
+
+      <div class="prose font-serif text-gray-800 text-base md:text-lg leading-relaxed space-y-4 text-justify markdown-content pt-4">
+        <Content />
+      </div>
+    </div>
+  </main>
+</Layout>

@@ -1,0 +1,35 @@
+backend:
+  name: github
+  repo: Nataliya-stack/adocat-Emma-new2
+  branch: main
+  
+#local_backend: true
+media_folder: "public/assets"
+public_folder: "/assets"
+
+collections:
+  - name: "noticies"
+    label: "Notícies i Articles"
+    folder: "src/content/noticies"
+    create: true
+    extension: "md"
+    format: "frontmatter"
+    # Название нового файла создастся автоматически из латинского названия статьи
+    slug: "{{title}}"
+    identifier_field: "title"
+    fields:
+      - { label: "Títol de la notícia", name: "title", widget: "string", required: true }
+      
+      - { label: "Data de publicació", name: "date", widget: "datetime", required: true, format: "DD/MM/YYYY", date_format: "DD/MM/YYYY", time_format: false }
+      
+      - { label: "Categoria", name: "category", widget: "string", required: true, default: "Actualitat Proclama" }
+      
+      - { label: "Estil CSS", name: "categoryClass", widget: "hidden", default: "bg-rose-50 text-rose-700 border-rose-100" }
+      
+      - { label: "Descripció curta", name: "description", widget: "string", required: true }
+      
+      - { label: "Imatge principal (URL d'internet)", name: "img_url", widget: "string", required: false }
+      
+      - { label: "O carregar fitxer d'imatge (Des de l'ordinador)", name: "img_file", widget: "image", required: false, choose_url: false }
+      
+      - { label: "Contingut de l'article", name: "body", widget: "markdown", required: true }

@@ -1,0 +1,153 @@
+---
+import '../../styles/global.css';
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from 'astro:content';
+import defaultLogo from '../../assets/logo-full-adocat.png';
+
+const allNoticies = await getCollection('noticies');
+
+const sortedNoticies = allNoticies.sort((a: any, b: any) => {
+  const parseDate = (dateStr: string) => {
+    if (!dateStr) return new Date(0);
+    const [day, month, year] = dateStr.split('/');
+    return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+  };
+  return parseDate(b.data.date).getTime() - parseDate(a.data.date).getTime();
+});
+
+---
+<Layout 
+  title="Actualitat, Notícies i Iniciatives - ADOCAT"
+  description="Plataforma interactiva d'ADOCAT per compartir la realitat del col·lectiu docent a Catalunya. Apte per a professors del SOC, formadors en línia, teleformació, tutors pedagògics, orientadors i professionals en cerca de centre de Formació per a l'Ocupació. Unifica les necessitats sectorials i prioritats del sector."
+>
+  <main class="w-full bg-white min-h-screen">
+    
+    <!-- 📰 ШАПКА СТРАНИЦЫ НОВОСТЕЙ (Обновлено под Приоритет 1 i 2) -->
+    <section class="max-w-7xl mx-auto pt-32 pb-12 px-4 md:px-8 border-b border-gray-100">
+      <div class="text-left space-y-4 max-w-4xl">
+        <div class="inline-flex items-center gap-2 bg-brand-green/10 text-brand-green px-3 py-1 rounded-sm text-xs font-bold uppercase tracking-wider">
+          Actualitat d’ADOCAT
+        </div>
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-brand-dark uppercase leading-tight">
+          Notícies i Iniciatives
+        </h1>
+        <p class="text-base text-gray-600 font-medium leading-relaxed text-justify">
+          Actualitat d’ADOCAT, activitats, iniciatives i informació d’interès per al col·lectiu docent de la formació per a l’ocupació.
+        </p>
+      </div>
+    </section>
+
+    <!-- 🎴 СЕТКА СТАТЕЙ ИЗ MARKDOWN -->
+    <section class="max-w-7xl mx-auto px-4 md:px-8 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+        
+        {sortedNoticies.slice(0, 6).map((article: any) => (
+          <article class="bg-white border border-gray-200 rounded-xs overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between group">
+            
+            <div class="w-full h-48 md:h-52 overflow-hidden border-b border-gray-100 relative">
+              <img src={article.data.img_url || article.data.img_file || article.data.img || defaultLogo.src} alt={article.data.title} class="w-full h-full object-cover" />
+            </div>
+
+            <div class="p-6 grow flex flex-col justify-between space-y-4 text-left">
+              <div class="space-y-2">
+                <div class="flex justify-between items-center text-xs font-bold uppercase tracking-wider">
+                  <span class={`px-2 py-0.5 border rounded-xs ${article.data.categoryClass}`}>
+                    {article.data.category}
+                  </span>
+                  <span class="text-gray-400 font-medium">{article.data.date}</span>
+                </div>
+                
+                <h2 class="text-xl font-black text-brand-dark uppercase tracking-tight leading-tight group-hover:text-brand-green transition-colors line-clamp-2">
+                  <!-- Роут обновлен на /actualitat/ для соответствия новой структуре страниц -->
+                  <a href={`/actualitat/${article.id.replace('.md', '')}`}>{article.data.title}</a>
+                </h2>
+                
+                <p class="text-xs md:text-sm text-gray-600 font-medium leading-relaxed line-clamp-3">
+                  {article.data.description}
+                </p>
+              </div>
+
+              <div class="pt-4 border-t border-gray-100">
+                <!-- Роут обновлен на /actualitat/ для соответствия новой структуре страниц -->
+                <a href={`/actualitat/${article.id.replace('.md', '')}`} class="text-xs font-black uppercase tracking-widest text-brand-dark group-hover:text-brand-green transition-colors inline-flex items-center gap-1">
+                   Llegir article &rarr;
+                </a>
+              </div>
+            </div>
+
+          </article>
+        ))}
+
+
+
+
+     <!-- 📊 БЛОК ПЕРЕКЛЮЧЕНИЯ СТРАНИЦ (ПАГИНАЦИЯ) -->
+      {sortedNoticies.length > 6 && (
+        <div class="max-w-7xl mx-auto px-4 md:px-8 pt-8 pb-4 flex justify-center items-center gap-4 text-sm font-sans font-bold">
+          
+          <!-- Кнопка Назад -->
+          <span class="border-2 border-gray-100 bg-gray-50 text-gray-300 px-4 py-3 rounded-xs cursor-not-allowed select-none">
+            &larr; Anterior
+          </span>
+
+          <!-- Номер текущей страницы -->
+          <span class="text-gray-400 font-bold px-2">
+            Pàgina 1 de {Math.ceil(sortedNoticies.length / 6)}
+          </span>
+
+          <!-- Кнопка Вперед (Путь изменен на /actualitat/2) -->
+          <a href="/actualitat/2" class="border-2 border-gray-200 bg-white hover:border-brand-dark text-gray-700 px-4 py-3 rounded-xs transition-colors cursor-pointer">
+            Següent &rarr;
+          </a>
+
+        </div>
+      )}
+      
+      </div>  
+    </section>
+
+    <!-- 📨 ИНТЕРАКТИВНЫЙ БЛОК ПОДПИСКИ ДЛЯ ГЛАВНОЙ НОВОСТЕЙ (Обновлено под Приоритет 1 i 2) -->
+    <section class="bg-gray-50 border-t border-gray-200 py-16 w-full mt-16">
+      <div class="max-w-5xl mx-auto px-4 md:px-8 grid md:grid-cols-12 gap-8 items-center text-left">
+        
+        <!-- Левая часть: Текст -->
+        <div class="md:col-span-7 space-y-3">
+          <h3 class="text-2xl md:text-3xl font-black text-brand-dark uppercase tracking-tight">No et perdis cap novetat sectorial</h3>
+          <p class="text-sm md:text-base text-gray-600 font-medium leading-relaxed max-w-xl">
+            Subscriu-te al nostre butlletí de novetats. Rebràs actualitzacions informatives sobre el sector de la Formació Professional Ocupacional (FPE) a Catalunya, publicacions de la comunitat i avisos d'interès.
+          </p>
+        </div>
+
+        <!-- Правая часть: Форма подписки -->
+        <div class="md:col-span-5 bg-white border border-gray-200 p-6 rounded-xs shadow-xs w-full" id="news-sub-container">
+          <form id="news-letter-form" class="space-y-3">
+            <div>
+              <label for="sub-email" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Correu electrònic professional</label>
+              <input 
+                type="email" 
+                id="sub-email" 
+                required
+                placeholder="exemple@correu.com" 
+                class="w-full border-2 border-gray-100 bg-gray-50/50 p-3 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors"
+              />
+            </div>
+
+            <!-- 🔒 Обязательный чекбокс защиты данных по Пункту 4 и 14 регламента -->
+            <div class="flex items-start gap-2 pt-1">
+              <input type="checkbox" id="sub-rgpd" class="mt-0.5 w-4 h-4 accent-brand-green cursor-pointer" required />
+              <label for="sub-rgpd" class="text-[10px] text-gray-500 font-medium cursor-pointer select-none leading-tight ml-2">
+                Accepto la <a href="/legal#privacitat" class="underline hover:text-brand-green transition-colors">política de privacitat</a> i autoritzo el tractament de les dades.
+              </label>
+            </div>
+
+            <button type="submit" class="w-full bg-brand-green hover:bg-brand-hover text-white font-black text-xs uppercase tracking-widest py-4 rounded-xs transition-colors shadow-xs cursor-pointer mt-1">
+              Subscriure'm al butlletí &rarr;
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+</Layout>
