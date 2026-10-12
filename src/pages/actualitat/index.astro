@@ -2,7 +2,7 @@
 import '../../styles/global.css';
 import Layout from "../../layouts/Layout.astro";
 import { getCollection } from 'astro:content';
-import defaultLogo from '../../assets/logo-full-adocat.png';
+import defaultLogo from '../../imagen/logo-full-adocat.png';
 
 const allNoticies = await getCollection('noticies');
 
@@ -21,9 +21,24 @@ const sortedNoticies = allNoticies.sort((a: any, b: any) => {
   description="Plataforma interactiva d'ADOCAT per compartir la realitat del col·lectiu docent a Catalunya. Apte per a professors del SOC, formadors en línia, teleformació, tutors pedagògics, orientadors i professionals en cerca de centre de Formació per a l'Ocupació. Unifica les necessitats sectorials i prioritats del sector."
 >
   <main class="w-full bg-white min-h-screen">
+     <!-- ХЛЕБНЫЕ КРОШКИ (СТРЕЛКИ НАВИГАЦИИ КАК НА ФОТО SMЕG) -->
+<nav class="w-full max-w-6xl mx-auto px-6 pt-8 pb-2 text-left" aria-label="Breadcrumb">
+  <ol class="inline-flex items-center space-x-1 md:space-x-2 text-[16px] font-sans tracking-wider uppercase text-stone-400">
+    <!-- Главная -->
+    <li class="inline-flex items-center">
+      <a href="/" class="hover:text-stone-900 transition-colors">Inici</a>
+    </li>
+    
+    <!-- Текущая страница -->
+    <li class="flex items-center space-x-1 md:space-x-2">
+      <span class="text-stone-300 font-light">/</span>
+      <span class="text-stone-600 font-medium select-none">ACTUALITAT</span>
+    </li>
+  </ol>
+</nav>
     
     <!-- 📰 ШАПКА СТРАНИЦЫ НОВОСТЕЙ (Обновлено под Приоритет 1 i 2) -->
-    <section class="max-w-7xl mx-auto pt-32 pb-12 px-4 md:px-8 border-b border-gray-100">
+    <section class="max-w-7xl mx-auto pt-12 pb-12 px-4 md:px-8 border-b border-gray-100">
       <div class="text-left space-y-4 max-w-4xl">
         <div class="inline-flex items-center gap-2 bg-brand-green/10 text-brand-green px-3 py-1 rounded-sm text-xs font-bold uppercase tracking-wider">
           Actualitat d’ADOCAT

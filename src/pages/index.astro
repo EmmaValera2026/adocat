@@ -1,7 +1,12 @@
 ---
 import '../styles/global.css';
 import Layout from "../layouts/Layout.astro";
-import fondoHero from "../assets/photo2.png";
+
+import fondoHero from "../imagen/photo2.png";
+import user1 from '../imagen/user1.avif';
+import user2 from '../imagen/user2.avif';
+import user3 from '../imagen/user3.avif';
+import user4 from '../imagen/user4.avif';
 ---
 
 <Layout 
@@ -31,10 +36,10 @@ import fondoHero from "../assets/photo2.png";
           A ADOCAT unim el col·lectiu docent de Catalunya per compartir necessitats, impulsar propostes, reforçar el reconeixement professional i contribuir a una formació de qualitat.
         </p>
         <div class="pt-2 flex flex-wrap gap-4">
-          <a href="/associar-se" class="bg-brand-green hover:bg-brand-hover text-white font-black text-sm uppercase tracking-widest py-4 px-8 rounded-md shadow-md hover:shadow-lg transition-all inline-block cursor-pointer">
+          <a href="/fes_te_socia" class="bg-brand-green hover:bg-brand-hover text-white font-black text-sm uppercase tracking-widest py-4 px-8 rounded-md shadow-md hover:shadow-lg transition-all inline-block cursor-pointer">
             Fes-te soci/sòcia
           </a>
-          <a href="/coneix-adocat" class="bg-transparent hover:bg-gray-100 text-brand-dark border border-gray-300 font-black text-sm uppercase tracking-widest py-4 px-8 rounded-md shadow-md hover:shadow-lg transition-all inline-block cursor-pointer">
+          <a href="/que_fem" class="bg-transparent hover:bg-gray-100 text-brand-dark border border-gray-300 font-black text-sm uppercase tracking-widest py-4 px-8 rounded-md shadow-md hover:shadow-lg transition-all inline-block cursor-pointer">
             Coneix ADOCAT
           </a>
         </div>
@@ -201,6 +206,100 @@ import fondoHero from "../assets/photo2.png";
     </div>
   </section>
 
+
+<!-- СЕКЦИЯ: VALORAT PER LA COMUNITAT (ОТЗЫВЫ НА ГЛАВНОЙ, ПОЛНОСТЬЮ ПО ТЗ) -->
+<section id="testimonials" class="w-full bg-[#f4f4f3] py-24 border-t border-stone-200/40">
+  <div class="max-w-6xl mx-auto px-6 font-sans">
+    
+    <!-- Заголовок секции со звездами Ugmonk -->
+    <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+      <!-- Пять золотых звездочек аккуратно по центру -->
+      <div class="flex justify-center text-amber-400 text-lg tracking-wider">
+        ★★★★★
+      </div>
+      <h2 class="text-3xl font-serif font-normal tracking-tight text-stone-950 sm:text-4xl">
+        Valorat per la Comunitat
+      </h2>
+      <p class="text-sm md:text-base text-stone-500 font-light leading-relaxed">
+        El que diuen els docents que ja formen part d'ADOCAT.
+      </p>
+    </div>
+
+    <!-- Сетка из 4-х карточек отзывов с эффектом плавного всплытия -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      
+      <!-- ОТЗЫВ 1: Carlos M. (Очищен от судов и fals autònom по пункту 2 ТЗ) -->
+      <div class="bg-white rounded-xl p-5 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.02)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5 group">
+        <div class="space-y-4">
+          <!-- Фото сотрудника -->
+          <div class="w-full h-48 overflow-hidden rounded-lg bg-stone-100">
+            <img src={user1.src} alt="Carlos M." class="object-top w-full h-full object-cover grayscale-20 group-hover:scale-103 transition-transform duration-500" />
+          </div>
+          <!-- Текст отзыва (Безопасный, про поддержку и стабильность) -->
+          <p class="text-[11px] md:text-xs text-stone-500 font-light leading-relaxed italic text-justify">
+            "Gràcies al suport informatiu i a l'orientació de l'associació, vaig aconseguir entendre millor la meva situació i regularitzar la meva activitat al centre de formació, assolint una major estabilitat professional."
+          </p>
+        </div>
+        <!-- Автор -->
+        <div class="pt-4 border-t border-stone-50 mt-4">
+          <h4 class="text-xs font-bold text-stone-950 uppercase tracking-wide">Carlos M.</h4>
+          <p class="text-[10px] text-stone-400 font-medium uppercase tracking-wider mt-0.5">Professor de FP</p>
+        </div>
+      </div>
+
+      <!-- ОТЗЫВ 2: Laura G. -->
+      <div class="bg-white rounded-xl p-5 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.02)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5 group">
+        <div class="space-y-4">
+          <div class="w-full h-48 overflow-hidden rounded-lg bg-stone-100">
+            <img src={user2.src} alt="Laura G." class="object-top w-full h-full object-cover grayscale-20 group-hover:scale-103 transition-transform duration-500" />
+          </div>
+          <p class="text-[11px] md:text-xs text-stone-500 font-light leading-relaxed italic text-justify">
+            "Un espai excel·lent per compartir recursos pedagògics i bones pràctiques. Sentir-se recolzada per una xarxa sòlida de companys i companyes de professió és una eina que no té preu en el nostre dia a dia."
+          </p>
+        </div>
+        <div class="pt-4 border-t border-stone-50 mt-4">
+          <h4 class="text-xs font-bold text-stone-950 uppercase tracking-wide">Laura G.</h4>
+          <p class="text-[10px] text-stone-400 font-medium uppercase tracking-wider mt-0.5">Formadora Ocupacional</p>
+        </div>
+      </div>
+
+      <!-- ОТЗЫВ 3: David T. (Очищен от «профсоюзных переговоров» по пункту 1 ТЗ) -->
+      <div class="bg-white rounded-xl p-5 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.02)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5 group">
+        <div class="space-y-4">
+          <div class="w-full h-48 overflow-hidden rounded-lg bg-stone-100">
+            <img src={user3.src} alt="David T." class="object-top w-full h-full object-cover grayscale-20 group-hover:scale-103 transition-transform duration-500" />
+          </div>
+          <p class="text-[11px] md:text-xs text-stone-500 font-light leading-relaxed italic text-justify">
+            "La interlocució d'ADOCAT amb les institucions públiques i els centres és clau. Per fi tenim una associació transparent que trasllada les nostres necessitats reals i demana millores tangibles per a tot el sector."
+          </p>
+        </div>
+        <div class="pt-4 border-t border-stone-50 mt-4">
+          <h4 class="text-xs font-bold text-stone-950 uppercase tracking-wide">David T.</h4>
+          <p class="text-[10px] text-stone-400 font-medium uppercase tracking-wider mt-0.5">Docent Tècnic</p>
+        </div>
+      </div>
+
+      <!-- ОТЗЫВ 4: Elena R. -->
+      <div class="bg-white rounded-xl p-5 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.02)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5 group">
+        <div class="space-y-4">
+          <div class="w-full h-48 overflow-hidden rounded-lg bg-stone-100">
+            <img src={user4.src} alt="Elena R." class="object-top w-full h-full object-cover grayscale-20 group-hover:scale-103 transition-transform duration-500" />
+          </div>
+          <p class="text-[11px] md:text-xs text-stone-500 font-light leading-relaxed italic text-justify">
+            "Els estudis tècnics i les trobades sectorials que organitzen ens ajuden a entendre els canvis normatius reals, a compartir experiències didàctiques i a defensar de manera conjunta la nostra dignitat professional."
+          </p>
+        </div>
+        <div class="pt-4 border-t border-stone-50 mt-4">
+          <h4 class="text-xs font-bold text-stone-950 uppercase tracking-wide">Elena R.</h4>
+          <p class="text-[10px] text-stone-400 font-medium uppercase tracking-wider mt-0.5">Consultora i Formadora</p>
+        </div>
+      </div>
+
+    </div> <!-- Закрытие grid -->
+  </div> <!-- Закрытие контейнера max-w-6xl -->
+</section>
+
+
   <!-- 📝 БЛОК КВИЗА (Перенесен во второстепенный блок по Приоритету 1, пункт 3 и Приоритету 2, пункт 8) -->
 <section class="w-full bg-white border-t border-gray-200 py-16">
   <div class="max-w-4xl mx-auto px-4 md:px-8 text-center space-y-6">
@@ -231,5 +330,6 @@ import fondoHero from "../assets/photo2.png";
 
   </div>
 </section>
+
 
 </Layout>

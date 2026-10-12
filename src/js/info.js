@@ -1066,3 +1066,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   }); // КОНЕЦ ГЛАВНОГО СЛУШАТЕЛЯ DOMContentLoaded (Строка 339)
 
+// Код для раскрытия скрытого квиза при клике
+document.addEventListener('DOMContentLoaded', () => {
+  const openBtn = document.getElementById('open-quiz-btn');
+  const quizSection = document.getElementById('quiz-section');
+
+  if (openBtn && quizSection) {
+    openBtn.addEventListener('click', () => {
+      // Показываем <main> (удаляем hidden)
+      quizSection.classList.remove('hidden');
+      
+      // Делаем плавное появление opacity
+      setTimeout(() => {
+        quizSection.classList.add('opacity-100');
+        // Плавно прокручиваем к началу квиза
+        quizSection.scrollIntoView({ behavior: 'smooth' });
+      }, 50);
+    });
+  }
+});

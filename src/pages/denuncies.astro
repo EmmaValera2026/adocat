@@ -10,6 +10,28 @@ import Layout from "../layouts/Layout.astro";
   <!-- Добавляем верхний отступ pt-32, чтобы контент не перекрывался меню -->
   <main class="w-full bg-white min-h-screen pb-20 pt-32 px-4 md:px-8">
     <div class="max-w-4xl mx-auto space-y-10">
+
+       <!-- ХЛЕБНЫЕ КРОШКИ (СТРЕЛКИ НАВИГАЦИИ КАК НА ФОТО SMЕG) -->
+<nav class="w-full max-w-6xl mx-auto px-6 pb-2 text-left" aria-label="Breadcrumb">
+  <ol class="inline-flex items-center space-x-1 md:space-x-2 text-[16px] font-sans tracking-wider uppercase text-stone-400">
+    <!-- Главная -->
+    <li class="inline-flex items-center">
+      <a href="/" class="hover:text-stone-900 transition-colors">Inici</a>
+    </li>
+    
+    <!-- Разделитель-стрелочка -->
+    <li class="flex items-center space-x-1 md:space-x-2">
+      <span class="text-stone-300 font-light">/</span>
+      <a href="/eixos_detalls#comunitat" class="hover:text-stone-900 transition-colors">Comunitat i participació</a>
+    </li>
+    
+    <!-- Текущая страница -->
+    <li class="flex items-center space-x-1 md:space-x-2">
+      <span class="text-stone-300 font-light">/</span>
+      <span class="text-stone-600 font-medium select-none">Consultes i incidències</span>
+    </li>
+  </ol>
+</nav>
       
       <!-- 📋 ШАПКА СТРАНИЦЫ (Обновлено под Пункт 9) -->
       <section class="text-left space-y-4 border-b border-gray-100 pb-8">

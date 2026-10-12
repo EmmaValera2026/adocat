@@ -1,0 +1,114 @@
+---
+import '../styles/global.css';
+import Layout from "../layouts/Layout.astro";
+
+// 1. Правильный импорт ваших новых изображений через Astro
+import photo7 from '../imagen/photo7.avif'; 
+import photo8 from '../imagen/photo8.avif'; 
+---
+
+<Layout 
+  title="Grups de Treball i Comunitat - ADOCAT" 
+  description="Espais de participació, grups de treball i comissions de l'Associació de Docents Ocupacionals de Catalunya."
+>
+  <main class="w-full bg-white min-h-screen pb-24">
+
+    <!-- ХЛЕБНЫЕ КРОШКИ (СТРЕЛКИ НАВИГАЦИИ КАК НА ФОТО SMЕG) -->
+<nav class="w-full max-w-6xl mx-auto px-6 pt-8 pb-2 text-left" aria-label="Breadcrumb">
+  <ol class="inline-flex items-center space-x-1 md:space-x-2 text-[16px] font-sans tracking-wider uppercase text-stone-400">
+    <!-- Главная -->
+    <li class="inline-flex items-center">
+      <a href="/" class="hover:text-stone-900 transition-colors">Inici</a>
+    </li>
+    
+    <!-- Разделитель-стрелочка -->
+    <li class="flex items-center space-x-1 md:space-x-2">
+      <span class="text-stone-300 font-light">/</span>
+      <a href="/participa" class="hover:text-stone-900 transition-colors">Participa</a>
+    </li>
+    
+    <!-- Текущая страница -->
+    <li class="flex items-center space-x-1 md:space-x-2">
+      <span class="text-stone-300 font-light">/</span>
+      <span class="text-stone-600 font-medium select-none">Comissions</span>
+    </li>
+  </ol>
+</nav>
+    
+    <!-- ВЕРХНИЙ БЛОК: Заголовок страницы -->
+    <section class="max-w-6xl mx-auto pt-24 pb-16 px-6 text-center space-y-4">
+      <h1 class="text-4xl md:text-5xl font-serif font-normal tracking-tight text-stone-900">
+        Grups de Treball i Comunitat
+      </h1>
+      <p class="text-sm text-stone-500 font-light max-w-2xl mx-auto leading-relaxed">
+        Estem definint un catàleg progressiu de recursos, activitats i suport professional. Tria l'espai de l'associació on t'agradaria connectar i compartir la teva experiència.
+      </p>
+    </section>
+
+    <!-- ДВУХКОЛОНОЧНЫЙ МАКЕТ С ДЕЙСТВИТЕЛЬНО КРУПНЫМИ КАРТОЧКАМИ -->
+    <section class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- КАРТОЧКА 1: Увеличена высота до min-h-[500px], добавлены большие отступы p-16 -->
+        <div class="group relative aspect-4/3 sm:aspect-16/10 rounded-xl overflow-hidden bg-stone-950 flex flex-col items-center justify-center text-center p-8 sm:p-16 border border-stone-200/10 shadow-lg">
+          <!-- Фото с пониженной яркостью за счет opacity-30 -->
+          <img 
+            src={photo7.src} 
+            alt="Comunitat i Recursos Docents" 
+            class="absolute inset-0 w-full h-full object-cover opacity-45 group-hover:scale-103 transition-transform duration-700"
+          />
+          <!-- Исправленный темный градиент для приглушения яркости фото -->
+          <div class="absolute inset-0 bg-linear-to-t from-stone-950/60 via-stone-950/20 to-transparent z-10"></div>
+          
+          <!-- Контент строго по центру -->
+          <div class="relative z-20 max-w-md space-y-4">
+            <span class="text-[10px] font-bold tracking-[0.25em] uppercase text-stone-300 block">Espai de cooperació</span>
+            <h3 class="text-white font-serif text-3xl sm:text-4xl tracking-tight leading-tight">
+              Comunitat i Recursos
+            </h3>
+            <p class="text-stone-200/90 text-sm font-light leading-relaxed">
+              Un espai viu per compartir materials didàctics, bones pràctiques i experiències de teleformació o presencials. Construïm una xarxa de suport mutu.
+            </p>
+            <!-- Белая кнопка-статус "В разработке" как на фото 2 -->
+            <div class="pt-4">
+              <span class="inline-block bg-white hover:bg-stone-100 text-stone-950 px-8 py-4 text-xs font-semibold tracking-widest uppercase transition-all shadow-md rounded-xs select-none">
+                En preparació &rarr;
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- КАРТОЧКА 2: Увеличена высота до min-h-[500px] -->
+        <div class="group relative aspect-4/3 sm:aspect-16/10 rounded-xl overflow-hidden bg-stone-950 flex flex-col items-center justify-center text-center p-8 sm:p-16 border border-stone-200/10 shadow-lg">
+          <!-- Фото -->
+          <img 
+            src={photo8.src} 
+            alt="Comissions d'Implicació Professional" 
+            class="absolute inset-0 w-full h-full object-cover opacity-45 group-hover:scale-103 transition-transform duration-700"
+          />
+          <!-- Исправленный темный градиент -->
+          <div class="absolute inset-0 bg-linear-to-t from-stone-950/60 via-stone-950/20 to-transparent z-10"></div>
+
+          <!-- Контент строго по центру -->
+          <div class="relative z-20 max-w-md space-y-4">
+            <span class="text-[10px] font-bold tracking-[0.25em] uppercase text-stone-300 block">Eix d'actuació oficial</span>
+            <h3 class="text-white font-serif text-3xl sm:text-4xl tracking-tight leading-tight">
+              Comissions de Treball
+            </h3>
+            <p class="text-stone-200/90 text-sm font-light leading-relaxed">
+              Grups dedicats a analitzar la normativa vigent, impulsar propostes de millora davant les administracions i defensar el reconeixement de la professió.
+            </p>
+            <!-- Белая кнопка-статус "В разработке" как на фото 2 -->
+            <div class="pt-4">
+              <span class="inline-block bg-white hover:bg-stone-100 text-stone-950 px-8 py-4 text-xs font-semibold tracking-widest uppercase transition-all shadow-md rounded-xs select-none">
+                En preparació &rarr;
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+</Layout>
