@@ -3,7 +3,7 @@ export const prerender = true;
 import '../../styles/global.css';
 import Layout from "../../layouts/Layout.astro";
 import { getCollection, render } from 'astro:content';
-import defaultLogo from '../../assets/logo-full-adocat.png';
+import defaultLogo from '../../imagen/logo-full-adocat.png';
 
 export async function getStaticPaths() {
   const allNoticies = await getCollection('noticies');
