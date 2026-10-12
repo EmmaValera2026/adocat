@@ -12,7 +12,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/netlify": "^8.2.5",
+    "@astrojs/netlify": "^8.2.9",
     "@astrojs/sitemap": "^3.7.4",
     "@supabase/supabase-js": "^2.110.6",
     "@tailwindcss/vite": "^4.3.3",

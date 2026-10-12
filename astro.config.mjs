@@ -6,10 +6,10 @@ import netlify from '@astrojs/netlify'; // 🚀 Подключаем серве�
 
 export default defineConfig({
   site: 'https://nataliyadev.com',
-  
+
   // 🚀 Переключаем сайт в гибридный режим, чтобы работали серверные функции и формы
-  //output: 'server',
-  //adapter: netlify(),
+  output: 'server',
+  adapter: netlify(),
 
   integrations: [
     sitemap(),
@@ -47,5 +47,5 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()] // 🔒 Ваш плагин Tailwind v4 работает без изменений
-  }
+  },
 });
