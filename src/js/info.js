@@ -2,8 +2,8 @@
 import { QuizEngine } from './class.js';
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = "https://pbxmhrwhebegnejjzksp.supabase.co";
-const supabaseAnonKey = "sb_publishable_Fg8_-r_e4Ef0rQDIzqWYyg_oK9Rsek2";
+const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // 🔒 ГЛОБАЛЬНЫЙ КЭШ ЭЛЕМЕНТОВ DOM — СТРОГО НА САМОМ ВЕРХУ ФАЙЛА

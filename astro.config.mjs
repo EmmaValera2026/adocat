@@ -5,7 +5,7 @@ import vitePWA from '@vite-pwa/astro'; // 📱 Подключаем мобиль
 import netlify from '@astrojs/netlify'; // 🚀 Подключаем серверный адаптер Netlify
 
 export default defineConfig({
-  site: 'https://nataliyadev.com',
+  site: 'https://socis.adocat.es',
 
   // 🚀 Переключаем сайт в гибридный режим, чтобы работали серверные функции и формы
   output: 'server',

@@ -1,8 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 import { QUIZ_QUESTIONS } from './date.js'; 
 
-const supabaseUrl = "https://pbxmhrwhebegnejjzksp.supabase.co";
-const supabaseAnonKey = "sb_publishable_Fg8_-r_e4Ef0rQDIzqWYyg_oK9Rsek2";
+const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export class QuizEngine {
