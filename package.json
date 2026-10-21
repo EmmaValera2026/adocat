@@ -19,11 +19,13 @@
     "@vite-pwa/astro": "^1.2.0",
     "astro": "^7.1.0",
     "netlify-identity-widget": "^2.0.3",
+    "pg": "^8.23.1",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.11",
     "@tailwindcss/typography": "^0.5.20",
+    "@types/pg": "^8.23.1",
     "tailwindcss-animate": "^1.0.7"
   }
 }
