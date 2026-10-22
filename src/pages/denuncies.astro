@@ -1,5 +1,4 @@
 ---
-import '../styles/global.css';
 import Layout from "../layouts/Layout.astro";
 ---
 
@@ -8,11 +7,11 @@ import Layout from "../layouts/Layout.astro";
   description="Plataforma interactiva d'ADOCAT per compartir la realitat del col·lectiu docent a Catalunya. Apte per a professors del SOC, formadors en línia, teleformació, tutors pedagògics, orientadors i professionals en cerca de centre de Formació per a l'Ocupació. Unifica les necessitats sectorials i prioritats del sector."
 >
   <!-- Добавляем верхний отступ pt-32, чтобы контент не перекрывался меню -->
-  <main class="w-full bg-white min-h-screen pb-20 pt-32 px-4 md:px-8">
+  <main class="w-full bg-white min-h-screen py-14 md:px-8">
     <div class="max-w-4xl mx-auto space-y-10">
 
-       <!-- ХЛЕБНЫЕ КРОШКИ (СТРЕЛКИ НАВИГАЦИИ КАК НА ФОТО SMЕG) -->
-<nav class="w-full max-w-6xl mx-auto px-6 pb-2 text-left" aria-label="Breadcrumb">
+      <!-- ХЛЕБНЫЕ КРОШКИ (СТРЕЛКИ НАВИГАЦИИ КАК НА ФОТО SMЕG) -->
+      <nav class="w-full max-w-6xl mx-auto text-left" aria-label="Breadcrumb">
   <ol class="inline-flex items-center space-x-1 md:space-x-2 text-[16px] font-sans tracking-wider uppercase text-stone-400">
     <!-- Главная -->
     <li class="inline-flex items-center">
@@ -125,12 +124,15 @@ import Layout from "../layouts/Layout.astro";
             </label>
           </div>
 
-          <!-- Кнопка отправки -->
-          <div class="pt-2">
-            <button type="submit" class="w-full bg-brand-dark hover:bg-black text-white font-black text-xs uppercase tracking-widest py-4 rounded-xs transition-colors shadow-xs cursor-pointer">
-              Enviar formulari de contacte &rarr;
-            </button>
-          </div>
+          <!-- Блок ошибки -->
+          <div id="complaint-form-error" class="hidden text-xs text-red-600 font-bold bg-red-50 p-3 rounded-xs border border-red-200"></div>
+
+            <!-- Кнопка отправки -->
+            <div class="pt-2">
+              <button type="submit" class="w-full bg-brand-dark hover:bg-black text-white font-black text-xs uppercase tracking-widest py-4 rounded-xs transition-colors shadow-xs cursor-pointer">
+                Enviar formulari de contacte &rarr;
+              </button>
+            </div>
 
         </form>
       </section>
@@ -138,3 +140,8 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </main>
 </Layout>
+
+</main>
+</Layout>
+
+<script src="../js/info.js"></script>

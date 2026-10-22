@@ -630,7 +630,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             try {
-                const response = await fetch('/api/save-lead-brevo', {
+                const response = await fetch('/api/subscribe', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email: emailTarget }) 
@@ -665,21 +665,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     ejecutarLogicaSuscripcion();
 
-    // ⚡ ОТПРАВКА СЛУЖЕБНЫХ КОНСУЛЬТАЦИЙ И ИНЦИДЕНТОВ (Обновлено по Пункту 9)
+    // ⚡ ОТПРАВКА СЛУЖЕБНЫХ КОНСУЛЬТАЦИЙ И ИНЦИДЕНТОВ
     const ejecutarLogicaDenuncias = () => {
+
         const form = document.getElementById('complaint-secure-form');
         const container = document.getElementById('denuncia-form-container');
 
-        if (!form || !container) return;
+        if (!form || !container) {
+            console.error("❌ Error: ¡No se encontró el formulario o contenedor en el DOM!");
+        return;
+        }
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault(); 
+       
 
             const irregularityType = document.getElementById('denuncia-tipus')?.value; 
             const centreName = document.getElementById('denuncia-centre')?.value.trim();
             const description = document.getElementById('denuncia-descripcio')?.value.trim();
             const contactInfo = document.getElementById('denuncia-contacte')?.value.trim();
             const compErrorEl = document.getElementById('complaint-form-error');
+
+             if (!irregularityType || !centreName || !description || !contactInfo) {
+                alert("Si us plau, omple tots els camps obligatoris.");
+            return;
+            }
 
             if (compErrorEl) compErrorEl.classList.add('hidden');
 
@@ -690,7 +700,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             try {
-                const { error } = await supabase
+                const { data, error } = await supabase
                     .from('complaints')
                     .insert([
                         { 
@@ -701,7 +711,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     ]);
 
-                if (error) throw error;
+                if (error) {
+                    console.error("❌ Error de SUPABASE:", error);
+                    throw error;
+                }
+
+            
 
                 container.innerHTML = `
                     <div class="text-center py-12 space-y-4 animate-fade-in text-brand-dark">
@@ -713,26 +728,27 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 `;
 
-            } catch (err) {
-                console.error('Database complaints error:', err.message);
-                if (compErrorEl) {
-                    compErrorEl.textContent = "S'ha produït un error en processar la sol·licitud. Torna-ho a provar més tard.";
-                    compErrorEl.classList.remove('hidden');
+                } catch (err) {
+                    console.error('❌ Error de tiempo de ejecución:', err);
+                        if (compErrorEl) {
+                        compErrorEl.textContent = "S'ha produït un error en processar la sol·licitud: " + (err.message || err);
+                        compErrorEl.classList.remove('hidden');
+                    }
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = "Enviar formulari de contacte &rarr;";
+                    }
                 }
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = "Enviar formulari de contacte &rarr;";
-                }
-            }
-        });
-    };
+            });
+        };
 
+    // Вызов
     ejecutarLogicaDenuncias();
 
 
 
 
-        // ⚡ Управление окном входа администратора
+    // ⚡ Управление окном входа администратора
     const abrirModalAdmin = (e) => {
         const mobileMenu = document.getElementById('mobile-menu');
         if (mobileMenu) mobileMenu.classList.add('hidden');

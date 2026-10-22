@@ -95,10 +95,6 @@ export class QuizEngine {
                 }
             }
 
-
-
-
-
             // 2. Ваша original прямая запись анкеты и контактов в таблицу leads
             const { error } = await supabase
                 .from('leads')
@@ -118,7 +114,6 @@ export class QuizEngine {
 
             // 3. Добавляем параллельную интеграцию с Brevo без удаления старого кода (Пункт 14)
             try {
-                // Добавлены пробелы в путь, уберите их при копировании в проект
                 await fetch('/api/save-lead-brevo', {
                     method: 'POST',
                     headers: {

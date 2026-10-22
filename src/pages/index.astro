@@ -1,5 +1,4 @@
 ---
-import '../styles/global.css';
 import Layout from "../layouts/Layout.astro";
 
 import fondoHero from "../imagen/photo2.png";
@@ -7,89 +6,84 @@ import user1 from '../imagen/user1.avif';
 import user2 from '../imagen/user2.avif';
 import user3 from '../imagen/user3.avif';
 import user4 from '../imagen/user4.avif';
+
+import { Image } from 'astro:assets';
+import emmaGrupo from '../imagen/emma_grupo.png'; // Укажите правильное расширение файла (.jpg / .png)
+import emmaConversacion from '../imagen/emma_convercasion.png';
+
 ---
 
 <Layout 
   title="ADOCAT - Comunitat de Docents de la Formació per a l'Ocupació"
   description="Plataforma interactiva d'ADOCAT per compartir la realitat del col·lectiu docent a Catalunya. Apte per a professors del SOC, formadors en línia, teleformació, tutors pedagògics, orientadors i professionals en cerca de centre de Formació per a l'Ocupació. Unifica les necessitats sectorials i prioritats del sector."
 >
-   <!-- 🎯 МЯГКИЙ ПОЛНОШИРИННЫЙ BANNER HERO С ЕДИНЫМ ФОНОМ (Обновленный стиль по Приоритету 1 и 2) -->
-  <section class="w-full relative bg-gray-50 border-b border-gray-200 overflow-hidden min-h-120 flex items-center">
-   
-    <!-- Мягкий интерьерный фон -->
-    <div class="absolute inset-0 opacity-15 bg-cover bg-center" style={`background-image: url('${fondoHero.src}');`}></div>
+   <!-- 🎯 МЯГКИЙ ПОЛНОШИРИННЫЙ BANNER HERO -->
+<section class="w-full relative bg-gray-50 border-b border-gray-200 overflow-hidden min-h-120 flex items-center">
+  
+  <!-- Мягкий интерьерный фон -->
+  <div class="absolute inset-0 opacity-15 bg-cover bg-center" style={`background-image: url('${fondoHero.src}');`}></div>
 
-    <!-- Тонкий радиальный градиент для мягкости и глубины -->
-    <div class="absolute inset-0 bg-linear-to-r from-gray-50 via-gray-50/90 to-transparent"></div>
+  <!-- Тонкий радиальный градиент -->
+  <div class="absolute inset-0 bg-linear-to-r from-gray-50 via-gray-50/90 to-transparent"></div>
 
-    <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 items-center px-4 md:px-8 py-12 lg:py-16 relative z-10 w-full">
-      
-      <!-- Левая часть: Приветственный текст -->
-      <div class="lg:col-span-7 space-y-6 text-left">
-        <div class="inline-flex items-center gap-2 bg-brand-green/10 text-brand-green px-3 py-1 rounded-sm text-xs font-bold uppercase tracking-wider">
-          Comunitat Docent de la Formació per a l'Ocupació
-        </div>
-        <h1 class="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-brand-dark uppercase leading-tight">
-          La docència per a l’ocupació mereix veu, reconeixement i comunitat.
-        </h1>
-        <p class="text-base md:text-lg text-gray-600 font-medium max-w-xl leading-relaxed">
-          A ADOCAT unim el col·lectiu docent de Catalunya per compartir necessitats, impulsar propostes, reforçar el reconeixement professional i contribuir a una formació de qualitat.
-        </p>
-        <div class="pt-2 flex flex-wrap gap-4">
-          <a href="/fes_te_socia" class="bg-brand-green hover:bg-brand-hover text-white font-black text-sm uppercase tracking-widest py-4 px-8 rounded-md shadow-md hover:shadow-lg transition-all inline-block cursor-pointer">
-            Fes-te soci/sòcia
-          </a>
-          <a href="/que_fem" class="bg-transparent hover:bg-gray-100 text-brand-dark border border-gray-300 font-black text-sm uppercase tracking-widest py-4 px-8 rounded-md shadow-md hover:shadow-lg transition-all inline-block cursor-pointer">
-            Coneix ADOCAT
-          </a>
-        </div>
-      </div>
-
-      <!-- Правая часть: Чистый крупный логотип поверх единого мягкого фонда -->
-      <div class="lg:col-span-5 flex items-center justify-center p-4 lg:p-8">
-        <img 
-            src="/img/logo-full-adocat.png" 
-            alt="Logotip Oficial ADOCAT" 
-            class="w-full max-w-85 md:max-w-95 h-auto object-contain pointer-events-none filter drop-shadow-sm select-none"
-            draggable="false"
-        />
-      </div>
-
-    </div>
-  </section>
-
-  <!-- 🎴 ЧЕРЕДУЮЩИЕСЯ БЛОКИ ИНФОРМАЦИИ (Стиль сохранен, тексты приведены к инклюзивным стандартам) -->
-  <section class="max-w-7xl mx-auto px-4 md:px-8 py-16 space-y-20">
+  <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 items-center px-4 md:px-8 py-12 lg:py-16 relative z-10 w-full">
     
-    <!-- Блок 1: Фото слева, текст справа -->
-    <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-      <div class="w-full h-70 md:h-95 rounded-xs overflow-hidden border border-gray-200 shadow-xs bg-cover bg-center" 
-           style="background-image: url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80');">
+    <!-- Левая часть: Приветственный текст -->
+    <div class="lg:col-span-7 space-y-6 text-left">
+      <div class="inline-flex items-center gap-2 bg-brand-green/10 text-brand-green px-3 py-1 rounded-sm text-xs font-bold uppercase tracking-wider">
+        Comunitat Docent de la Formació per a l'Ocupació
       </div>
-      <div class="space-y-4 text-left">
-        <span class="text-xs font-black text-brand-green uppercase tracking-widest">Iniciativa 01</span>
-        <h2 class="text-2xl md:text-3xl font-black text-brand-dark uppercase tracking-tight">Acció Compartida i Impuls Docent</h2>
-        <p class="text-sm md:text-base text-gray-600 leading-relaxed font-medium">
-          Unim el col·lectiu docent de la formació per a l'ocupació a Catalunya per fer visible la nostra tasca. Treballem de forma cooperativa per analitzar la realitat del sector, construir propostes de millora i promoure el desenvolupament professional de totes les persones associades.
-        </p>
-      </div>
-    </div>
-
-    <!-- Блок 2: Текст слева, фото справа -->
-    <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-      <div class="space-y-4 text-left order-2 md:order-1">
-        <span class="text-xs font-black text-brand-green uppercase tracking-widest">Iniciativa 02</span>
-        <h2 class="text-2xl md:text-3xl font-black text-brand-dark uppercase tracking-tight">Espais de Trobada i Suport Mutu</h2>
-        <p class="text-sm md:text-base text-gray-600 leading-relaxed font-medium">
-          Creem canals de comunicació i participació actius on compartir inquietuds, defensar els interessos comuns del nostre sector i orientar el futur de la professió de manera digna, constructiva i transparent.
-        </p>
-      </div>
-      <div class="w-full h-70 md:h-95 rounded-xs overflow-hidden border border-gray-200 shadow-xs bg-cover bg-center order-1 md:order-2" 
-           style="background-image: url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80');">
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-brand-dark uppercase leading-tight">
+        La docència per a l’ocupació mereix veu, reconeixement i comunitat.
+      </h1>
+      <p class="text-base md:text-lg text-gray-600 font-medium max-w-xl leading-relaxed">
+        A ADOCAT unim el col·lectiu docent de Catalunya per compartir necessitats, impulsar propostes, reforçar el reconeixement professional i contribuir a una formació de qualitat.
+      </p>
+      <div class="pt-2 flex flex-wrap gap-4">
+        <a href="/fes_te_socia" class="bg-brand-green hover:bg-brand-hover text-white font-black text-sm uppercase tracking-widest py-4 px-8 rounded-md shadow-md hover:shadow-lg transition-all inline-block cursor-pointer">
+          Fes-te soci/sòcia
+        </a>
+        <a href="/que_fem" class="bg-transparent hover:bg-gray-100 text-brand-dark border border-gray-300 font-black text-sm uppercase tracking-widest py-4 px-8 rounded-md shadow-md hover:shadow-lg transition-all inline-block cursor-pointer">
+          Coneix ADOCAT
+        </a>
       </div>
     </div>
 
-  </section>
+    <!-- Правая часть: Скрепка на всю высоту + 5 строк чистейшего HTML-текста -->
+    <div class="lg:col-span-5 flex items-center justify-center p-4 lg:p-8">
+      <div class="flex items-stretch gap-2 select-none">
+        
+        <!-- Картинка-скрепка (растягивается точно по высоте блока с текстом справа) -->
+        <img 
+          src="/img/logo-adocat.png" 
+          alt="Simbol ADOCAT" 
+          class="h-auto w-28 md:w-36 lg:w-100 object-contain pointer-events-none filter drop-shadow-sm shrink-0"
+          draggable="false"
+        />
+
+        <!-- Текстовый блок логотипа (5 строк) -->
+        <div class="flex flex-col justify-center text-center -ml-25">
+          
+          <!-- 1 строка: ADOCAT -->
+          <span class="text-2xl md:text-3xl lg:text-6xl font-semibold tracking-wide leading-none">
+            <span class="text-[#38bdf8]">AD</span><span class="text-[#f97316]">O</span><span class="text-gray-900">CAT</span>
+          </span>
+
+          <!-- 2-5 строки: Тонкий шрифт подписи -->
+          <div class="text-lg md:text-2xl lg:text-3xl font-semibold text-gray-900 leading-tight">
+            <p>Associació</p>
+            <p>de Docents</p>
+            <p>Ocupacionals</p>
+            <p>de Catalunya</p>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
 
   <!-- 📊 ВЕЛИКОЛЕПНЫЕ КРУПНЫЕ ПИЛОНЫ ПРЕИМУЩЕСТВ (Обновлено по Приоритету 1 и 2 · 4 Единицы грида) -->
   <section class="bg-gray-50 border-t border-gray-200 py-20 w-full">

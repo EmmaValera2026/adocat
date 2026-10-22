@@ -1,8 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_PUBLISHABLE_KEY
+  import.meta.env.SUPABASE_URL,
+  import.meta.env.SUPABASE_PUBLISHABLE_KEY
 );
 
 export const prerender = false;
@@ -15,7 +15,7 @@ export const POST = async ({ request }) => {
       return new Response(JSON.stringify({ message: 'Email requerit' }), { status: 400 });
     }
 
-    // 1. Главное: сохраняем подписчика в таблицу leads нового Supabase
+    // 1. Сохраняем подписчика в базу Supabase (таблица leads)
     const { error } = await supabase
       .from('leads') 
       .insert([
@@ -32,14 +32,33 @@ export const POST = async ({ request }) => {
       return new Response(JSON.stringify({ message: error.message }), { status: 500 });
     }
 
-    // 2. Попытка отправить письмо через Brevo (сработает только тогда, когда вы добавите BREVO_API_KEY)
-    if (process.env.BREVO_API_KEY) {
+    // 2. Добавляем контакт в список Brevo (Список ID #3) и отправляем письмо
+    const apiKey = import.meta.env.BREVO_API_KEY;
+    const listId = Number(import.meta.env.BREVO_LIST_ID) || 3;
+
+    if (apiKey) {
       try {
+        // А) Добавляем контакт в список контактов Brevo (#3)
+        await fetch('https://api.brevo.com/v3/contacts', {
+          method: 'POST',
+          headers: {
+            'accept': 'application/json',
+            'api-key': apiKey,
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: email,
+            listIds: [listId],
+            updateEnabled: true
+          })
+        });
+
+        // Б) Отправляем приветственное транзакционное письмо
         await fetch('https://api.brevo.com/v3/smtp/email', {
           method: 'POST',
           headers: {
             'accept': 'application/json',
-            'api-key': process.env.BREVO_API_KEY,
+            'api-key': apiKey,
             'content-type': 'application/json'
           },
           body: JSON.stringify({
@@ -56,8 +75,8 @@ export const POST = async ({ request }) => {
             `
           })
         });
+
       } catch (mailErr) {
-        // Ошибка почты не блокирует сохранение пользователя в базу
         console.error('Brevo error (non-blocking):', mailErr);
       }
     }
