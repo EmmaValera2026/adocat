@@ -8,8 +8,8 @@ export default defineConfig({
   site: 'https://socis.adocat.es',
 
   // 🚀 Переключаем сайт в гибридный режим, чтобы работали серверные функции и формы
-  //output: 'server',
-  //adapter: netlify(),
+  output: 'server',
+  adapter: netlify(),
 
   integrations: [
     sitemap(),
