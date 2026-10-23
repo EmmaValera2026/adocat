@@ -497,7 +497,7 @@ if (typeof window !== 'undefined') {
           if (dbError) throw dbError;
 
           // В. Передаем лид в Brevo
-          await fetch('/api/save-lead-brevo', {
+          await fetch('/api/subscribe', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: emailVal, nombre: nameVal, telefono: phoneVal, role: roleVal })

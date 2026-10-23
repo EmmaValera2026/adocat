@@ -48,11 +48,18 @@ const {
 
     <!-- 🌐 NAVIGATION HEADER -->
     <header class="w-full bg-[#111111] text-white px-8 md:px-8 py-0 sticky top-0 z-40 shadow-md">
-        <div class="max-w-7xl mx-auto flex items-center justify-between h-20">
-            <div class="flex items-center">
-               <img src="/img/faicon.png" alt="Logotip ADOCAT" class="h-13 w-auto object-contain" />    
-                <span class="text-3xl font-semibold tracking-wider text-white ml-3">ADOCAT</span>
-            </div>
+      <div class="max-w-7xl mx-auto flex items-center justify-between h-20">
+          <div class="flex items-center">
+              <!-- Иконка: возврат на главную -->
+              <a href="/" class="hover:opacity-80 transition-opacity flex items-center">
+                <img src="/img/faicon.png" alt="Logotip ADOCAT" class="h-13 w-auto object-contain" />
+              </a>
+
+              <!-- Текст: кнопка вызова админки -->
+              <button type="button" id="open-admin-nav-btn" class="text-3xl font-semibold tracking-wider text-white ml-3 hover:text-emerald-400 transition-colors focus:outline-none cursor-pointer" >
+                ADOCAT
+              </button>
+          </div>
             
             <!-- 🖥️ DESKTOP NAV -->
             <nav class="hidden lg:flex items-center gap-6 text-[14px] md:text-[18px] font-bold uppercase tracking-wider text-gray-300">

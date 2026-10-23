@@ -669,14 +669,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const ejecutarLogicaDenuncias = () => {
 
         const form = document.getElementById('complaint-secure-form');
-        const container = document.getElementById('denuncia-form-container');
+    const container = document.getElementById('denuncia-form-container');
 
-        if (!form || !container) {
-            console.error("❌ Error: ¡No se encontró el formulario o contenedor en el DOM!");
+    if (!form || !container) {
+        console.error("❌ Error: ¡No se encontró el formulario o contenedor en el DOM!");
         return;
-        }
+    }
 
-        form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', async (e) => {
             e.preventDefault(); 
        
 

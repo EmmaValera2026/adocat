@@ -114,7 +114,7 @@ export class QuizEngine {
 
             // 3. Добавляем параллельную интеграцию с Brevo без удаления старого кода (Пункт 14)
             try {
-                await fetch('/api/save-lead-brevo', {
+                await fetch('/api/subscribe', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

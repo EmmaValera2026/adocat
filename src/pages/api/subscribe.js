@@ -9,37 +9,66 @@ export const prerender = false;
 
 export const POST = async ({ request }) => {
   try {
-    const { email } = await request.json();
+    const body = await request.json();
+    console.log('📥 INCOMING QUIZ DATA:', body); // Лог входящих данных для проверки
+
+    const { email, nombre, telefono, provincia, role, respuestas } = body;
 
     if (!email) {
       return new Response(JSON.stringify({ message: 'Email requerit' }), { status: 400 });
     }
 
-    // 1. Сохраняем подписчика в базу Supabase (таблица leads)
+    // 1. Сохраняем полный набор данных в Supabase
     const { error } = await supabase
       .from('leads') 
       .insert([
         { 
           email: email, 
+          nombre: nombre || null,
+          telefono: telefono || null,
+          provincia: provincia || null,
+          modalidad_implicacion: role || 'butlleti',
+          respuestas: respuestas || null,
           app_origen: 'adocat',
-          modalidad_implicacion: 'butlleti',
           created_at: new Date().toISOString()
         }
       ]);
 
     if (error) {
-      console.error('Error guardando en Supabase:', error.message);
-      return new Response(JSON.stringify({ message: error.message }), { status: 500 });
+      console.error('❌ Error guardando en Supabase:', error.message);
     }
 
-    // 2. Добавляем контакт в список Brevo (Список ID #3) и отправляем письмо
+    // 2. Добавляем в Brevo
     const apiKey = import.meta.env.BREVO_API_KEY;
     const listId = Number(import.meta.env.BREVO_LIST_ID) || 3;
 
     if (apiKey) {
       try {
-        // А) Добавляем контакт в список контактов Brevo (#3)
-        await fetch('https://api.brevo.com/v3/contacts', {
+        // Разделяем имя и фамилию
+        let firstName = '';
+        let lastName = '';
+        
+        if (nombre) {
+          const parts = nombre.trim().split(/\s+/);
+          firstName = parts[0] || '';
+          lastName = parts.slice(1).join(' ') || '';
+        }
+
+        const attributesObj = {};
+        if (firstName) attributesObj.NOMBRE = firstName;
+        if (lastName) attributesObj.APELLIDOS = lastName;
+
+        // Форматирование телефона только если он из 9+ цифр
+        if (telefono) {
+          const cleanPhone = telefono.replace(/\D/g, '');
+          if (cleanPhone.length >= 9) {
+            attributesObj.SMS = cleanPhone.startsWith('34') ? `+${cleanPhone}` : `+34${cleanPhone}`;
+          }
+        }
+
+        console.log('📤 SENDING TO BREVO ATTRIBUTES:', attributesObj);
+
+        const brevoRes = await fetch('https://api.brevo.com/v3/contacts', {
           method: 'POST',
           headers: {
             'accept': 'application/json',
@@ -48,12 +77,16 @@ export const POST = async ({ request }) => {
           },
           body: JSON.stringify({
             email: email,
+            attributes: attributesObj,
             listIds: [listId],
             updateEnabled: true
           })
         });
 
-        // Б) Отправляем приветственное транзакционное письмо
+        const brevoData = await brevoRes.json();
+        console.log('🟢 BREVO CONTACT RESPONSE:', JSON.stringify(brevoData));
+
+        // 3. Отправка приветственного транзакционного письма
         await fetch('https://api.brevo.com/v3/smtp/email', {
           method: 'POST',
           headers: {
@@ -62,7 +95,7 @@ export const POST = async ({ request }) => {
             'content-type': 'application/json'
           },
           body: JSON.stringify({
-            sender: { name: 'ADOCAT', email: 'som.adocat.team@gmail.com' },
+            sender: { name: 'ADOCAT', email: 'som.adocat@gmail.com' },
             to: [{ email: email }],
             subject: "✨ Benvingut/da al butlletí oficial d'ADOCAT",
             htmlContent: `
@@ -77,13 +110,14 @@ export const POST = async ({ request }) => {
         });
 
       } catch (mailErr) {
-        console.error('Brevo error (non-blocking):', mailErr);
+        console.error('❌ Brevo error:', mailErr);
       }
     }
 
     return new Response(JSON.stringify({ success: true }), { status: 200 });
 
   } catch (err) {
+    console.error('❌ Server Error:', err.message);
     return new Response(JSON.stringify({ message: err.message }), { status: 500 });
   }
 };
