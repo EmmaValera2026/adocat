@@ -7,322 +7,369 @@ import user2 from '../imagen/user2.avif';
 import user3 from '../imagen/user3.avif';
 import user4 from '../imagen/user4.avif';
 
-import { Image } from 'astro:assets';
-import emmaGrupo from '../imagen/emma_grupo.png'; // Укажите правильное расширение файла (.jpg / .png)
+import emmaGrupo from '../imagen/emma_grupo.png'; 
 import emmaConversacion from '../imagen/emma_convercasion.png';
-
 ---
 
 <Layout 
   title="ADOCAT - Comunitat de Docents de la Formació per a l'Ocupació"
   description="Plataforma interactiva d'ADOCAT per compartir la realitat del col·lectiu docent a Catalunya. Apte per a professors del SOC, formadors en línia, teleformació, tutors pedagògics, orientadors i professionals en cerca de centre de Formació per a l'Ocupació. Unifica les necessitats sectorials i prioritats del sector."
 >
-   <!-- 🎯 МЯГКИЙ ПОЛНОШИРИННЫЙ BANNER HERO -->
-<section class="w-full relative bg-gray-50 border-b border-gray-200 overflow-hidden min-h-120 flex items-center">
-  
-  <!-- Мягкий интерьерный фон -->
-  <div class="absolute inset-0 opacity-15 bg-cover bg-center" style={`background-image: url('${fondoHero.src}');`}></div>
 
-  <!-- Тонкий радиальный градиент -->
-  <div class="absolute inset-0 bg-linear-to-r from-gray-50 via-gray-50/90 to-transparent"></div>
-
-  <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 items-center px-4 md:px-8 py-12 lg:py-16 relative z-10 w-full">
+  <!-- ========================================== -->
+  <!-- ШАПКА / ГЛАВНЫЙ БАННЕР (HEADER)           -->
+  <!-- ========================================== -->
+  <header class="w-full relative bg-gray-50 border-b border-gray-200 overflow-hidden min-h-120 flex items-center">
     
-    <!-- Левая часть: Приветственный текст -->
-    <div class="lg:col-span-7 space-y-6 text-left">
-      <div class="inline-flex items-center gap-2 bg-brand-green/10 text-brand-green px-3 py-1 rounded-sm text-xs font-bold uppercase tracking-wider">
-        Comunitat Docent de la Formació per a l'Ocupació
-      </div>
-      <h1 class="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-brand-dark uppercase leading-tight">
-        La docència per a l’ocupació mereix veu, reconeixement i comunitat.
-      </h1>
-      <p class="text-base md:text-lg text-gray-600 font-medium max-w-xl leading-relaxed">
-        A ADOCAT unim el col·lectiu docent de Catalunya per compartir necessitats, impulsar propostes, reforçar el reconeixement professional i contribuir a una formació de qualitat.
-      </p>
-      <div class="pt-2 flex flex-wrap gap-4">
-        <a href="/fes_te_socia" class="bg-brand-green hover:bg-brand-hover text-white font-black text-sm uppercase tracking-widest py-4 px-8 rounded-md shadow-md hover:shadow-lg transition-all inline-block cursor-pointer">
-          Fes-te soci/sòcia
-        </a>
-        <a href="/que_fem" class="bg-transparent hover:bg-gray-100 text-brand-dark border border-gray-300 font-black text-sm uppercase tracking-widest py-4 px-8 rounded-md shadow-md hover:shadow-lg transition-all inline-block cursor-pointer">
-          Coneix ADOCAT
-        </a>
-      </div>
-    </div>
+    <!-- 🖼️ ФОНОВОЕ ФОТО ДЛЯ ДЕСКТОПА: Растянуто на весь баннер (скрыто на мобильных: hidden lg:block) -->
+    <div 
+      class="hidden lg:block absolute inset-0 opacity-15 bg-cover bg-center pointer-events-none" 
+      style={`background-image: url('${fondoHero.src}');`}
+    ></div>
 
-    <!-- Правая часть: Скрепка на всю высоту + 5 строк чистейшего HTML-текста -->
-   <div class="lg:col-span-5 flex items-center justify-start lg:justify-center -ml-4 lg:ml-0 p-0 lg:p-8">
-  <div class="flex items-stretch gap-2 select-none">
-        <!-- Картинка-скрепка (растягивается точно по высоте блока с текстом справа) -->
-        <img 
-          src="/img/logo-adocat.png" 
-          alt="Simbol ADOCAT" 
-          class="h-auto w-60 md:w-80 lg:w-100 object-contain pointer-events-none filter drop-shadow-sm shrink-0"
-          draggable="false"
-        />
+    <!-- Тонкий радиальный градиент (мягко скрывает фото слева под текстом) -->
+    <div class="absolute inset-0 bg-linear-to-r from-gray-50 via-gray-50/90 to-transparent z-1"></div>
 
-        <!-- Текстовый блок логотипа (5 строк) -->
-        <div class="flex flex-col justify-center text-center -ml-15 lg:-ml-25">
-          
-          <!-- 1 строка: ADOCAT -->
-          <span class="text-2xl md:text-3xl lg:text-6xl font-semibold tracking-wide leading-none">
-            <span class="text-[#38bdf8]">AD</span><span class="text-[#f97316]">O</span><span class="text-gray-900">CAT</span>
-          </span>
-
-          <!-- 2-5 строки: Тонкий шрифт подписи -->
-          <div class="text-lg md:text-2xl lg:text-3xl font-semibold text-gray-900 leading-tight">
-            <p>Associació</p>
-            <p>de Docents</p>
-            <p>Ocupacionals</p>
-            <p>de Catalunya</p>
-          </div>
-
-        </div>
-
-      </div>
-    </div>
-
-  </div>
-</section>
-
-  <!-- 📊 ВЕЛИКОЛЕПНЫЕ КРУПНЫЕ ПИЛОНЫ ПРЕИМУЩЕСТВ (Обновлено по Приоритету 1 и 2 · 4 Единицы грида) -->
-  <section class="bg-gray-50 border-t border-gray-200 py-20 w-full">
-    <div class="max-w-8xl mx-auto px-4 md:px-8 text-center space-y-12">
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 items-center px-4 md:px-8 py-12 lg:py-16 relative z-10 w-full">
       
-      <!-- Заголовок секции -->
-      <div class="space-y-3">
-        <h2 class="text-3xl md:text-4xl font-black text-brand-dark uppercase tracking-tight">Exploreu els Nostres Pilars</h2>
-        <p class="text-sm md:text-base text-gray-500 font-medium">Trobeu els eixos que defineixen el nostre compromís ferm amb la docència</p>
+      <!-- Левая часть: Приветственный текст -->
+      <div class="lg:col-span-7 space-y-6 text-left relative z-10">
+        <div class="inline-flex items-center gap-2 bg-brand-green/10 text-brand-green px-3 py-1 rounded-sm text-xs font-bold uppercase tracking-wider">
+          Comunitat Docent de la Formació per a l'Ocupació
+        </div>
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-brand-dark uppercase leading-tight">
+          La docència per a l’ocupació mereix veu, reconeixement i comunitat.
+        </h1>
+        <p class="text-base md:text-lg text-gray-600 font-medium max-w-xl leading-relaxed">
+          A ADOCAT unim el col·lectiu docent de Catalunya per compartir necessitats, impulsar propostes, reforçar el reconeixement professional i contribuir a una formació de qualitat.
+        </p>
+        <div class="pt-2 flex flex-wrap gap-4">
+          <a href="/fes_te_socia" class="bg-brand-green hover:bg-brand-hover text-white font-black text-sm uppercase tracking-widest py-4 px-8 rounded-md shadow-md hover:shadow-lg transition-all inline-block cursor-pointer">
+            Fes-te soci/sòcia
+          </a>
+          <a href="/que_fem" class="bg-transparent hover:bg-gray-100 text-brand-dark border border-gray-300 font-black text-sm uppercase tracking-widest py-4 px-8 rounded-md shadow-md hover:shadow-lg transition-all inline-block cursor-pointer">
+            Coneix ADOCAT
+          </a>
+        </div>
       </div>
 
-      <!-- Просторная сетка крупных карточек (Адаптирована под 4 элемента) -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left items-stretch pt-4">
+      <!-- Правая часть: Скрепка + Логотип -->
+      <div class="lg:col-span-5 flex items-center justify-start lg:justify-center -ml-4 lg:ml-0 p-6 lg:p-0 relative rounded-2xl overflow-hidden">
         
-        <!-- Пилон 1: Veu i reconeixement professional (Зеленый) -->
-        <div class="bg-white border border-gray-200 p-6 rounded-xs shadow-xs hover:shadow-md transition-all flex flex-col justify-between relative min-h-95 group">
-          <div class="absolute top-0 left-0 right-0 h-1.5 bg-brand-green"></div>
-          
-          <div class="space-y-4 grow flex flex-col">
-            <span class="text-xs font-black text-brand-green uppercase tracking-widest block">Eix 01</span>
-            
-            <!-- 🟢 Внутренний цветной прямоугольник-вкладка -->
-            <div class="bg-emerald-50/60 border-l-4 border-brand-green p-5 rounded-sm grow flex flex-col justify-center">
-              <h3 class="text-lg font-black text-brand-dark uppercase tracking-tight mb-2">Veu i reconeixement professional</h3>
-              <p class="text-xs md:text-sm text-gray-600 leading-relaxed font-medium">
-                Recollim les necessitats del col·lectiu docent i les transformem en propostes per reforçar el seu reconeixement i les seves condicions professionals.
-              </p>
+        <!-- 🖼️ ФОНОВОЕ ФОТО ДЛЯ МОБИЛЬНЫХ -->
+        <div 
+          class="block lg:hidden absolute inset-0 opacity-15 bg-cover bg-top pointer-events-none rounded-2xl" 
+          style={`background-image: url('${fondoHero.src}');`}
+        ></div>
+
+        <div class="flex items-stretch gap-2 select-none relative z-10">
+          <!-- Картинка-скрепка -->
+          <img 
+            src="/img/logo-adocat.png" 
+            alt="Simbol ADOCAT" 
+            class="h-auto w-60 md:w-80 lg:w-100 object-contain pointer-events-none filter drop-shadow-sm shrink-0"
+            draggable="false"
+          />
+
+          <!-- Текстовый блок логотипа -->
+          <div class="flex flex-col justify-center text-center -ml-15 lg:-ml-25">
+            <span class="text-2xl md:text-3xl lg:text-6xl font-semibold tracking-wide leading-none">
+              <span class="text-[#38bdf8]">AD</span><span class="text-[#f97316]">O</span><span class="text-gray-900">CAT</span>
+            </span>
+
+            <div class="text-lg md:text-2xl lg:text-3xl font-semibold text-gray-900 leading-tight">
+              <p>Associació</p>
+              <p>de Docents</p>
+              <p>Ocupacionals</p>
+              <p>de Catalunya</p>
             </div>
           </div>
 
-          <div class="pt-4 border-t border-gray-100 mt-6">
-            <a href="/eixos_detalls#veu" class="text-xs font-bold uppercase tracking-wider text-brand-dark group-hover:text-brand-green transition-colors flex items-center gap-1">
-              Saber-ne més &rarr;
-            </a>
-          </div>
         </div>
-
-        <!-- Пилон 2: Qualitat i desenvolupament professional (Синий) -->
-        <div class="bg-white border border-gray-200 p-6 rounded-xs shadow-xs hover:shadow-md transition-all flex flex-col justify-between relative min-h-95 group">
-          <div class="absolute top-0 left-0 right-0 h-1.5 bg-[#007cc2]"></div>
-          
-          <div class="space-y-4 grow flex flex-col">
-            <span class="text-xs font-black text-[#007cc2] uppercase tracking-widest block">Eix 02</span>
-            
-            <!-- 🔵 Внутренний цветной прямоугольник-вкладка -->
-            <div class="bg-blue-50/60 border-l-4 border-[#007cc2] p-5 rounded-sm grow flex flex-col justify-center">
-              <h3 class="text-lg font-black text-brand-dark uppercase tracking-tight mb-2">Qualitat i desenvolupament professional</h3>
-              <p class="text-xs md:text-sm text-gray-600 leading-relaxed font-medium">
-                Impulsem l’intercanvi de coneixement i la definició de recursos i activitats que contribueixin a una formació de qualitat.
-              </p>
-            </div>
-          </div>
-
-          <div class="pt-4 border-t border-gray-100 mt-6">
-            <a href="/eixos_detalls#qualitat" class="text-xs font-bold uppercase tracking-wider text-brand-dark group-hover:text-[#007cc2] transition-colors flex items-center gap-1">
-              Recursos &rarr;
-            </a>
-          </div>
-        </div>
-
-        <!-- Пилон 3: Comunitat i participació (Оранжевый) -->
-        <div class="bg-white border border-gray-200 p-6 rounded-xs shadow-xs hover:shadow-md transition-all flex flex-col justify-between relative min-h-95 group">
-          <div class="absolute top-0 left-0 right-0 h-1.5 bg-[#ff5a00]"></div>
-          
-          <div class="space-y-4 grow flex flex-col">
-            <span class="text-xs font-black text-[#ff5a00] uppercase tracking-widest block">Eix 03</span>
-            
-            <!-- 🟠 Внутренний цветной прямоугольник-вкладка -->
-            <div class="bg-orange-50/60 border-l-4 border-[#ff5a00] p-5 rounded-sm grow flex flex-col justify-center">
-              <h3 class="text-lg font-black text-brand-dark uppercase tracking-tight mb-2">Comunitat i participació</h3>
-              <p class="text-xs md:text-sm text-gray-600 leading-relaxed font-medium">
-                Construïm espais de trobada i col·laboració perquè les persones associades puguin compartir experiències i participar en l’associació.
-              </p>
-            </div>
-          </div>
-
-          <div class="pt-4 border-t border-gray-100 mt-6">
-            <a href="/eixos_detalls#comunitat" class="text-xs font-bold uppercase tracking-wider text-brand-dark group-hover:text-[#ff5a00] transition-colors flex items-center gap-1">
-              Participa &rarr;
-            </a>
-          </div>
-        </div>
-
-        <!-- Пилон 4: Diàleg i col·laboració (Новый цвет - Индиго) -->
-        <div class="bg-white border border-gray-200 p-6 rounded-xs shadow-xs hover:shadow-md transition-all flex flex-col justify-between relative min-h-95 group">
-          <div class="absolute top-0 left-0 right-0 h-1.5 bg-indigo-600"></div>
-          
-          <div class="space-y-4 grow flex flex-col">
-            <span class="text-xs font-black text-indigo-600 uppercase tracking-widest block">Eix 04</span>
-            
-            <!-- 🟣 Внутренний цветной прямоугольник-вкладка (Индиго) -->
-            <div class="bg-indigo-50/60 border-l-4 border-indigo-600 p-5 rounded-sm grow flex flex-col justify-center">
-              <h3 class="text-lg font-black text-brand-dark uppercase tracking-tight mb-2">Diàleg i col·laboració</h3>
-              <p class="text-xs md:text-sm text-gray-600 leading-relaxed font-medium">
-                Promovem el diàleg amb centres, entitats i administracions per avançar en objectius compartits.
-              </p>
-            </div>
-          </div>
-
-          <div class="pt-4 border-t border-gray-100 mt-6">
-            <a href="/eixos_detalls#dialeg" class="text-xs font-bold uppercase tracking-wider text-brand-dark group-hover:text-indigo-600 transition-colors flex items-center gap-1">
-              Col·labora &rarr;
-            </a>
-          </div>
-        </div>
-
       </div>
 
-      <!-- Ниже копирайт бренда (Скорректирован на Территориальный охват из Приоритета 1) -->
-      <p class="pt-8 text-xs text-gray-400 font-semibold tracking-wider uppercase">
-        Associació de Docents Ocupacionals de Catalunya — Àmbit territorial: Catalunya
-      </p>
-
     </div>
-  </section>
+  </header>
+  <!-- ========================================== -->
+  <!-- ОСНОВНОЙ КОНТЕНТ СТРАНИЦЫ (MAIN)          -->
+  <!-- ========================================== -->
+  <main class="w-full bg-white">
 
-
-<!-- СЕКЦИЯ: VALORAT PER LA COMUNITAT (ОТЗЫВЫ НА ГЛАВНОЙ, ПОЛНОСТЬЮ ПО ТЗ) -->
-<section id="testimonials" class="w-full bg-[#f4f4f3] py-24 border-t border-stone-200/40">
-  <div class="max-w-6xl mx-auto px-6 font-sans">
-    
-    <!-- Заголовок секции со звездами Ugmonk -->
-    <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
-      <!-- Пять золотых звездочек аккуратно по центру -->
-      <div class="flex justify-center text-amber-400 text-lg tracking-wider">
-        ★★★★★
-      </div>
-      <h2 class="text-3xl font-serif font-normal tracking-tight text-stone-950 sm:text-4xl">
-        Valorat per la Comunitat
-      </h2>
-      <p class="text-sm md:text-base text-stone-500 font-light leading-relaxed">
-        El que diuen els docents que ja formen part d'ADOCAT.
-      </p>
-    </div>
-
-    <!-- Сетка из 4-х карточек отзывов с эффектом плавного всплытия -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <!-- 🎴 ЧЕРЕДУЮЩИЕСЯ БЛОКИ ИНФОРМАЦИИ -->
+    <section class="max-w-7xl mx-auto px-4 md:px-8 py-16 space-y-20">
       
-      <!-- ОТЗЫВ 1: Carlos M. (Очищен от судов и fals autònom по пункту 2 ТЗ) -->
-      <div class="bg-white rounded-xl p-5 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.02)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5 group">
-        <div class="space-y-4">
-          <!-- Фото сотрудника -->
-          <div class="w-full h-48 overflow-hidden rounded-lg bg-stone-100">
-            <img src={user1.src} alt="Carlos M." class="object-top w-full h-full object-cover grayscale-20 group-hover:scale-103 transition-transform duration-500" />
-          </div>
-          <!-- Текст отзыва (Безопасный, про поддержку и стабильность) -->
-          <p class="text-[11px] md:text-xs text-stone-500 font-light leading-relaxed italic text-justify">
-            "Gràcies al suport informatiu i a l'orientació de l'associació, vaig aconseguir entendre millor la meva situació i regularitzar la meva activitat al centre de formació, assolint una major estabilitat professional."
-          </p>
+      <!-- Блок 1: Фото слева, текст справа -->
+      <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div class="w-full h-70 md:h-95 rounded-xs overflow-hidden border border-gray-200 shadow-xs bg-gray-100">
+          <img 
+            src={emmaGrupo.src} 
+            alt="Acció i Recursos Pedagògics - ADOCAT" 
+            class="w-full h-full object-cover object-center"
+          />
         </div>
-        <!-- Автор -->
-        <div class="pt-4 border-t border-stone-50 mt-4">
-          <h4 class="text-xs font-bold text-stone-950 uppercase tracking-wide">Carlos M.</h4>
-          <p class="text-[10px] text-stone-400 font-medium uppercase tracking-wider mt-0.5">Professor de FP</p>
+        <div class="space-y-4 text-left">
+          <span class="text-xs font-black text-brand-green uppercase tracking-widest">Mètode 01</span>
+          <h2 class="text-2xl md:text-3xl font-black text-brand-dark uppercase tracking-tight">Acció i Recursos Pedagògics</h2>
+          <p class="text-sm md:text-base text-gray-600 leading-relaxed font-medium">
+            Unim forces compartint eines didàctiques d'alt nivell. Accedeix a una base de dades comuna creada per i per a docents, amb programacions modulars adaptades a les exigències del SOC i exàmens ja validats per agilitzar el teu dia a dia.
+          </p>
         </div>
       </div>
 
-      <!-- ОТЗЫВ 2: Laura G. -->
-      <div class="bg-white rounded-xl p-5 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.02)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5 group">
-        <div class="space-y-4">
-          <div class="w-full h-48 overflow-hidden rounded-lg bg-stone-100">
-            <img src={user2.src} alt="Laura G." class="object-top w-full h-full object-cover grayscale-20 group-hover:scale-103 transition-transform duration-500" />
-          </div>
-          <p class="text-[11px] md:text-xs text-stone-500 font-light leading-relaxed italic text-justify">
-            "Un espai excel·lent per compartir recursos pedagògics i bones pràctiques. Sentir-se recolzada per una xarxa sòlida de companys i companyes de professió és una eina que no té preu en el nostre dia a dia."
+      <!-- Блок 2: Текст слева, фото справа -->
+      <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div class="space-y-4 text-left order-2 md:order-1">
+          <span class="text-xs font-black text-brand-green uppercase tracking-widest">Mètode 02</span>
+          <h2 class="text-2xl md:text-3xl font-black text-brand-dark uppercase tracking-tight">Presència i Interlocució Legal</h2>
+          <p class="text-sm md:text-base text-gray-600 leading-relaxed font-medium">
+            Establim ponts ferms amb administracions públiques, sindicats i centres per assegurar de forma efectiva que la qualitat es paga. Rebreu assessorament legal especialitzat per fer front a qualsevol incidència contractual o situació de fals autònom.
           </p>
         </div>
-        <div class="pt-4 border-t border-stone-50 mt-4">
-          <h4 class="text-xs font-bold text-stone-950 uppercase tracking-wide">Laura G.</h4>
-          <p class="text-[10px] text-stone-400 font-medium uppercase tracking-wider mt-0.5">Formadora Ocupacional</p>
+        <div class="w-full h-70 md:h-95 rounded-xs overflow-hidden border border-gray-200 shadow-xs bg-gray-100 order-1 md:order-2">
+          <img 
+            src={emmaConversacion.src} 
+            alt="Presència i Interlocució Legal - ADOCAT" 
+            class="w-full h-full object-cover object-center"
+          />
         </div>
       </div>
 
-      <!-- ОТЗЫВ 3: David T. (Очищен от «профсоюзных переговоров» по пункту 1 ТЗ) -->
-      <div class="bg-white rounded-xl p-5 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.02)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5 group">
-        <div class="space-y-4">
-          <div class="w-full h-48 overflow-hidden rounded-lg bg-stone-100">
-            <img src={user3.src} alt="David T." class="object-top w-full h-full object-cover grayscale-20 group-hover:scale-103 transition-transform duration-500" />
+    </section>
+
+    <!-- 📊 ВЕЛИКОЛЕПНЫЕ КРУПНЫЕ ПИЛОНЫ ПРЕИМУЩЕСТВ -->
+    <section class="bg-gray-50 border-t border-gray-200 py-20 w-full">
+      <div class="max-w-8xl mx-auto px-4 md:px-8 text-center space-y-12">
+        
+        <!-- Заголовок секции -->
+        <div class="space-y-3">
+          <h2 class="text-3xl md:text-4xl font-black text-brand-dark uppercase tracking-tight">Exploreu els Nostres Pilars</h2>
+          <p class="text-sm md:text-base text-gray-500 font-medium">Trobeu els eixos que defineixen el nostre compromís ferm amb la docència</p>
+        </div>
+
+        <!-- Просторная сетка крупных карточек (Адаптирована под 4 элемента) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left items-stretch pt-4">
+          
+          <!-- Пилон 1: Veu i reconeixement professional (Зеленый) -->
+          <div class="bg-white border border-gray-200 p-6 rounded-xs shadow-xs hover:shadow-md transition-all flex flex-col justify-between relative min-h-95 group">
+            <div class="absolute top-0 left-0 right-0 h-1.5 bg-brand-green"></div>
+            
+            <div class="space-y-4 grow flex flex-col">
+              <span class="text-xs font-black text-brand-green uppercase tracking-widest block">Eix 01</span>
+              
+              <!-- 🟢 Внутренний цветной прямоугольник-вкладка -->
+              <div class="bg-emerald-50/60 border-l-4 border-brand-green p-5 rounded-sm grow flex flex-col justify-center">
+                <h3 class="text-lg font-black text-brand-dark uppercase tracking-tight mb-2">Veu i reconeixement professional</h3>
+                <p class="text-xs md:text-sm text-gray-600 leading-relaxed font-medium">
+                  Recollim les necessitats del col·lectiu docent i les transformem en propostes per reforçar el seu reconeixement i les seves condicions professionals.
+                </p>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-gray-100 mt-6">
+              <a href="/eixos_detalls#veu" class="text-xs font-bold uppercase tracking-wider text-brand-dark group-hover:text-brand-green transition-colors flex items-center gap-1">
+                Saber-ne més &rarr;
+              </a>
+            </div>
           </div>
-          <p class="text-[11px] md:text-xs text-stone-500 font-light leading-relaxed italic text-justify">
-            "La interlocució d'ADOCAT amb les institucions públiques i els centres és clau. Per fi tenim una associació transparent que trasllada les nostres necessitats reals i demana millores tangibles per a tot el sector."
+
+          <!-- Пилон 2: Qualitat i desenvolupament professional (Синий) -->
+          <div class="bg-white border border-gray-200 p-6 rounded-xs shadow-xs hover:shadow-md transition-all flex flex-col justify-between relative min-h-95 group">
+            <div class="absolute top-0 left-0 right-0 h-1.5 bg-[#007cc2]"></div>
+            
+            <div class="space-y-4 grow flex flex-col">
+              <span class="text-xs font-black text-[#007cc2] uppercase tracking-widest block">Eix 02</span>
+              
+              <!-- 🔵 Внутренний цветной прямоугольник-вкладка -->
+              <div class="bg-blue-50/60 border-l-4 border-[#007cc2] p-5 rounded-sm grow flex flex-col justify-center">
+                <h3 class="text-lg font-black text-brand-dark uppercase tracking-tight mb-2">Qualitat i desenvolupament professional</h3>
+                <p class="text-xs md:text-sm text-gray-600 leading-relaxed font-medium">
+                  Impulsem l’intercanvi de coneixement i la definició de recursos i activitats que contribueixin a una formació de qualitat.
+                </p>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-gray-100 mt-6">
+              <a href="/eixos_detalls#qualitat" class="text-xs font-bold uppercase tracking-wider text-brand-dark group-hover:text-[#007cc2] transition-colors flex items-center gap-1">
+                Recursos &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- Пилон 3: Comunitat i participació (Оранжевый) -->
+          <div class="bg-white border border-gray-200 p-6 rounded-xs shadow-xs hover:shadow-md transition-all flex flex-col justify-between relative min-h-95 group">
+            <div class="absolute top-0 left-0 right-0 h-1.5 bg-[#ff5a00]"></div>
+            
+            <div class="space-y-4 grow flex flex-col">
+              <span class="text-xs font-black text-[#ff5a00] uppercase tracking-widest block">Eix 03</span>
+              
+              <!-- 🟠 Внутренний цветной прямоугольник-вкладка -->
+              <div class="bg-orange-50/60 border-l-4 border-[#ff5a00] p-5 rounded-sm grow flex flex-col justify-center">
+                <h3 class="text-lg font-black text-brand-dark uppercase tracking-tight mb-2">Comunitat i participació</h3>
+                <p class="text-xs md:text-sm text-gray-600 leading-relaxed font-medium">
+                  Construïm espais de trobada i col·laboració perquè les persones associades puguin compartir experiències i participar en l’associació.
+                </p>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-gray-100 mt-6">
+              <a href="/eixos_detalls#comunitat" class="text-xs font-bold uppercase tracking-wider text-brand-dark group-hover:text-[#ff5a00] transition-colors flex items-center gap-1">
+                Participa &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- Пилон 4: Diàleg i col·laboració (Индиго) -->
+          <div class="bg-white border border-gray-200 p-6 rounded-xs shadow-xs hover:shadow-md transition-all flex flex-col justify-between relative min-h-95 group">
+            <div class="absolute top-0 left-0 right-0 h-1.5 bg-indigo-600"></div>
+            
+            <div class="space-y-4 grow flex flex-col">
+              <span class="text-xs font-black text-indigo-600 uppercase tracking-widest block">Eix 04</span>
+              
+              <!-- 🟠 Внутренний цветной прямоугольник-вкладка -->
+              <div class="bg-indigo-50/60 border-l-4 border-indigo-600 p-5 rounded-sm grow flex flex-col justify-center">
+                <h3 class="text-lg font-black text-brand-dark uppercase tracking-tight mb-2">Diàleg i col·laboració</h3>
+                <p class="text-xs md:text-sm text-gray-600 leading-relaxed font-medium">
+                  Promovem el diàleg amb centres, entitats i administracions per avançar en objectius compartits.
+                </p>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-gray-100 mt-6">
+              <a href="/eixos_detalls#dialeg" class="text-xs font-bold uppercase tracking-wider text-brand-dark group-hover:text-indigo-600 transition-colors flex items-center gap-1">
+                Col·labora &rarr;
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="pt-8 text-xs text-gray-400 font-semibold tracking-wider uppercase">
+          Associació de Docents Ocupacionals de Catalunya — Àmbit territorial: Catalunya
+        </p>
+
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ: VALORAT PER LA COMUNITAT (ОТЗЫВЫ НА ГЛАВНОЙ) -->
+    <section id="testimonials" class="w-full bg-[#f4f4f3] py-24 border-t border-stone-200/40">
+      <div class="max-w-6xl mx-auto px-6 font-sans">
+        
+        <!-- Заголовок секции со звездами Ugmonk -->
+        <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+          <!-- Пять золотых звездочек аккуратно по центру -->
+          <div class="flex justify-center text-amber-400 text-lg tracking-wider">
+            ★★★★★
+          </div>
+          <h2 class="text-3xl font-serif font-normal tracking-tight text-stone-950 sm:text-4xl">
+            Valorat per la Comunitat
+          </h2>
+          <p class="text-sm md:text-base text-stone-500 font-light leading-relaxed">
+            El que diuen els docents que ja formen part d'ADOCAT.
           </p>
         </div>
-        <div class="pt-4 border-t border-stone-50 mt-4">
-          <h4 class="text-xs font-bold text-stone-950 uppercase tracking-wide">David T.</h4>
-          <p class="text-[10px] text-stone-400 font-medium uppercase tracking-wider mt-0.5">Docent Tècnic</p>
-        </div>
-      </div>
 
-      <!-- ОТЗЫВ 4: Elena R. -->
-      <div class="bg-white rounded-xl p-5 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.02)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5 group">
-        <div class="space-y-4">
-          <div class="w-full h-48 overflow-hidden rounded-lg bg-stone-100">
-            <img src={user4.src} alt="Elena R." class="object-top w-full h-full object-cover grayscale-20 group-hover:scale-103 transition-transform duration-500" />
+        <!-- Сетка из 4-х карточек отзывов с эффектом плавного всплытия -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <!-- ОТЗЫВ 1: Carlos M. -->
+          <div class="bg-white rounded-xl p-5 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.02)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5 group">
+            <div class="space-y-4">
+              <div class="w-full h-48 overflow-hidden rounded-lg bg-stone-100">
+                <img src={user1.src} alt="Carlos M." class="object-top w-full h-full object-cover grayscale-20 group-hover:scale-103 transition-transform duration-500" />
+              </div>
+              <p class="text-[11px] md:text-xs text-stone-500 font-light leading-relaxed italic text-justify">
+                "Gràcies al suport informatiu i a l'orientació de l'associació, vaig aconseguir entendre millor la meva situació i regularitzar la meva activitat al centre de formació, assolint una major estabilitat professional."
+              </p>
+            </div>
+            <!-- Автор -->
+            <div class="pt-4 border-t border-stone-50 mt-4">
+              <h4 class="text-xs font-bold text-stone-950 uppercase tracking-wide">Carlos M.</h4>
+              <p class="text-[10px] text-stone-400 font-medium uppercase tracking-wider mt-0.5">Professor de FP</p>
+            </div>
           </div>
-          <p class="text-[11px] md:text-xs text-stone-500 font-light leading-relaxed italic text-justify">
-            "Els estudis tècnics i les trobades sectorials que organitzen ens ajuden a entendre els canvis normatius reals, a compartir experiències didàctiques i a defensar de manera conjunta la nostra dignitat professional."
+
+          <!-- ОТЗЫВ 2: Laura G. -->
+          <div class="bg-white rounded-xl p-5 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.02)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5 group">
+            <div class="space-y-4">
+              <div class="w-full h-48 overflow-hidden rounded-lg bg-stone-100">
+                <img src={user2.src} alt="Laura G." class="object-top w-full h-full object-cover grayscale-20 group-hover:scale-103 transition-transform duration-500" />
+              </div>
+              <p class="text-[11px] md:text-xs text-stone-500 font-light leading-relaxed italic text-justify">
+                "Un espai excel·lent per compartir recursos pedagògics i bones pràctiques. Sentir-se recolzada per una xarxa sòlida de companys i companyes de professió és una eina que no té preu en el nostre dia a dia."
+              </p>
+            </div>
+            <div class="pt-4 border-t border-stone-50 mt-4">
+              <h4 class="text-xs font-bold text-stone-950 uppercase tracking-wide">Laura G.</h4>
+              <p class="text-[10px] text-stone-400 font-medium uppercase tracking-wider mt-0.5">Formadora Ocupacional</p>
+            </div>
+          </div>
+
+          <!-- ОТЗЫВ 3: David T. -->
+          <div class="bg-white rounded-xl p-5 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.02)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5 group">
+            <div class="space-y-4">
+              <div class="w-full h-48 overflow-hidden rounded-lg bg-stone-100">
+                <img src={user3.src} alt="David T." class="object-top w-full h-full object-cover grayscale-20 group-hover:scale-103 transition-transform duration-500" />
+              </div>
+              <p class="text-[11px] md:text-xs text-stone-500 font-light leading-relaxed italic text-justify">
+                "La interlocució d'ADOCAT amb les institucions públiques i els centres és clau. Per fi tenim una associació transparent que trasllada les nostres necessitats reals i demana millores tangibles per a tot el sector."
+              </p>
+            </div>
+            <div class="pt-4 border-t border-stone-50 mt-4">
+              <h4 class="text-xs font-bold text-stone-950 uppercase tracking-wide">David T.</h4>
+              <p class="text-[10px] text-stone-400 font-medium uppercase tracking-wider mt-0.5">Docent Tècnic</p>
+            </div>
+          </div>
+
+          <!-- ОТЗЫВ 4: Elena R. -->
+          <div class="bg-white rounded-xl p-5 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.02)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5 group">
+            <div class="space-y-4">
+              <div class="w-full h-48 overflow-hidden rounded-lg bg-stone-100">
+                <img src={user4.src} alt="Elena R." class="object-top w-full h-full object-cover grayscale-20 group-hover:scale-103 transition-transform duration-500" />
+              </div>
+              <p class="text-[11px] md:text-xs text-stone-500 font-light leading-relaxed italic text-justify">
+                "Els estudis tècnics i les trobades sectorials que organitzen ens ajuden a entendre els canvis normatius reals, a compartir experiències didàctiques i a defensar de manera conjunta la nostra dignitat professional."
+              </p>
+            </div>
+            <div class="pt-4 border-t border-stone-50 mt-4">
+              <h4 class="text-xs font-bold text-stone-950 uppercase tracking-wide">Elena R.</h4>
+              <p class="text-[10px] text-stone-400 font-medium uppercase tracking-wider mt-0.5">Consultora i Formadora</p>
+            </div>
+          </div>
+
+        </div> 
+      </div> 
+    </section>
+
+    <!-- 📝 БЛОК КВИЗА (Перенесен во второстепенный блок по Приоритету 1, пункт 3 и Приоритету 2, пункт 8) -->
+    <section class="w-full bg-white border-t border-gray-200 py-16">
+      <div class="max-w-4xl mx-auto px-4 md:px-8 text-center space-y-6">
+        
+        <!-- Иконка или легкий визуальный маркер секции -->
+        <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-brand-green/10 text-brand-green mx-auto">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+          </svg>
+        </div>
+
+        <!-- Заголовок и вводный текст строго по регламенту Эммы -->
+        <div class="space-y-3">
+          <h2 class="text-2xl md:text-3xl font-black text-brand-dark uppercase tracking-tight">
+            Comparteix la teva realitat docent
+          </h2>
+          <p class="text-sm md:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed font-medium">
+            Aquest qüestionari ens ajuda a conèixer les necessitats del col·lectiu i orientar les prioritats d’ADOCAT. No és una valoració jurídica.
           </p>
         </div>
-        <div class="pt-4 border-t border-stone-50 mt-4">
-          <h4 class="text-xs font-bold text-stone-950 uppercase tracking-wide">Elena R.</h4>
-          <p class="text-[10px] text-stone-400 font-medium uppercase tracking-wider mt-0.5">Consultora i Formadora</p>
+
+        <!-- Кнопка прохождения квиза -->
+        <div class="pt-2">
+          <a href="/participa" class="bg-brand-green hover:bg-brand-hover text-white font-black text-sm uppercase tracking-widest py-4 px-8 rounded-md shadow-md hover:shadow-lg transition-all inline-block cursor-pointer">
+            Comença el qüestionari &rarr;
+          </a>
         </div>
+
       </div>
+    </section>
 
-    </div> <!-- Закрытие grid -->
-  </div> <!-- Закрытие контейнера max-w-6xl -->
-</section>
-
-
-  <!-- 📝 БЛОК КВИЗА (Перенесен во второстепенный блок по Приоритету 1, пункт 3 и Приоритету 2, пункт 8) -->
-<section class="w-full bg-white border-t border-gray-200 py-16">
-  <div class="max-w-4xl mx-auto px-4 md:px-8 text-center space-y-6">
-    
-    <!-- Иконка или легкий визуальный маркер секции -->
-    <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-brand-green/10 text-brand-green mx-auto">
-      <svg xmlns="http://w3.org" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-      </svg>
-    </div>
-
-    <!-- Заголовок и вводный текст строго по регламенту Эммы -->
-    <div class="space-y-3">
-      <h2 class="text-2xl md:text-3xl font-black text-brand-dark uppercase tracking-tight">
-        Comparteix la teva realitat docent
-      </h2>
-      <p class="text-sm md:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed font-medium">
-        Aquest qüestionari ens ajuda a conèixer les necessitats del col·lectiu i orientar les prioritats d’ADOCAT. No és una valoració jurídica.
-      </p>
-    </div>
-
-    <!-- Кнопка прохождения квиза -->
-    <div class="pt-2">
-      <a href="/participa" class="bg-brand-green hover:bg-brand-hover text-white font-black text-sm uppercase tracking-widest py-4 px-8 rounded-md shadow-md hover:shadow-lg transition-all inline-block cursor-pointer">
-        Comença el qüestionari &rarr;
-      </a>
-    </div>
-
-  </div>
-</section>
-
-
+  </main>
 </Layout>

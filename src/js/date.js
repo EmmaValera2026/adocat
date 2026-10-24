@@ -1,4 +1,4 @@
-// 📜 CONFIGURACIÓ DE PREGUNTES I SEGMENTACIÓ ADOCAT (Restauració d'IDs originals per a escala i CSS)
+// 📜 CONFIGURACIÓ DE PREGUNTES I SEGMENTACIÓ ADOCAT
 export const QUIZ_QUESTIONS = [
     { 
         id: "trabajas_soc", 
@@ -72,6 +72,6 @@ export const DEMO_USER_PROFILE = {
   provincia: "Girona",
   status: "Persona associada",
   statusClass: "bg-emerald-50 text-brand-green border-emerald-100",
-  idAfiliat: "SO-2026-8492", // Префикс изменен на SO (Soci) для исключения терминов афилиации
+  idAfiliat: "SO-2026-8492", 
   dataAlta: "14/02/2026"
 };

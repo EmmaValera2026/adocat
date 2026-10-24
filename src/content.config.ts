@@ -9,7 +9,7 @@ const noticiesCollection = defineCollection({
     categoryClass: z.string(),
     title: z.string(),
     description: z.string(),
-    img: z.string().optional(), // Добавили .optional() для совместимости со старыми файлами
+    img: z.string().optional(), 
     img_url: z.string().optional(),
     img_file: z.string().optional()
   })

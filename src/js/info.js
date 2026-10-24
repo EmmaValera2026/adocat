@@ -1,12 +1,8 @@
 // src/js/info.js
 import { QuizEngine } from './class.js';
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from './supabaseClient.js'; 
 
-const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
-// 🔒 ГЛОБАЛЬНЫЙ КЭШ ЭЛЕМЕНТОВ DOM — СТРОГО НА САМОМ ВЕРХУ ФАЙЛА
+// 🔒 ГЛОБАЛЬНЫЙ КЭШ ЭЛЕМЕНТОВ DOM
 let DOM_CACHE = {};
 let listaLeads = [];
 let filtroRolActual = 'all';
@@ -59,7 +55,6 @@ const inicializarCacheDOM = () => {
         tbody: document.getElementById('leads-table-body'),
         mobileList: document.getElementById('leads-mobile-list'),
         
-        // Новые метрики под требования Эммы
         metricTotal: document.getElementById('metric-total'),
         metricOnlyReg: document.getElementById('metric-only-reg'),
         metricSocios: document.getElementById('metric-socios'),
@@ -68,7 +63,7 @@ const inicializarCacheDOM = () => {
     };
 };
 
-// ⚡ Обновление метрик панели администратора (Расширенная логика на 5 категорий)
+// ⚡ Обновление метрик панели администратора
 const actualizarMetricasAdmin = (leads) => {
     if (!DOM_CACHE.metricTotal) return;
 
@@ -77,13 +72,13 @@ const actualizarMetricasAdmin = (leads) => {
     // 1. Фильтр: Только регистрация (Поле пустое, либо человек выбрал только инфо-бюллетень — Пункт 4)
     const onlyReg = leads.filter(l => !l.modalidad_implicacion || l.modalidad_implicacion.toLowerCase() === 'boletin' || l.modalidad_implicacion.toLowerCase() === 'butlleti').length;
     
-    // 2. Фильтр: Члены ассоциации (Пункт 1)
+    // 2. Фильтр: Члены ассоциации
     const socios = leads.filter(l => l.modalidad_implicacion && l.modalidad_implicacion.toLowerCase() === 'socio').length;
     
-    // 3. Фильтр: Друзья PADA (Пункт 7)
+    // 3. Фильтр: Друзья PADA
     const padas = leads.filter(l => l.modalidad_implicacion && l.modalidad_implicacion.toLowerCase() === 'pada').length;
     
-    // 4. Фильтр: Актив комиссий и организаций (Пункт 7)
+    // 4. Фильтр: Актив комиссий и организаций
     const colaboradores = leads.filter(l => l.modalidad_implicacion && (l.modalidad_implicacion.toLowerCase() === 'comissio' || l.modalidad_implicacion.toLowerCase() === 'entitat')).length;
 
     // Отрисовываем цифры в интерфейсе
@@ -93,8 +88,6 @@ const actualizarMetricasAdmin = (leads) => {
     if (DOM_CACHE.metricPadas) DOM_CACHE.metricPadas.textContent = padas;
     if (DOM_CACHE.metricColaboradores) DOM_CACHE.metricColaboradores.textContent = colaboradores;
 };
-
-
 
 // ⚡ Универсальный рендеринг таблицы пользователей с поддержкой 5 фильтров
 const renderizarTabla = (filtro, sorting, tbody, mobileList) => {
@@ -106,7 +99,7 @@ const renderizarTabla = (filtro, sorting, tbody, mobileList) => {
     tbody.innerHTML = '';
     mobileList.innerHTML = '';
 
-    // Логика фильтрации под новые состояния (Пункт 4 и 7)
+    // Логика фильтрации под новые состояния
     let leadsProcesados = [...listaLeads];
     if (filtro !== 'all') {
         if (filtro === 'only-reg') {
@@ -134,7 +127,7 @@ const renderizarTabla = (filtro, sorting, tbody, mobileList) => {
         const fechaText = new Date(lead.created_at).toLocaleDateString('ca-ES');
         const provinciaText = lead.provincia || 'Barcelona';
         
-        // Перевод технической роли в красивый инклюзивный текст бейджа (Пункт 13)
+        // Перевод технической роли в красивый инклюзивный текст бейджа
         let rolText = 'SOCI/A';
         let badgeStyle = "bg-emerald-50 text-brand-green border-emerald-100";
         let lineStyle = "bg-brand-green";
@@ -204,11 +197,7 @@ const renderizarTabla = (filtro, sorting, tbody, mobileList) => {
     actualizarMetricasAdmin(listaLeads);
 };
 
-
-
-
-
-// ⚡ Рендеринг таблицы со служебными инцидентами и консультациями (Обновлено под Пункт 9)
+// ⚡ Рендеринг таблицы со служебными инцидентами и консультациями
 const renderizarComplaints = (tbody, mobileList) => {
     const rowTemplate = document.getElementById('table-row-template'); 
     const cardTemplate = document.getElementById('complaint-card-template');
@@ -298,7 +287,7 @@ const renderizarComplaints = (tbody, mobileList) => {
     });
 };
 
-// ⚡ Функция экспорта данных в CSV (Добавлено 5 новых категорий и инклюзивный язык — Пункт 13)
+// ⚡ Функция экспорта данных в CSV
 const ejecutarExportacionCSV = () => {
     if (listaLeads.length === 0) return console.warn('No hi ha dades per exportar.');
     
@@ -332,10 +321,6 @@ const ejecutarExportacionCSV = () => {
     document.body.removeChild(link);
 };
 
-
-
-
-
 // 🔥 ГЛАВНЫЙ СЛУШАТЕЛЬ СТРАНИЦЫ
 document.addEventListener('DOMContentLoaded', () => {
     // Объявляем переменные для вкладок здесь, чтобы они были доступны всему слушателю
@@ -347,7 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnComplaints = document.getElementById('tab-btn-complaints');
     btnSupport = document.getElementById('tab-btn-support');
 
-    // ⚡ Функция отрисовки шагов квиза (Обновлено под Пункт 8 брифа)
+    // ⚡ Функция отрисовки шагов квиза
     const renderizarPasoQuiz = (state) => {
         if (DOM_CACHE.progressBar) DOM_CACHE.progressBar.style.width = `${state.percent}%`;
         if (DOM_CACHE.stepCounter) DOM_CACHE.stepCounter.textContent = `${state.currentIndex + 1} / ${state.totalSteps}`;
@@ -386,10 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-
-
-
-                // 3. Рендеринг карточки текущего вопроса квиза
+        // 3. Рендеринг карточки текущего вопроса квиза
         if (DOM_CACHE.stepsHolder) DOM_CACHE.stepsHolder.innerHTML = ''; 
         if (!state.currentQuestion) return;
 
@@ -426,13 +408,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const activeCard = DOM_CACHE.stepsHolder?.querySelector('.quiz-card');
             if (activeCard) activeCard.classList.remove('opacity-0', '-translate-y-6');
         }, 50);
-    }; // КОНЕЦ функции renderizarPasoQuiz
+    }; // КОНЕЦ функции renderizarPasoQuiz    
 
-
-
-    
-
-        // ⚡ Логика модального окна подтверждения ответа (Прогресс опроса)
+    // ⚡ Логика модального окна подтверждения ответа (Прогресс опроса)
     const abrirModalConfirmacion = (currentProgress) => {
         if (DOM_CACHE.confirmPercent) DOM_CACHE.confirmPercent.textContent = `Has participat en el ${currentProgress}% de l'enquesta`;
         if (DOM_CACHE.confirmBar) DOM_CACHE.confirmBar.style.width = `${currentProgress}%`;
@@ -481,10 +459,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-
-
-
-        // ⚡ Инициализация мотора опросника и подписка на обновления
+    // ⚡ Инициализация мотора опросника и подписка на обновления
     if (DOM_CACHE.quizFlowContainer && DOM_CACHE.questionTemplate) {
         engine = new QuizEngine((state) => renderizarPasoQuiz(state));
         engine.start();
@@ -492,7 +467,7 @@ document.addEventListener('DOMContentLoaded', () => {
         DOM_CACHE.prevQuestionBtn?.addEventListener('click', () => engine.prevStep());
         document.getElementById('go-to-form-btn')?.addEventListener('click', () => revealForm());
         
-        // Перехват формы и отправка данных в режиме запроса интереса (Пункт 4)
+        // Перехват формы и отправка данных в режиме запроса интереса
         document.getElementById('lead-form-adocat')?.addEventListener('submit', async (e) => {
             e.preventDefault();
             const inputProvincia = document.getElementById('lead-provincia');
@@ -517,7 +492,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     setTimeout(() => DOM_CACHE.stepCardSuccess.classList.remove('opacity-0'), 50);
                 }
             } else {
-                // Вместо alert() выводим аккуратную ошибку в интерфейс
                 if (quizErrorEl) {
                     quizErrorEl.textContent = "Hi va haver un problema en processar la teva sol·licitud d'informació. Torna-ho a provar.";
                     quizErrorEl.classList.remove('hidden');
@@ -525,10 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-
-
-
-               // Блок документов: Full de sol·licitud d'informació
+        // Блок документов: Full de sol·licitud d'informació
         document.getElementById('btn-cta-socio')?.addEventListener('click', () => {
             const htmlSocio = `
                 <div class="w-full border-4 border-double border-gray-800 p-8 md:p-10 bg-white font-serif text-gray-900 space-y-6 shadow-sm select-text relative">
@@ -604,11 +575,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('close-cta-modal-btn')?.addEventListener('click', () => closeModal());
         document.getElementById('close-cta-modal-bottom-btn')?.addEventListener('click', () => closeModal());
     }
-
-
-
     
-       // ⚡ ЛОГИКА ПОДПИСКИ НА РАССЫЛКУ НОВОСТЕЙ (Интеграция с сервисом Brevo)
+    // ⚡ ЛОГИКА ПОДПИСКИ НА РАССЫЛКУ НОВОСТЕЙ (Интеграция с сервисом Brevo)
     const ejecutarLogicaSuscripcion = () => {
         const form = document.getElementById('news-letter-form');
         const container = document.getElementById('news-sub-container');
@@ -665,20 +633,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     ejecutarLogicaSuscripcion();
 
-    // ⚡ ОТПРАВКА СЛУЖЕБНЫХ КОНСУЛЬТАЦИЙ И ИНЦИДЕНТОВ
+    // ⚡ ENVIAMENT DE CONSULTES I INCIDÈNCIES (Amb sincronització de contacte)
     const ejecutarLogicaDenuncias = () => {
-
         const form = document.getElementById('complaint-secure-form');
-    const container = document.getElementById('denuncia-form-container');
+        const container = document.getElementById('denuncia-form-container');
 
-    if (!form || !container) {
-        console.error("❌ Error: ¡No se encontró el formulario o contenedor en el DOM!");
-        return;
-    }
+        if (!form || !container) {
+            return;
+        }
 
-    form.addEventListener('submit', async (e) => {
-            e.preventDefault(); 
-       
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();        
 
             const irregularityType = document.getElementById('denuncia-tipus')?.value; 
             const centreName = document.getElementById('denuncia-centre')?.value.trim();
@@ -686,9 +651,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const contactInfo = document.getElementById('denuncia-contacte')?.value.trim();
             const compErrorEl = document.getElementById('complaint-form-error');
 
-             if (!irregularityType || !centreName || !description || !contactInfo) {
+            if (!irregularityType || !centreName || !description || !contactInfo) {
                 alert("Si us plau, omple tots els camps obligatoris.");
-            return;
+                return;
             }
 
             if (compErrorEl) compErrorEl.classList.add('hidden');
@@ -700,6 +665,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             try {
+                // 1. Guardar a Supabase
                 const { data, error } = await supabase
                     .from('complaints')
                     .insert([
@@ -714,9 +680,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (error) {
                     console.error("❌ Error de SUPABASE:", error);
                     throw error;
-                }
+                }    
 
-            
+                // 2. Sincronitzar el correu a Brevo si conté '@' (utilitzant la mateixa ruta /api/subscribe o similar)
+                if (contactInfo && contactInfo.includes('@')) {
+                    try {
+                        await fetch('/api/subscribe', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email: contactInfo })
+                        });
+                    } catch (syncErr) {
+                        console.warn("⚠️ Avís de sincronització de contacte:", syncErr);
+                    }
+                }
 
                 container.innerHTML = `
                     <div class="text-center py-12 space-y-4 animate-fade-in text-brand-dark">
@@ -728,26 +705,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 `;
 
-                } catch (err) {
-                    console.error('❌ Error de tiempo de ejecución:', err);
-                        if (compErrorEl) {
-                        compErrorEl.textContent = "S'ha produït un error en processar la sol·licitud: " + (err.message || err);
-                        compErrorEl.classList.remove('hidden');
-                    }
-                    if (submitBtn) {
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = "Enviar formulari de contacte &rarr;";
-                    }
+            } catch (err) {
+                console.error('❌ Error de temps d\'execució:', err);
+                if (compErrorEl) {
+                    compErrorEl.textContent = "S'ha produït un error en processar la sol·licitud: " + (err.message || err);
+                    compErrorEl.classList.remove('hidden');
                 }
-            });
-        };
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "Enviar formulari de contacte &rarr;";
+                }
+            }
+        });
+    };
 
-    // Вызов
     ejecutarLogicaDenuncias();
-
-
-
-
+    
     // ⚡ Управление окном входа администратора
     const abrirModalAdmin = (e) => {
         const mobileMenu = document.getElementById('mobile-menu');
@@ -817,11 +790,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('submit-password-btn')?.addEventListener('click', verificarPassword);
     DOM_CACHE.passwordInput?.addEventListener('keydown', (e) => { if (e.key === 'Enter') verificarPassword(); });
 
-
-
-
-   // ⚡ Просмотр детальных ответов лида из таблицы (Очищено от агрессивного капса по Пункту 12)
-        // ⚡ Просмотр детальных ответов лида из таблицы (Очищено от агрессивного капса по Пункту 12)
+    // ⚡ Просмотр детальных ответов лида из таблицы
     const abrirExpedienteRespuestas = async (dbId) => {
         const lead = listaLeads.find(l => String(l.id) === String(dbId));
         if (!lead) return;
@@ -889,7 +858,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('close-answers-btn')?.addEventListener('click', cerrarExpediente);
     document.getElementById('close-answers-bottom-btn')?.addEventListener('click', cerrarExpediente);
 
-    // Слушатели кнопок фильтров (Обновлены размеры под новые 6 кнопок из HTML по Пункту 7 и 13)
+    // Слушатели кнопок фильтров
     document.querySelectorAll('.filter-role-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             document.querySelectorAll('.filter-role-btn').forEach(b => {
@@ -908,7 +877,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-
         document.getElementById('sort-leads-select')?.addEventListener('change', function() {
         criterioSortActual = this.value;
         renderizarTabla(filtroRolActual, criterioSortActual, DOM_CACHE.tbody, DOM_CACHE.mobileList);
@@ -916,7 +884,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('export-csv-btn')?.addEventListener('click', ejecutarExportacionCSV);
     
-    // ⚡ Переключение табов администратора (Incidències / Support) - Обновлено под Пункт 9
+    // ⚡ Переключение табов администратора (Incidències / Support)
     btnComplaints = document.getElementById('tab-btn-complaints');
     btnSupport = document.getElementById('tab-btn-support');
 
@@ -924,7 +892,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (pestañaActual === nuevaPestaña) return;
         pestañaActual = nuevaPestaña;
 
-        // ИСПРАВЛЕНО: селектор синхронизирован с верным ID #modal-card вашего Astro-компонента
+        // Селектор синхронизирован с верным ID #modal-card вашего Astro-компонента
         const headerstr = document.querySelector('#modal-card table thead tr');
 
         [btnComplaints, btnSupport].forEach(b => {
@@ -937,7 +905,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (pestañaActual === 'leads') {
             if (headerstr) {
-                // Изменяем "Rol Actiu" на "Modalitat d'interès" строчными буквами по Пункту 4 и 12
                 headerstr.innerHTML = `
                     <th class="p-4">Data</th>
                     <th class="p-4">Nom i província</th>
@@ -955,7 +922,6 @@ document.addEventListener('DOMContentLoaded', () => {
             btnComplaints?.classList.replace('border-gray-200', 'border-brand-green');
 
             if (headerstr) {
-                // Очищаем заголовки колонок от агрессивного капса и старых терминов по Пункту 9 и 12
                 headerstr.innerHTML = `
                     <th class="p-4">Data</th>
                     <th class="p-4">Entitat o centre</th>
@@ -968,7 +934,6 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const { data, error } = await supabase.from('complaints').select('*').order('created_at', { ascending: false });
                 if (error) throw error;
-                // Маркер обновлен на инклюзивный CONSULTA DOCENT: для точной фильтрации
                 listaComplaints = data.filter(c => !c.centre_name || !c.centre_name.includes('CONSULTA DOCENT:'));
                 renderizarComplaints(DOM_CACHE.tbody, DOM_CACHE.mobileList);
             } catch (err) { console.error('Database connection error:', err.message); }
@@ -978,7 +943,6 @@ document.addEventListener('DOMContentLoaded', () => {
             btnSupport?.classList.replace('border-gray-200', 'border-brand-green');
 
             if (headerstr) {
-                // Приводим вкладку поддержки к уважительному и аккуратному строчному стилю
                 headerstr.innerHTML = `
                     <th class="p-4">Data</th>
                     <th class="p-4">Nom de la persona</th>
@@ -991,7 +955,6 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const { data, error } = await supabase.from('complaints').select('*').order('created_at', { ascending: false });
                 if (error) throw error;
-                // Маркер обновлен на инклюзивный CONSULTA DOCENT: для точной фильтрации
                 listaComplaints = data.filter(c => c.centre_name && c.centre_name.includes('CONSULTA DOCENT:'));
                 renderizarComplaints(DOM_CACHE.tbody, DOM_CACHE.mobileList);
             } catch (err) { console.error('Database connection error:', err.message); }
@@ -1001,13 +964,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnComplaints?.addEventListener('click', () => cambiarPestaña('complaints'));
     btnSupport?.addEventListener('click', () => cambiarPestaña('support'));
 
-
-
-
-
-
-
-        // Просмотр детального описания обращений и консультаций (Обновлено под Пункт 9, 12 и 13)
+    // Просмотр детального описания обращений и консультаций
     const abrirDetalleDenuncia = (compId) => {
         const comp = listaComplaints.find(c => String(c.id) === String(compId));
         if (!comp) return;
@@ -1019,7 +976,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!container || !modal || !card) return;
 
-        // Маркер заменен на инклюзивный CONSULTA DOCENT: для полной синхронизации
         const esConsulta = comp.centre_name && comp.centre_name.includes('CONSULTA DOCENT:');
 
         if (infoHeader) {
@@ -1027,12 +983,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const nombreLimpio = comp.centre_name.replace('CONSULTA DOCENT:', '').trim();
                 infoHeader.textContent = `Consulta de la persona docent: ${nombreLimpio}`;
             } else {
-                // Полностью исключаем слово "DENÚNCIA" из заголовка карточки просмотра
                 infoHeader.textContent = `Incidència o consulta: ${comp.centre_name || 'Centre Desconegut'}`;
             }
         }
 
-        // Traducció i normalització textual amable segons el Punt 9 i Punt 12 del brif
         const labelType = esConsulta ? "Motiu de la consulta" : "Motiu del contacte";
         const labelDesc = esConsulta ? "Detalls de la consulta" : "Descripció de la situació aportada";
         const labelContact = esConsulta ? "Dades de resposta per al seguiment" : "Dades de contacte facilitades";

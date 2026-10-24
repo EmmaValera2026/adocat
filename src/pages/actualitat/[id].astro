@@ -20,20 +20,32 @@ const { Content } = await render(post);
 ---
 
 <Layout title={`${post.data.title} - ADOCAT`} description={post.data.description}>
+  <!-- ========================================== -->
+  <!-- ОСНОВНОЙ КОНТЕНТ СТАТЬИ (MAIN)             -->
+  <!-- ========================================== -->
   <main class="w-full bg-white min-h-screen pb-20 pt-23 px-4 md:px-8">
     <div class="max-w-3xl mx-auto space-y-6 text-left">
+      
+      <!-- ========================================== -->
+      <!-- 1. КНОПКА ВОЗВРАТА НАЗАД                   -->
+      <!-- ========================================== -->
       <div>
-        <!-- Путь обновлен на /actualitat для предотвращения ошибки 404 -->
         <a href="/actualitat" class="text-xs font-black uppercase tracking-widest text-gray-400 hover:text-brand-green transition-colors inline-flex items-center gap-1.5">
           &larr; Tornar a notícies
         </a>
       </div>
 
+      <!-- ========================================== -->
+      <!-- 2. МЕТАДАННЫЕ (КАТЕГОРИЯ И ДАТА)            -->
+      <!-- ========================================== -->
       <div class="flex items-center gap-3 text-xs font-bold uppercase tracking-wider pt-2">
         <span class={`px-2 py-0.5 border rounded-xs ${post.data.categoryClass}`}>{post.data.category}</span>
         <span class="text-gray-400 font-medium">{post.data.date}</span>
       </div>
       
+      <!-- ========================================== -->
+      <!-- 3. ЗАГОЛОВОК И ОПИСАНИЕ                    -->
+      <!-- ========================================== -->
       <h1 class="text-3xl md:text-4xl font-black tracking-tight text-brand-dark uppercase leading-tight">
         {post.data.title}
       </h1>
@@ -42,13 +54,20 @@ const { Content } = await render(post);
         {post.data.description}
       </p>
 
+      <!-- ========================================== -->
+      <!-- 4. ИЗОБРАЖЕНИЕ СТАТЬИ                      -->
+      <!-- ========================================== -->
       <div class="w-full max-h-96 aspect-video overflow-hidden rounded-xs border border-gray-200 shadow-xs my-4">
         <img src={post.data.img_url || post.data.img_file || post.data.img || defaultLogo.src} alt={post.data.title} class="w-full h-full object-cover" />
       </div>
 
+      <!-- ========================================== -->
+      <!-- 5. ТЕКСТОВОЕ СОДЕРЖИМОЕ (MARKDOWN CONTENT)  -->
+      <!-- ========================================== -->
       <div class="prose font-serif text-gray-800 text-base md:text-lg leading-relaxed space-y-4 text-justify markdown-content pt-4">
         <Content />
       </div>
+
     </div>
   </main>
 </Layout>

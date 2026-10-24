@@ -1,23 +1,13 @@
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from './supabaseClient.js';
 
-const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
-
-let supabase;
-// Инклюзивное дефолтное имя по Приоритету 3 (Пункт 13)
+// Инклюзивное дефолтное имя по Приоритету
 let currentUserName = "DOCENT DE LA COMUNITAT"; 
 
 if (typeof window !== 'undefined') {
-  // 1. Инициализируем клиент Supabase один раз в браузере
-  if (!window.supabaseClient) {
-    window.supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
-  }
-  supabase = window.supabaseClient;
-
   // 2. Ждем, пока браузер полностью построит HTML-дерево (DOM)
   document.addEventListener('DOMContentLoaded', () => {
 
-    // 3. Объявляем ВСЕ константы DOM один раз в самом верху. Теперь они яркие и активные!
+    // 3. Объявляем ВСЕ константы DOM один раз в самом верху.
     const authContainer = document.getElementById('auth-container');
     const profileContainer = document.getElementById('profile-container');
     const userWelcome = document.getElementById('user-welcome');
@@ -58,7 +48,7 @@ if (typeof window !== 'undefined') {
       }
     };
 
-        // Выносим активацию всех внутренних кнопок кабинета в изолированную функцию
+    // Выносим активацию всех внутренних кнопок кабинета в изолированную функцию
     const initCabinetButtons = () => {
       const btnSocio = document.getElementById('btn-cta-socio');
       const btnCertificat = document.getElementById('btn-cta-colaborar');
@@ -116,9 +106,7 @@ if (typeof window !== 'undefined') {
         openLocalModal(htmlSocio);
       });
 
-
-
-            // Кнопка 2: Informe d'activitat (Полная оригинальная версия)
+      // Кнопка 2: Informe d'activitat (Полная оригинальная версия)
       btnCertificat?.addEventListener('click', () => {
         const htmlCertificat = `
           <div class="w-full border-4 border-double border-gray-800 p-8 md:p-10 bg-white font-serif text-gray-900 space-y-6 shadow-sm relative text-left max-w-2xl mx-auto leading-relaxed text-xs md:text-sm">
@@ -203,9 +191,7 @@ if (typeof window !== 'undefined') {
         openLocalModal(htmlCertificat);
       });
 
-
-
-          // Кнопка 3: Sol·licitud de contacte i propostes a l'equip (С заменой alert на локальную ошибку)
+      // Кнопка 3: Sol·licitud de contacte i propostes a l'equip
       btnNotificar?.addEventListener('click', (e) => {
         e.preventDefault();
         const htmlSupport = `
@@ -230,7 +216,6 @@ if (typeof window !== 'undefined') {
                 <textarea id="support-message" required rows="4" class="w-full p-3 bg-gray-50 border border-gray-200 text-sm font-semibold rounded-xl focus:outline-none focus:border-brand-dark focus:bg-white transition-all" placeholder="Comparteix una consulta, necessitat o incidència relacionada amb la teva activitat docent..."></textarea>
               </div>
 
-              <!-- ЛОКАЛЬНЫЙ ТЕКСТ ОШИБКИ ВНУТРИ МОДАЛКИ (ВМЕСТО ALERT) -->
               <div id="support-error" class="hidden text-xs text-red-600 font-bold bg-red-50 border border-red-200 p-3 rounded-xl text-center my-2 animate-fade-in"></div>
 
               <button type="submit" id="support-submit-btn" class="w-full bg-brand-dark hover:bg-black text-white font-black text-xs uppercase tracking-widest py-3.5 rounded-xl transition-all cursor-pointer shadow-md text-center">
@@ -300,9 +285,7 @@ if (typeof window !== 'undefined') {
       });
     }; // КОНЕЦ ИЗОЛИРОВАННОЙ ФУНКЦИИ initCabinetButtons
 
-
-
-      // 1. Проверка текущей сессии при загрузке страницы
+    // 1. Проверка текущей сессии при загрузке страницы
     supabase.auth.getSession().then(({ data: { session } }) => {
       actualizarInterfaz(session);
     });
@@ -378,10 +361,7 @@ if (typeof window !== 'undefined') {
     closeCompteModal?.addEventListener('click', closeLocalModalFunc);
     compteModalBg?.addEventListener('click', closeLocalModalFunc);
 
-
-
-
-      // 5.1 Обработчик генерации документа Sol·licitud d'informació
+    // 5.1 Обработчик генерации документа Sol·licitud d'informació
     document.getElementById('btn-cta-socio')?.addEventListener('click', () => {
       const htmlSocio = `
         <div class="w-full border-4 border-double border-gray-800 p-6 md:p-8 bg-white font-serif text-gray-900 space-y-6 shadow-sm select-text relative">
@@ -425,8 +405,7 @@ if (typeof window !== 'undefined') {
       openLocalModal(htmlCertificat);
     });
 
-
-        // 6. Логика формы регистрации аккаунта и интереса (БЕЗ ОШИБОК И С АВТОВХОДОМ)
+    // 6. Логика формы регистрации с мгновенным открытием личного кабинета
     if (registerFormAdocat) {
       registerFormAdocat.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -453,8 +432,8 @@ if (typeof window !== 'undefined') {
           return;
         }
 
-        // Валидация 2: сложность пароля (ИСПРАВЛЕНО: убран ломающий символ \)
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@\(!\%*?&._-]).{8,}\$/;
+        // Валидация 2: сложность пароля 
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@\(!\%*?&._-]).{8,}$/;
         if (!passwordRegex.test(passwordVal)) {
           if (registerError) {
             registerError.textContent = "La contrasenya no compleix els requisits de seguretat mencionats.";
@@ -469,7 +448,7 @@ if (typeof window !== 'undefined') {
         }
 
         try {
-          // А. Регистрация в Supabase
+          // А. Регистрация в Supabase Auth
           const { data: authData, error: authError } = await supabase.auth.signUp({
             email: emailVal,
             password: passwordVal,
@@ -494,7 +473,7 @@ if (typeof window !== 'undefined') {
               created_at: new Date().toISOString()
             }
           ]);
-          if (dbError) throw dbError;
+          if (dbError && !dbError.message.includes('duplicate')) throw dbError;
 
           // В. Передаем лид в Brevo
           await fetch('/api/subscribe', {
@@ -503,16 +482,10 @@ if (typeof window !== 'undefined') {
             body: JSON.stringify({ email: emailVal, nombre: nameVal, telefono: phoneVal, role: roleVal })
           });
 
-          console.log('Account created successfully. Forcing login...');
+          console.log('Account created and Brevo updated. Opening cabinet directly...');
 
-          // Г. Автоматический бесшовный вход
-          const { data: loginData, error: loginError } = await supabase.auth.signInWithPassword({
-            email: emailVal,
-            password: passwordVal
-          });
-
-          if (loginError) throw loginError;
-          console.log('Auto-login successful:', loginData);
+          // Г. Мгновенно открываем личный кабинет по полученной сессии
+          actualizarInterfaz(authData.session);
 
         } catch (err) {
           console.error('Registration processing error:', err.message);
@@ -521,7 +494,6 @@ if (typeof window !== 'undefined') {
             registerError.classList.remove('hidden');
           }
         } finally {
-          // ИСПРАВЛЕНО: убрана ломающая проверка лишней кнопки
           if (submitBtnReg) {
             submitBtnReg.disabled = false;
             submitBtnReg.textContent = "Enviar sol·licitud ➔";
@@ -529,7 +501,7 @@ if (typeof window !== 'undefined') {
         }
       });
     }
-
+    
     // 7. ИНИЦИАЛИЗАЦИЯ ИНТЕРАКТИВНЫХ ГЛАЗИКОВ (БЕЗОПАСНАЯ ВЕРСИЯ)
     const togglePasswordButtons = document.querySelectorAll('.toggle-password');
     

@@ -1,5 +1,5 @@
 import { defineConfig } from 'astro/config';
-import tailwindcss from '@tailwindcss/vite'; // 🔒 Полностью сохраняем ваш Tailwind v4
+import tailwindcss from '@tailwindcss/vite'; 
 import sitemap from '@astrojs/sitemap';
 import vitePWA from '@vite-pwa/astro'; // 📱 Подключаем мобильный PWA-плагин
 import netlify from '@astrojs/netlify'; // 🚀 Подключаем серверный адаптер Netlify
@@ -21,7 +21,7 @@ export default defineConfig({
         name: 'ADOCAT — Associació de Docents',
         short_name: 'ADOCAT',
         description: "Plataforma oficial de l'Associació de Docents de Formació Ocupacional de Catalunya",
-        theme_color: '#15803d', // Фирменный зеленый цвет бренда ADOCAT
+        theme_color: '#15803d', 
         background_color: '#ffffff',
         display: 'standalone', // Запуск приложения во весь экран без рамок браузера
         start_url: '/',
@@ -46,6 +46,6 @@ export default defineConfig({
   ],
 
   vite: {
-    plugins: [tailwindcss()] // 🔒 Ваш плагин Tailwind v4 работает без изменений
+    plugins: [tailwindcss()] 
   },
 });

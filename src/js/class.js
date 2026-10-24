@@ -1,9 +1,5 @@
-import { createClient } from '@supabase/supabase-js';
 import { QUIZ_QUESTIONS } from './date.js'; 
-
-const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+import { supabase } from './supabaseClient.js';
 
 export class QuizEngine {
     constructor(onStateChange) {
@@ -46,7 +42,7 @@ export class QuizEngine {
         const totalSteps = QUIZ_QUESTIONS.length;
         const currentQuestion = this.currentIndex < totalSteps ? QUIZ_QUESTIONS[this.currentIndex] : null;
         
-        // Переводим внутреннее состояние в нейтральный информационный режим по Пункту 8 брифа
+        // Переводим внутреннее состояние в нейтральный информационный режим 
         return {
             currentIndex: this.currentIndex,
             totalSteps: totalSteps,
@@ -76,7 +72,7 @@ export class QuizEngine {
 
     saveLeadToDatabase = async (userData) => {
         try {
-            // 1. Ваша оригинальная авторегистрация пользователя в Supabase
+            // 1. Оригинальная авторегистрация пользователя в Supabase
             if (userData.email && userData.telefono.length >= 6) {
                 try {
                     await supabase.auth.signUp({
@@ -95,7 +91,7 @@ export class QuizEngine {
                 }
             }
 
-            // 2. Ваша original прямая запись анкеты и контактов в таблицу leads
+            // 2. Оriginal прямая запись анкеты и контактов в таблицу leads
             const { error } = await supabase
                 .from('leads')
                 .insert([
@@ -112,7 +108,7 @@ export class QuizEngine {
 
             if (error) throw error;
 
-            // 3. Добавляем параллельную интеграцию с Brevo без удаления старого кода (Пункт 14)
+            // 3. Добавляем параллельную интеграцию с Brevo без удаления старого кода
             try {
                 await fetch('/api/subscribe', {
                     method: 'POST',

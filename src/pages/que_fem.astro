@@ -8,7 +8,6 @@ import photo4 from '../imagen/photo4.avif';
 import photo5 from '../imagen/photo5.avif';
 import photo6 from '../imagen/photo6.avif';
 import emma from '../imagen/emma.baner.jpg';
-
 ---
 
 <Layout 
@@ -17,77 +16,77 @@ import emma from '../imagen/emma.baner.jpg';
 >
   <main class="w-full bg-white min-h-screen pb-20">
 
-  <section class="w-full bg-[#f4f4f3] border-t border-stone-200/40 pt-12 pb-16 lg:pt-16 lg:pb-24">
-  <!-- Ограничиваем максимальную ширину и центрируем, чтобы появилось расстояние от краев экрана -->
-  <!-- ХЛЕБНЫЕ КРОШКИ (СТРЕЛКИ НАВИГАЦИИ КАК НА ФОТО SMЕG) -->
-<nav class="w-full max-w-6xl mx-auto px-12 pb-10 text-left" aria-label="Breadcrumb">
-  <ol class="inline-flex items-center space-x-1 md:space-x-2 text-[16px] font-sans tracking-wider uppercase text-stone-400">
-    <!-- Главная -->
-    <li class="inline-flex items-center">
-      <a href="/" class="hover:text-stone-900 transition-colors">Inici</a>
-    </li>
-   
-    <!-- Текущая страница -->
-    <li class="flex items-center space-x-1 md:space-x-2">
-      <span class="text-stone-300 font-light">/</span>
-      <span class="text-stone-600 font-medium select-none">QUE FEM</span>
-    </li>
-  </ol>
-</nav>
+    <!-- ========================================== -->
+    <!-- СЕКЦИЯ: ОБРАЩЕНИЕ ПРЕЗИДЕНТА / HERO       -->
+    <!-- ========================================== -->
+    <section class="w-full bg-[#f4f4f3] border-t border-stone-200/40 pt-12 pb-16 lg:pt-16 lg:pb-24">
+      <!-- ХЛЕБНЫЕ КРОШКИ -->
+      <nav class="w-full max-w-6xl mx-auto px-12 pb-10 text-left" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-2 text-[16px] font-sans tracking-wider uppercase text-stone-400">
+          <!-- Главная -->
+          <li class="inline-flex items-center">
+            <a href="/" class="hover:text-stone-900 transition-colors">Inici</a>
+          </li>
+         
+          <!-- Текущая страница -->
+          <li class="flex items-center space-x-1 md:space-x-2">
+            <span class="text-stone-300 font-light">/</span>
+            <span class="text-stone-600 font-medium select-none">QUE FEM</span>
+          </li>
+        </ol>
+      </nav>
 
-  <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
-    
-    <!-- Используем сетку с увеличенным расстоянием (gap-12 / lg:gap-20) между фото и текстом -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-      
-      <!-- ЛЕВАЯ ЧАСТЬ: Фото Эммы с фиксированным изящным пропорциональным соотношением (aspect-3/4) -->
-      <div class="lg:col-span-5 w-full">
-        <div class="aspect-3/4 w-full overflow-hidden rounded-sm shadow-[0_15px_40px_rgba(0,0,0,0.04)] border border-stone-200/30 bg-stone-100">
-          <img 
-            src={emma.src} 
-            alt="Presidenta d'ADOCAT" 
-            class="w-full h-full object-cover object-center contrast-95 grayscale-10"
-          />
+      <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
+       
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          
+          <!-- ЛЕВАЯ ЧАСТЬ: Фото Эммы с фиксированным изящным пропорциональным соотношением (aspect-3/4) -->
+          <div class="lg:col-span-5 w-full">
+            <div class="aspect-3/4 w-full overflow-hidden rounded-sm shadow-[0_15px_40px_rgba(0,0,0,0.04)] border border-stone-200/30 bg-stone-100">
+              <img 
+                src={emma.src} 
+                alt="Presidenta d'ADOCAT" 
+                class="w-full h-full object-cover object-center contrast-95 grayscale-10"
+              />
+            </div>
+          </div>
+
+          <!-- ПРАВАЯ ЧАСТЬ: Текст сдвинут вправо за счет колонок и имеет отступы -->
+          <div class="lg:col-span-7 space-y-6 lg:pl-4">
+            <span class="text-[10px] font-bold tracking-[0.25em] uppercase text-[#21bf63] block">
+              Un missatge de la nostra presidenta
+            </span>
+            
+            <h2 class="text-3xl sm:text-4xl font-serif font-normal tracking-tight text-stone-900 leading-tight">
+              Treballant pels detalls que importen
+            </h2>
+            
+            <div class="text-sm text-stone-600 font-light leading-relaxed space-y-4 max-w-xl">
+              <p>
+                Vam fundar ADOCAT amb una idea molt clara al cap: la formació ocupacional i contínua a Catalunya no pot avançar si es construeix sobre la precarietat d'aquells que la imparteixen. Vam començar com un grup reduït de companys compartint inquietuds, sense grans recursos, però amb la ferma convicció que les coses podien millorar.
+              </p>
+              <p>
+                Avui dia, seguim analitzant cada normativa, defensant els interessos del col·lectiu i promovent la dignitat de la nostra profession como a associació. Si tu també creus que la vertadera qualitat educativa es reconeix i es respecta, estàs al lloc correcte.
+              </p>
+            </div>
+
+            <!-- Подпись -->
+            <div class="pt-2">
+              <p class="text-sm font-serif italic text-stone-900">Emma Valera</p>
+              <p class="text-[11px] font-medium tracking-wider uppercase text-stone-400">Presidenta d'ADOCAT i Formadora Ocupacional</p>
+            </div>        
+          </div>
+
         </div>
       </div>
-
-      <!-- ПРАВАЯ ЧАСТЬ: Текст сдвинут вправо за счет колонок и имеет отступы -->
-      <div class="lg:col-span-7 space-y-6 lg:pl-4">
-        <!-- ТРЕБОВАНИЕ 13: Женский род -->
-        <span class="text-[10px] font-bold tracking-[0.25em] uppercase text-[#21bf63] block">
-          Un missatge de la nostra presidenta
-        </span>
-        
-        <!-- ТРЕБОВАНИЕ 3: Новый заголовок -->
-        <h2 class="text-3xl sm:text-4xl font-serif font-normal tracking-tight text-stone-900 leading-tight">
-          Treballant pels detalls que importen
-        </h2>
-        
-        <!-- ТРЕБОВАНИЕ 1, 2, 13: Обновленный текст ассоциации на чистом каталанском -->
-        <div class="text-sm text-stone-600 font-light leading-relaxed space-y-4 max-w-xl">
-          <p>
-            Vam fundar ADOCAT amb una idea molt clara al cap: la formació ocupacional i contínua a Catalunya no pot avançar si es construeix sobre la precarietat d'aquells que la imparteixen. Vam començar com un grup reduït de companys compartint inquietuds, sense grans recursos, però amb la ferma convicció que les coses podien millorar.
-          </p>
-          <p>
-            Avui dia, seguim analitzant cada normativa, defensant els interessos del col·lectiu i promovent la dignitat de la nostra profession como a associació. Si tu també creus que la vertadera qualitat educativa es reconeix i es respecta, estàs al lloc correcte.
-          </p>
-        </div>
-
-        <!-- Подпись -->
-        <div class="pt-2">
-          <p class="text-sm font-serif italic text-stone-900">Emma Valera</p>
-          <p class="text-[11px] font-medium tracking-wider uppercase text-stone-400">Presidenta d'ADOCAT i Formadora Ocupacional</p>
-        </div>        
-      </div>
-
-    </div>
-  </div>
-</section>
+    </section>
     
-    <!-- СЕКЦИЯ 01: QUI SOM (Белый фон, центрируем контент через внутренний div) -->
-    <section class="max-w-4xl mx-auto px-4 md:px-8 mb-24 mt-24">
+    <!-- ========================================== -->
+    <!-- СЕКЦИЯ 01: QUI SOM                         -->
+    <!-- ========================================== -->
+    <section class="max-w-4xl mx-auto px-4 md:px-8 mb-12 md:mb-24 mt-12 md:mt-24">
       
-      <!-- Тут ваш предыдущий готовый код Блока 01 (Qui som?) -->
+      <!-- Готовый код Блока 01 (Qui som?) -->
       <div class="space-y-12 pb-12 border-b border-gray-100">
         <div class="space-y-1">
           <span class="text-xs font-normal text-gray-400 uppercase tracking-widest block">01 / IDENTITAT</span>
@@ -123,241 +122,241 @@ import emma from '../imagen/emma.baner.jpg';
 
     </section>
 
+    <!-- ========================================== -->
+    <!-- СЕКЦИЯ 02: QUÈ FEM                       -->
+    <!-- ========================================== -->
+    <section id="what-we-do" class="w-full bg-[#f4f4f3] py-12 md:py-24 border-t border-b border-stone-200/40">
+      <div class="max-w-340 mx-auto px-6"> <!-- Увеличили контейнер, чтобы 5 карточек встали просторно -->
+        
+        <!-- Заголовок секции -->
+        <div class="text-center max-w-2xl mx-auto mb-20">
+          <span class="text-[11px] font-bold tracking-[0.2em] uppercase text-stone-400 block mb-4">02 / Activitat</span>
+          <h2 class="text-3xl font-serif font-normal tracking-tight text-stone-950 sm:text-4xl mb-6">Què fem?</h2>
+          <p class="text-lg text-stone-600 font-light leading-relaxed max-w-xl mx-auto">
+            Treballem dia a dia per defensar els interessos del col·lectiu de professionals de la formació ocupacional i contínua a Catalunya.
+          </p>
+        </div>
 
-    <!-- SECCIÓ: QUÈ FEM (ESTIL UGMONK REAL AMB 5 FOTOS I ELS TEUS PUNTS) -->
-<section id="what-we-do" class="w-full bg-[#f4f4f3] py-24 border-t border-b border-stone-200/40">
-  <div class="max-w-340 mx-auto px-6"> <!-- Увеличили контейнер, чтобы 5 карточек встали просторно -->
-    
-    <!-- Заголовок секции -->
-    <div class="text-center max-w-2xl mx-auto mb-20">
-      <span class="text-[11px] font-bold tracking-[0.2em] uppercase text-stone-400 block mb-4">02 / Activitat</span>
-      <h2 class="text-3xl font-serif font-normal tracking-tight text-stone-950 sm:text-4xl mb-6">Què fem?</h2>
-      <p class="text-lg text-stone-600 font-light leading-relaxed max-w-xl mx-auto">
-        Treballem dia a dia per defensar els interessos del col·lectiu de professionals de la formació ocupacional i contínua a Catalunya.
-      </p>
-    </div>
-
-    <!-- Идеальная сетка: 1 колонка на мобильных, 2 на планшетах, 3 на средних экранах и 5 на больших -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-6">
-      
-      <!-- Карточка 1: Veu i condicions professionals -->
-      <div class="flex flex-col group">
-        <div class="bg-white rounded-xl p-4 h-104 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.03)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5">
-          <div class="w-full h-40 overflow-hidden rounded-lg bg-stone-100 mb-4">
-            <img src={photo1.src} alt="Veu" class="w-full h-full object-cover grayscale-20 contrast-95 group-hover:scale-105 transition-transform duration-500"/>
-          </div>
-          <div class="grow flex flex-col px-1 justify-between">
-            <div>
-              <span class="inline-block text-[9px] font-bold tracking-widest uppercase bg-[#21bf63] text-white px-2 py-0.5 rounded-sm mb-2">Veu</span>
-              <h3 class="text-sm font-serif font-normal text-stone-950 mb-1.5 leading-snug">1. Veu i condicions professionals:</h3>
-              <p class="text-[11px] text-stone-500 font-light leading-relaxed text-justify">Un dels principals objectius d'ADOCAT és orientar el col·lectiu davant les dificultats professionals. Ens enfoquem a oferir suport informatiu davant relacions contractuals complexes i promoure remuneracions justes.</p>
+        <!-- Идеальная сетка: 1 колонка на мобильных, 2 на планшетах, 3 на средних экранах и 5 на больших -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-6">
+          
+          <!-- Карточка 1: Veu i condicions professionals -->
+          <div class="flex flex-col group">
+            <div class="bg-white rounded-xl p-4 h-104 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.03)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5">
+              <div class="w-full h-40 overflow-hidden rounded-lg bg-stone-100 mb-4">
+                <img src={photo1.src} alt="Veu" class="w-full h-full object-cover grayscale-20 contrast-95 group-hover:scale-105 transition-transform duration-500"/>
+              </div>
+              <div class="grow flex flex-col px-1 justify-between">
+                <div>
+                  <span class="inline-block text-[9px] font-bold tracking-widest uppercase bg-[#21bf63] text-white px-2 py-0.5 rounded-sm mb-2">Veu</span>
+                  <h3 class="text-sm font-serif font-normal text-stone-950 mb-1.5 leading-snug">1. Veu i condicions professionals:</h3>
+                  <p class="text-[11px] text-stone-500 font-light leading-relaxed text-justify">Un dels principals objectius d'ADOCAT és orientar el col·lectiu davant les dificultats professionals. Ens enfoquem a oferir suport informatiu davant relacions contractuals complexes i promoure remuneracions justes.</p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <!-- Карточка 2: Millora de la Qualitat Educativa -->
-      <div class="flex flex-col group">
-        <div class="bg-white rounded-xl p-4 h-104 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.03)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5">
-          <div class="w-full h-40 overflow-hidden rounded-lg bg-stone-100 mb-4">
-            <img src={photo2.src} alt="Qualitat" class="w-full h-full object-cover grayscale-20 contrast-95 group-hover:scale-105 transition-transform duration-500" />
-          </div>
-          <div class="grow flex flex-col px-1 justify-between">
-            <div>
-              <span class="inline-block text-[9px] font-bold tracking-widest uppercase bg-[#21bf63] text-white px-2 py-0.5 rounded-sm mb-2">Qualitat</span>
-              <h3 class="text-sm font-serif font-normal text-stone-950 mb-1.5 leading-snug">2. Millora de la Qualitat Educativa:</h3>
-              <p class="text-[11px] text-stone-500 font-light leading-relaxed text-justify">Creiem fermament que la qualitat ha de ser una prioritat. Per això, col·laborem en el disseny i l'aplicació de criteris d'excel·lència perquè els docents comptin amb els recursos i el suport necessaris.</p>
+          <!-- Карточка 2: Millora de la Qualitat Educativa -->
+          <div class="flex flex-col group">
+            <div class="bg-white rounded-xl p-4 h-104 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.03)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5">
+              <div class="w-full h-40 overflow-hidden rounded-lg bg-stone-100 mb-4">
+                <img src={photo2.src} alt="Qualitat" class="w-full h-full object-cover grayscale-20 contrast-95 group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div class="grow flex flex-col px-1 justify-between">
+                <div>
+                  <span class="inline-block text-[9px] font-bold tracking-widest uppercase bg-[#21bf63] text-white px-2 py-0.5 rounded-sm mb-2">Qualitat</span>
+                  <h3 class="text-sm font-serif font-normal text-stone-950 mb-1.5 leading-snug">2. Millora de la Qualitat Educativa:</h3>
+                  <p class="text-[11px] text-stone-500 font-light leading-relaxed text-justify">Creiem fermament que la qualitat ha de ser una prioritat. Per això, col·laborem en el disseny i l'aplicació de criteris d'excel·lència perquè els docents comptin amb els recursos i el suport necessaris.</p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <!-- Карточка 3: Suport i Representació dels Docents -->
-      <div class="flex flex-col group">
-        <div class="bg-white rounded-xl p-4 h-104 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.03)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5">
-          <div class="w-full h-40 overflow-hidden rounded-lg bg-stone-100 mb-4">
-            <img src={photo3.src} alt="Suport" class="w-full h-full object-cover grayscale-20 contrast-95 group-hover:scale-105 transition-transform duration-500" />
-          </div>
-          <div class="grow flex flex-col px-1 justify-between">
-            <div>
-              <span class="inline-block text-[9px] font-bold tracking-widest uppercase bg-[#21bf63] text-white px-2 py-0.5 rounded-sm mb-2">Suport</span>
-              <h3 class="text-sm font-serif font-normal text-stone-950 mb-1.5 leading-snug">3. Suport i Representació dels Docents:</h3>
-              <p class="text-[11px] text-stone-500 font-light leading-relaxed text-justify">Oferim un espai perquè els docents expressin preocupacions i trobin suport mutu. Ens comprometem a traslladar els interessos del col·lectiu de manera cooperativa davant d'institucions i centres.</p>
+          <!-- Карточка 3: Suport i Representació dels Docents -->
+          <div class="flex flex-col group">
+            <div class="bg-white rounded-xl p-4 h-104 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.03)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5">
+              <div class="w-full h-40 overflow-hidden rounded-lg bg-stone-100 mb-4">
+                <img src={photo3.src} alt="Suport" class="w-full h-full object-cover grayscale-20 contrast-95 group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div class="grow flex flex-col px-1 justify-between">
+                <div>
+                  <span class="inline-block text-[9px] font-bold tracking-widest uppercase bg-[#21bf63] text-white px-2 py-0.5 rounded-sm mb-2">Suport</span>
+                  <h3 class="text-sm font-serif font-normal text-stone-950 mb-1.5 leading-snug">3. Suport i Representació dels Docents:</h3>
+                  <p class="text-[11px] text-stone-500 font-light leading-relaxed text-justify">Oferim un espai perquè els docents expressin preocupacions i trobin suport mutu. Ens comprometem a traslladar els interessos del col·lectiu de manera cooperativa davant d'institucions i centres.</p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <!-- Карточка 4: Promoció de la Unió Professional -->
-      <div class="flex flex-col group">
-        <div class="bg-white rounded-xl p-4 h-104 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.03)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5">
-          <div class="w-full h-40 overflow-hidden rounded-lg bg-stone-100 mb-4">
-            <img src={photo4.src} alt="Unió" class="w-full h-full object-cover grayscale-20 contrast-95 group-hover:scale-105 transition-transform duration-500" />
-          </div>
-          <div class="grow flex flex-col px-1 justify-between">
-            <div>
-              <span class="inline-block text-[9px] font-bold tracking-widest uppercase bg-[#21bf63] text-white px-2 py-0.5 rounded-sm mb-2">Unió</span>
-              <h3 class="text-sm font-serif font-normal text-stone-950 mb-1.5 leading-snug">4. Promoció de la Unió Professional:</h3>
-              <p class="text-[11px] text-stone-500 font-light leading-relaxed text-justify">La unió fa la força. A ADOCAT, fomentem la col·laboració i el treball en xarxa entre els docents, creant una comunitat sòlida que comparteix coneixements i estratègies per superar els desafiaments.</p>
+          <!-- Карточка 4: Promoció de la Unió Professional -->
+          <div class="flex flex-col group">
+            <div class="bg-white rounded-xl p-4 h-104 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.03)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5">
+              <div class="w-full h-40 overflow-hidden rounded-lg bg-stone-100 mb-4">
+                <img src={photo4.src} alt="Unió" class="w-full h-full object-cover grayscale-20 contrast-95 group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div class="grow flex flex-col px-1 justify-between">
+                <div>
+                  <span class="inline-block text-[9px] font-bold tracking-widest uppercase bg-[#21bf63] text-white px-2 py-0.5 rounded-sm mb-2">Unió</span>
+                  <h3 class="text-sm font-serif font-normal text-stone-950 mb-1.5 leading-snug">4. Promoció de la Unió Professional:</h3>
+                  <p class="text-[11px] text-stone-500 font-light leading-relaxed text-justify">La unió fa la força. A ADOCAT, fomentem la col·laboració i el treball en xarxa entre els docents, creant una comunitat sòlida que comparteix coneixements i estratègies per superar els desafiaments.</p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <!-- Карточка 5: Accions de Sensibilització i Visibilitat -->
-      <div class="flex flex-col group">
-        <div class="bg-white rounded-xl p-4 h-104 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.03)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5">
-          <div class="w-full h-40 overflow-hidden rounded-lg bg-stone-100 mb-4">
-            <img src={photo5.src} alt="Visibilitat" class="w-full h-full object-cover grayscale-20 contrast-95 group-hover:scale-105 transition-transform duration-500" />
-          </div>
-          <div class="grow flex flex-col px-1 justify-between">
-            <div>
-              <span class="inline-block text-[9px] font-bold tracking-widest uppercase bg-[#21bf63] text-white px-2 py-0.5 rounded-sm mb-2">Visibilitat</span>
-              <!-- Заголовок теперь занимает ровно 2 строчки -->
-              <h3 class="text-sm font-serif font-normal text-stone-950 mb-1.5 leading-snug">5. Accions de Sensibilització i Visibilitat:</h3>
-              <!-- Добавили i rellevància, теперь текст идеально совпадает по высоте -->
-              <p class="text-[11px] text-stone-500 font-light leading-relaxed text-justify">A través de campanyes informatives, manifestos i activitats de comunicació, busquem donar visibilitat i rellevància a la nostra causa, sensibilitzar la societat i construir una imatge respectada dels docents.</p>
+          <!-- Карточка 5: Accions de Sensibilització i Visibilitat -->
+          <div class="flex flex-col group">
+            <div class="bg-white rounded-xl p-4 h-104 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.03)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5">
+              <div class="w-full h-40 overflow-hidden rounded-lg bg-stone-100 mb-4">
+                <img src={photo5.src} alt="Visibilitat" class="w-full h-full object-cover grayscale-20 contrast-95 group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div class="grow flex flex-col px-1 justify-between">
+                <div>
+                  <span class="inline-block text-[9px] font-bold tracking-widest uppercase bg-[#21bf63] text-white px-2 py-0.5 rounded-sm mb-2">Visibilitat</span>
+                  <h3 class="text-sm font-serif font-normal text-stone-950 mb-1.5 leading-snug">5. Accions de Sensibilització i Visibilitat:</h3>
+                  <p class="text-[11px] text-stone-500 font-light leading-relaxed text-justify">A través de campanyes informatives, manifestos i activitats de comunicació, busquem donar visibilitat i rellevància a la nostra causa, sensibilitzar la societat i construir una imatge respectada dels docents.</p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-    </div> <!-- Закрытие grid -->
-  </div> <!-- Закрытие контейнера max-w -->
-</section>
+        </div> 
+      </div> 
+    </section>
 
-    <!-- СЕКЦИЯ 03: MOTIVACIÓ — Per què ho fem? (СТИЛЬ UGMONK С БОЛЬШИМИ НОМЕРАМИ) -->
-<section id="why-we-do-it" class="w-full bg-white py-24 border-t border-stone-200/40">
-  <div class="max-w-4xl mx-auto px-4 md:px-8">
-    
-    <!-- Заголовок секции в тонком стиле вашего макета -->
-    <div class="space-y-1 mb-16">
-      <span class="text-xs font-normal text-gray-400 uppercase tracking-widest block">
-        03 / MOTIVACIÓ
-      </span>
-      <h2 class="text-3xl font-light text-gray-500 tracking-tight">
-        Per què ho fem?
-      </h2>
-    </div>
-
-    <!-- Список из 5 ваших пунктов в точной геометрии Ugmonk -->
-    <div class="divide-y divide-stone-200/60 font-sans">
-      
-      <!-- Пункт 01 -->
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 py-8 items-start">
-        <div class="md:col-span-2 text-3xl font-serif italic font-light text-stone-300 leading-none">
-          01
-        </div>
-        <div class="md:col-span-4 text-base font-bold text-gray-800 tracking-wide uppercase leading-snug">
-          1. Per la Dignitat de la nostra professió:
-        </div>
-        <div class="md:col-span-6 text-sm md:text-base text-gray-500 font-light leading-relaxed text-justify">
-          En els darrers anys, els docents hem enfrontat un deteriorament constant de les nostres condicions professionals. Des de remuneracions suficients fins a relacions contractuals poc clares, la nostra professió requereix una cooperació activa que en reivindique la importància i el valor. Fem esto perquè creiem que la dignitat en l'entorn de treball és un dret fonamental.
-        </div>
-      </div>
-
-      <!-- Пункт 02 -->
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 py-8 items-start">
-        <div class="md:col-span-2 text-3xl font-serif italic font-light text-stone-300 leading-none">
-          02
-        </div>
-        <div class="md:col-span-4 text-base font-bold text-gray-800 tracking-wide uppercase leading-snug">
-          2. Per la Qualitat de la Formació:
-        </div>
-        <div class="md:col-span-6 text-sm md:text-base text-gray-500 font-light leading-relaxed text-justify">
-          La formació ocupacional i contínua juga un paper crucial en el desenvolupament professional de les persones i en el creixement econòmic de Catalunya. Tot i això, la inestabilitat dels formadors impacta directament en la qualitat dels programes educatius. Treballem perquè la formació que oferim sigui sinònim d'excel·lència.
-        </div>
-      </div>
-
-      <!-- Пункт 03 -->
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 py-8 items-start">
-        <div class="md:col-span-2 text-3xl font-serif italic font-light text-stone-300 leading-none">
-          03
-        </div>
-        <div class="md:col-span-4 text-base font-bold text-gray-800 tracking-wide uppercase leading-snug">
-          3. Per la Unitat i la Solidaritat:
-        </div>
-        <div class="md:col-span-6 text-sm md:text-base text-gray-500 font-light leading-relaxed text-justify">
-          Moltes vegades, os docents enfrontem problemes de manera aïllada, sense saber que altres col·legues comparteixen les mateixes dificultats. ADOCAT neix per trencar aquest aïllament sectorial, unificar veus i construir solucions compartides basades en el suport mutu. Creiem que junts podem assolir més.
-        </div>
-      </div>
-
-      <!-- Пункт 04 -->
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 py-8 items-start">
-        <div class="md:col-span-2 text-3xl font-serif italic font-light text-stone-300 leading-none">
-          04
-        </div>
-        <div class="md:col-span-4 text-base font-bold text-gray-800 tracking-wide uppercase leading-snug">
-          4. Per la Justícia en la Gestió de la Formació Subvencionada:
-        </div>
-        <div class="md:col-span-6 text-sm md:text-base text-gray-500 font-light leading-relaxed text-justify">
-          La formació subvencionada, encara que necessària, sovint genera dinàmiques de gestió complexes per als docents. Volem assegurar que els fons públics es tradueixin de manera eficaç en condicions correctes i estables tant per als formadors com per als alumnes, garantint la transparència.
-        </div>
-      </div>
-
-      <!-- Пункт 05 -->
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 py-8 items-start">
-        <div class="md:col-span-2 text-3xl font-serif italic font-light text-stone-300 leading-none">
-          05
-        </div>
-        <div class="md:col-span-4 text-base font-bold text-gray-800 tracking-wide uppercase leading-snug">
-          5. Pel Futur del Sector:
-        </div>
-        <div class="md:col-span-6 text-sm md:text-base text-gray-500 font-light leading-relaxed text-justify">
-          Volem un futur on ser docent ocupacional sigui sinònim d'estabilitat, respecte i reconeixement institucional. La nostra feina avui és una inversió en aquest futur, no només per a nosaltres, sinó també per a les generacions de professionals que vindran després.
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- СЕКЦИЯ: ФИНАЛЬНОЕ ЗАКЛЮЧЕНИЕ (ДИЗАЙН UGMONK С ФОТО, ТЕКСТОМ 16PX И НА БЛЕДНО-ЗЕЛЕНОМ ФОНЕ) -->
-<section id="final-statement" class="w-full bg-brand-bg py-24 border-t border-stone-200/40">
-  <!-- Контейнер max-w-4xl, чтобы ширина карточки идеально совпадала с прошлой секцией -->
-  <div class="max-w-5xl mx-auto px-4 md:px-8 font-sans">
-    
-    <!-- Белая карточка по структуре Ugmonk -->
-    <div class="bg-white rounded-xl p-4 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.03)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5 group">
-      
-      <!-- Крупное верхнее фото из папки ассетов -->
-      <div class="w-full h-48 overflow-hidden rounded-lg bg-stone-100 mb-6">
-        <img 
-          src={photo6.src} 
-          alt="ADOCAT Comunitat" 
-          class="w-full h-full object-cover grayscale-20 contrast-95 group-hover:scale-105 transition-transform duration-500" 
-        />
-      </div>
-
-      <!-- Текстовое наполнение карточки -->
-      <div class="grow flex flex-col justify-between px-2">
-        <div class="space-y-4">
-          <span class="inline-block text-[9px] font-bold tracking-widest uppercase bg-stone-100 text-stone-600 px-2.5 py-1 rounded-sm">
-            Comunitat
+    <!-- ========================================== -->
+    <!-- СЕКЦИЯ 03: MOTIVACIÓ — Per què ho fem?   -->
+    <!-- ========================================== -->
+    <section id="why-we-do-it" class="w-full bg-white py-12 md:py-24 border-t border-stone-200/40">
+      <div class="max-w-4xl mx-auto px-4 md:px-8">
+        
+        <!-- Заголовок секции в тонком стиле вашего макета -->
+        <div class="space-y-1 mb-8 md:mb-16">
+          <span class="text-xs font-normal text-gray-400 uppercase tracking-widest block">
+            03 / MOTIVACIÓ
           </span>
+          <h2 class="text-3xl font-light text-gray-500 tracking-tight">
+            Per què ho fem?
+          </h2>
+        </div>
+
+        <!-- Список из 5 пунктов -->
+        <div class="divide-y divide-stone-200/60 font-sans">
           
-          <h3 class="text-xl md:text-2xl font-serif font-normal text-stone-950 tracking-tight">
-            El nostre compromís amb el futur docent
-          </h3>
-          
-          <!-- Полный объемный текст в едином блоке размером 16px -->
-          <div class="text-[16px] text-stone-500 font-light leading-relaxed text-justify space-y-4">
-            <p>
-              El futur de la formació ocupacional a Catalunya depèn de la implicació i de la unió de tots els professionals que en formem part. 
-              Cada iniciativa, cada espai de diàleg compartit i cada proposta que impulsem des de l'associació ens apropa un pas més cap a la consolidació d'un entorn de treball digne, transparent i basat en el respecte mutu. A ADOCAT, no només treballem per canviar la nostra realitat actual, sinó també per construir un sector més fort, just i sostenible.
-              Perquè creiem que la nostra tasca com a formadors és clau per al desenvolupament de la nostra societat!
-            </p>                     
+          <!-- Пункт 01 -->
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 py-4 md:py-8 items-start">
+            <div class="md:col-span-2 text-3xl font-serif italic font-light text-stone-300 leading-none">
+              01
+            </div>
+            <div class="md:col-span-4 text-base font-bold text-gray-800 tracking-wide uppercase leading-snug">
+              1. Per la Dignitat de la nostra professió:
+            </div>
+            <div class="md:col-span-6 text-sm md:text-base text-gray-500 font-light leading-relaxed text-justify">
+              En els darrers anys, els docents hem enfrontat un deteriorament constant de les nostres condicions professionals. Des de remuneracions suficients fins a relacions contractuals poc clares, la nostra professió requereix una cooperació activa que en reivindique la importància i el valor. Fem esto perquè creiem que la dignitat en l'entorn de treball és un dret fonamental.
+            </div>
           </div>
+
+          <!-- Пункт 02 -->
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 py-8 items-start">
+            <div class="md:col-span-2 text-3xl font-serif italic font-light text-stone-300 leading-none">
+              02
+            </div>
+            <div class="md:col-span-4 text-base font-bold text-gray-800 tracking-wide uppercase leading-snug">
+              2. Per la Qualitat de la Formació:
+            </div>
+            <div class="md:col-span-6 text-sm md:text-base text-gray-500 font-light leading-relaxed text-justify">
+              La formació ocupacional i contínua juga un paper crucial en el desenvolupament professional de les persones i en el creixement econòmic de Catalunya. Tot i això, la inestabilitat dels formadors impacta directament en la qualitat dels programes educatius. Treballem perquè la formació que oferim sigui sinònim d'excel·lència.
+            </div>
+          </div>
+
+          <!-- Пункт 03 -->
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 py-8 items-start">
+            <div class="md:col-span-2 text-3xl font-serif italic font-light text-stone-300 leading-none">
+              03
+            </div>
+            <div class="md:col-span-4 text-base font-bold text-gray-800 tracking-wide uppercase leading-snug">
+              3. Per la Unitat i la Solidaritat:
+            </div>
+            <div class="md:col-span-6 text-sm md:text-base text-gray-500 font-light leading-relaxed text-justify">
+              Moltes vegades, os docents enfrontem problemes de manera aïllada, sense saber que altres col·legues comparteixen les mateixes dificultats. ADOCAT neix per trencar aquest aïllament sectorial, unificar veus i construir solucions compartides basades en el suport mutu. Creiem que junts podem assolir més.
+            </div>
+          </div>
+
+          <!-- Пункт 04 -->
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 py-8 items-start">
+            <div class="md:col-span-2 text-3xl font-serif italic font-light text-stone-300 leading-none">
+              04
+            </div>
+            <div class="md:col-span-4 text-base font-bold text-gray-800 tracking-wide uppercase leading-snug">
+              4. Per la Justícia en la Gestió de la Formació Subvencionada:
+            </div>
+            <div class="md:col-span-6 text-sm md:text-base text-gray-500 font-light leading-relaxed text-justify">
+              La formació subvencionada, encara que necessària, sovint genera dinàmiques de gestió complexes per als docents. Volem assegurar que els fons públics es tradueixin de manera eficaç en condicions correctes i estables tant per als formadors com per als alumnes, garantint la transparència.
+            </div>
+          </div>
+
+          <!-- Пункт 05 -->
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 py-8 items-start">
+            <div class="md:col-span-2 text-3xl font-serif italic font-light text-stone-300 leading-none">
+              05
+            </div>
+            <div class="md:col-span-4 text-base font-bold text-gray-800 tracking-wide uppercase leading-snug">
+              5. Pel Futur del Sector:
+            </div>
+            <div class="md:col-span-6 text-sm md:text-base text-gray-500 font-light leading-relaxed text-justify">
+              Volem un futur on ser docent ocupacional sigui sinònim d'estabilitat, respecte i reconeixement institucional. La nostra feina avui és una inversió en aquest futur, no només per a nosaltres, sinó també per a les generacions de professionals que vindran després.
+            </div>
+          </div>
+
         </div>
       </div>
+    </section>
 
-    </div> <!-- Закрытие карточки -->    
+    <!-- ========================================== -->
+    <!-- СЕКЦИЯ: ФИНАЛЬНОЕ ЗАКЛЮЧЕНИЕ              -->
+    <!-- ========================================== -->
+    <section id="final-statement" class="w-full bg-brand-bg py-24 border-t border-stone-200/40">
+      <!-- Контейнер max-w-4xl, чтобы ширина карточки идеально совпадала с прошлой секцией -->
+      <div class="max-w-5xl mx-auto px-4 md:px-8 font-sans">
+        
+        <!-- Белая карточка -->
+        <div class="bg-white rounded-xl p-4 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.03)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5 group">
+          
+          <!-- Крупное верхнее фото из папки ассетов -->
+          <div class="w-full h-48 overflow-hidden rounded-lg bg-stone-100 mb-6">
+            <img 
+              src={photo6.src} 
+              alt="ADOCAT Comunitat" 
+              class="w-full h-full object-cover grayscale-20 contrast-95 group-hover:scale-105 transition-transform duration-500" 
+            />
+          </div>
 
-  </div>
-</section>
+          <!-- Текстовое наполнение карточки -->
+          <div class="grow flex flex-col justify-between px-2">
+            <div class="space-y-4">
+              <span class="inline-block text-[9px] font-bold tracking-widest uppercase bg-stone-100 text-stone-600 px-2.5 py-1 rounded-sm">
+                Comunitat
+              </span>
+              
+              <h3 class="text-xl md:text-2xl font-serif font-normal text-stone-950 tracking-tight">
+                El nostre compromís amb el futur docent
+              </h3>
+              
+              <!-- Полный объемный текст в едином блоке размером 16px -->
+              <div class="text-[16px] text-stone-500 font-light leading-relaxed text-justify space-y-4">
+                <p>
+                  El futur de la formació ocupacional a Catalunya depèn de la implicació i de la unió de tots els professionals que en formem part. 
+                  Cada iniciativa, cada espai de diàleg compartit i cada proposta que impulsem des de l'associació ens apropa un pas més cap a la consolidació d'un entorn de treball digne, transparent i basat en el respecte mutu. A ADOCAT, no només treballem per canviar la nostra realitat actual, sinó també per construir un sector més fort, just i sostenible.
+                  Perquè creiem que la nostra tasca com a formadors és clau per al desenvolupament de la nostra societat!
+                </p>                 
+              </div>
+            </div>
+          </div>
 
+        </div>  
 
-
+      </div>
+    </section>
 
   </main>
 </Layout>

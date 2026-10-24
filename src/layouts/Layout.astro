@@ -32,10 +32,10 @@ const {
     <meta property="og:title" content={title}>
     <meta property="og:description" content={description}>
     <meta property="og:image" content="/img/logo-full-adocat.png">
-    <link rel="preconnect" href="https://googleapis.com">
-    <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/img/faicon.png" />
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -46,137 +46,145 @@ const {
 
 <body class="bg-brand-bg text-brand-dark min-h-screen flex flex-col font-sans antialiased">
 
-    <!-- 🌐 NAVIGATION HEADER -->
-    <header class="w-full bg-[#111111] text-white px-8 md:px-8 py-0 sticky top-0 z-40 shadow-md">
-      <div class="max-w-7xl mx-auto flex items-center justify-between h-20">
-          <div class="flex items-center">
-              <!-- Иконка: возврат на главную -->
-              <a href="/" class="hover:opacity-80 transition-opacity flex items-center">
-                <img src="/img/faicon.png" alt="Logotip ADOCAT" class="h-13 w-auto object-contain" />
-              </a>
+  <!-- ========================================== -->
+  <!-- 🌐 НАВИГАЦИОННАЯ ШАПКА (HEADER)            -->
+  <!-- ========================================== -->
+  <header class="w-full bg-[#111111] text-white px-8 md:px-8 py-0 sticky top-0 z-40 shadow-md">
+    <div class="max-w-7xl mx-auto flex items-center justify-between h-20">
+      
+      <!-- ЛОГОТИП И НАЗВАНИЕ -->
+      <div class="flex items-center">
+        <!-- Иконка: возврат на главную -->
+        <a href="/" class="hover:opacity-80 transition-opacity flex items-center">
+          <img src="/img/faicon.png" alt="Logotip ADOCAT" class="h-13 w-auto object-contain" />
+        </a>
 
-              <!-- Текст: кнопка вызова админки -->
-              <button type="button" id="open-admin-nav-btn" class="text-3xl font-semibold tracking-wider text-white ml-3 hover:text-emerald-400 transition-colors focus:outline-none cursor-pointer" >
-                ADOCAT
-              </button>
-          </div>
-            
-            <!-- 🖥️ DESKTOP NAV -->
-            <nav class="hidden lg:flex items-center gap-6 text-[14px] md:text-[18px] font-bold uppercase tracking-wider text-gray-300">
-                <a href="/" class="text-white hover:text-brand-green transition-colors">Inici</a>
-                <a href="/que_fem" class="hover:text-brand-green transition-colors">Què fem</a>
-                <a href="/participa" class="hover:text-brand-green transition-colors">Participa</a>
-                <a href="/actualitat" class="hover:text-white transition-colors">Actualitat</a>
-                <a href="/fes_te_socia" class="hover:text-white transition-colors">Fes-te soci/sòcia</a>
-            </nav>
+        <!-- Текст: кнопка/логотип ADOCAT -->
+        <button type="button" class="text-3xl font-semibold tracking-wider text-white ml-3">
+          ADOCAT
+        </button>
+      </div>
+        
+      <!-- 🖥️ ДЕСКТОРНОЕ МЕНЮ -->
+      <nav class="hidden lg:flex items-center gap-6 text-[14px] md:text-[18px] font-bold uppercase tracking-wider text-gray-300">
+        <a href="/" class="text-white hover:text-brand-green transition-colors">Inici</a>
+        <a href="/que_fem" class="hover:text-brand-green transition-colors">Què fem</a>
+        <a href="/participa" class="hover:text-brand-green transition-colors">Participa</a>
+        <a href="/actualitat" class="hover:text-white transition-colors">Actualitat</a>
+        <a href="/fes_te_socia" class="hover:text-white transition-colors">Fes-te soci/sòcia</a>
+      </nav>
 
-            <div class="flex items-center gap-4">
-                <!-- 📱 HAMBURGER BUTTON -->
-                <button id="menu-toggle" class="lg:hidden text-white text-2xl focus:outline-none cursor-pointer p-1">
-                    ☰
-                </button>
-            </div>
+      <!-- 📱 ГАМБУРГЕР ДЛЯ МОБИЛЬНЫХ -->
+      <div class="flex items-center gap-4">
+        <button id="menu-toggle" class="lg:hidden text-white text-2xl focus:outline-none cursor-pointer p-1" aria-label="Obrir menú">
+          ☰
+        </button>
+      </div>
+    </div>
+
+    <!-- 📱 МОБИЛЬНОЕ МЕНЮ -->
+    <nav id="mobile-menu" class="hidden lg:hidden gap-4 pt-4 pb-2 text-sm font-bold uppercase tracking-wider text-gray-300 border-t border-gray-800 mt-3 space-y-3">
+      <a href="/" class="block">Inici</a>
+      <a href="/que_fem" class="block">Què fem</a>
+      <a href="/participa" class="block">Participa</a>
+      <a href="/actualitat" class="block">Actualitat</a>
+      <a href="/fes_te_socia" class="block">Fes-te soci/sòcia</a>
+    </nav>
+  </header>
+
+  <!-- ========================================== -->
+  <!-- ОСНОВНАЯ ОБЛАСТЬ ВСТАВКИ СТРАНИЦ (SLOT)    -->
+  <!-- ========================================== -->
+  <main class="grow">
+    <slot />
+  </main>
+
+  <!-- ========================================== -->
+  <!-- 📋 КОНТРАСТНЫЙ МНОГОКОЛОНОЧНЫЙ ФУТЕР        -->
+  <!-- ========================================== -->
+  <footer class="w-full bg-border-dark text-gray-100 text-sm py-16 border-t border-gray-800 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-1 md:grid-cols-12 gap-10">
+      
+      <!-- Колонка 1: Логотип, Описание и Юридические данные -->
+      <div class="md:col-span-4 space-y-4 text-left">
+        <h3 class="font-sans font-black text-white uppercase tracking-wider text-lg">ADOCAT</h3>
+        <p class="text-gray-300 text-xs md:text-sm leading-relaxed font-medium">
+          A ADOCAT unim el col·lectiu docent de Catalunya per compartir necessitats, impulsar propostes, reforçar el reconeixement professional i contribuir a una formació de qualitat.
+        </p>
+
+        <!-- 🏛️ DATOS FISCALES / Юридический блок -->
+        <div class="pt-2 border-t border-gray-800/80 text-[11px] text-gray-400 space-y-1 font-medium leading-tight">
+          <p class="text-gray-300 font-bold uppercase tracking-wide">ADOCAT - Associació de Docents Ocupacionals de Catalunya</p>
+          <p>CIF: <span class="text-gray-300 font-semibold">Pendent de rebre</span></p>
+          <p>Adreça: <span class="text-gray-300 font-semibold">En procés de canvi</span></p>
         </div>
 
-        <!-- 📱 MOBILE NAV -->
-        <nav id="mobile-menu" class="hidden lg:hidden gap-4 pt-4 pb-2 text-sm font-bold uppercase tracking-wider text-gray-300 border-t border-gray-800 mt-3 space-y-3">
-            <a href="/" class="block">Inici</a>
-            <a href="/que_fem" class="block">Què fem</a>
-            <a href="/participa" class="block">Participa</a>
-            <a href="/actualitat" class="block">Actualitat</a>
-            <a href="/fes_te_socia" class="block">Fes-te soci/sòcia</a>
-        </nav>
+        <div class="flex gap-4 pt-2 text-xs font-black uppercase tracking-wider">
+          <a href="https://www.linkedin.com/company/adocat/?originalSubdomain=es" target="_blank" class="text-gray-300 hover:text-white transition-colors underline decoration-brand-green underline-offset-4">LinkedIn</a>
+          <span class="text-gray-600">|</span>
+          <a href="https://t.me/+4ahcQVP9jfoxOTdk" target="_blank" class="text-emerald-400 hover:text-emerald-300 transition-colors underline underline-offset-4">Telegram</a>
+        </div>
+      </div>
 
-    </header>
+      <!-- Колонка 2: Навигация -->
+      <div class="md:col-span-3 space-y-4 text-left">
+        <h4 class="text-xs font-black uppercase text-gray-400 tracking-widest border-b border-gray-800 pb-2">Navegació</h4>
+        <ul class="space-y-2.5 text-xs md:text-sm font-bold">
+          <li><a href="/" class="text-gray-200 hover:text-white transition-colors">Inici</a></li>
+          <li><a href="/que_fem" class="text-gray-200 hover:text-white transition-colors">Què fem</a></li>
+          <li><a href="/participa" class="text-gray-200 hover:text-white transition-colors">Participa</a></li>
+          <li><a href="/actualitat" class="text-gray-200 hover:text-white transition-colors">Actualitat</a></li>
+          <li><a href="/fes_te_socia" class="text-gray-200 hover:text-white transition-colors">Fes-te soci/sòcia</a></li>
+        </ul>
+      </div>
 
+      <!-- Колонка 3: Официальные контакты -->
+      <div class="md:col-span-3 space-y-4 text-left">
+        <h4 class="text-xs font-black uppercase text-gray-400 tracking-widest border-b border-gray-800 pb-2">Contacte Oficial</h4>
+        <ul class="space-y-2.5 text-xs md:text-sm font-bold text-gray-200">
+          <li class="flex flex-col">
+            <span class="text-[10px] text-gray-400 font-black uppercase tracking-wider">Correu electrònic</span>
+            <a href="mailto:info@adocat.es" class="text-white hover:text-emerald-400 transition-colors mt-0.5 text-sm md:text-base">info@adocat.es</a>
+          </li>
+          <li class="flex flex-col">
+            <span class="text-[10px] text-gray-400 font-black uppercase tracking-wider">Telèfon de suport</span>
+            <a href="tel:+34614696489" class="text-white hover:text-emerald-400 transition-colors mt-0.5 text-sm md:text-base">614 696 489</a>
+          </li>
+          <li class="text-[14px] text-gray-400 pt-1 font-semibold">
+            Àmbit territorial: Catalunya
+          </li>
+        </ul>
+      </div>
 
-    <main class="grow">
-         <slot />
-    </main>
+      <!-- Колонка 4: Юридический блок -->
+      <div class="md:col-span-2 space-y-4 text-left">
+        <h4 class="text-xs font-black uppercase text-gray-400 tracking-widest border-b border-gray-800 pb-2">Suport i Legalitat</h4>
+        <ul class="space-y-2.5 text-xs font-bold">
+          <li>
+            <a href="/denuncies" class="text-gray-300 hover:text-white transition-colors cursor-pointer">
+              Consultes i incidències
+            </a>
+          </li>
+          <li><a href="/legal#avis" class="text-gray-300 hover:text-white transition-colors cursor-pointer">Avís Legal</a></li>
+          <li><a href="/legal#privacitat" class="text-gray-300 hover:text-white transition-colors cursor-pointer">Privacitat</a></li>
+          <li><a href="/legal#cookies" class="text-gray-300 hover:text-white transition-colors cursor-pointer">Cookies</a></li>
+        </ul>
+      </div>
 
-<!-- 📋 КОНТРАСТНЫЙ МНОГОКОЛОНОЧНЫЙ ФУТЕР -->
-<footer class="w-full bg-border-dark text-gray-100 text-sm py-16 border-t border-gray-800 mt-auto">
-  <div class="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-1 md:grid-cols-12 gap-10">
-    
-    <!-- Колонка 1: Логотип, Описание и Юридические данные -->
-    <div class="md:col-span-4 space-y-4 text-left">
-      <h3 class="font-sans font-black text-white uppercase tracking-wider text-lg">ADOCAT</h3>
-      <p class="text-gray-300 text-xs md:text-sm leading-relaxed font-medium">
-        A ADOCAT unim el col·lectiu docent de Catalunya per compartir necessitats, impulsar propostes, reforçar el reconeixement professional i contribuir a una formació de qualitat.
+    </div>
+
+    <!-- Тонкая линия и копирайт -->
+    <div class="max-w-7xl mx-auto px-4 md:px-8 mt-12 pt-6 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-semibold text-gray-400">
+      <p class="text-center sm:text-left leading-relaxed max-w-xs sm:max-w-none">
+        &copy; 2026 Associació de Docents Ocupacionals de Catalunya. <span class="block sm:inline mt-0.5 sm:mt-0">Tots els drets reservats.</span>
       </p>
-
-      <!-- 🏛️ DATOS FISCALES / Юридический блок -->
-      <div class="pt-2 border-t border-gray-800/80 text-[11px] text-gray-400 space-y-1 font-medium leading-tight">
-        <p class="text-gray-300 font-bold uppercase tracking-wide">ADOCAT - Associació de Docents Ocupacionals de Catalunya</p>
-        <p>CIF: <span class="text-gray-300 font-semibold">Pendent de rebre</span></p>
-        <p>Adreça: <span class="text-gray-300 font-semibold">En procés de canvi</span></p>
-      </div>
-
-      <div class="flex gap-4 pt-2 text-xs font-black uppercase tracking-wider">
-        <a href="https://www.linkedin.com/company/adocat/?originalSubdomain=es" target="_blank" class="text-gray-300 hover:text-white transition-colors underline decoration-brand-green underline-offset-4">LinkedIn</a>
-        <span class="text-gray-600">|</span>
-        <a href="https://t.me/+4ahcQVP9jfoxOTdk" target="_blank" class="text-emerald-400 hover:text-emerald-300 transition-colors underline underline-offset-4">Telegram</a>
+      <div class="flex gap-2 items-center text-[10px] font-black uppercase tracking-wider text-gray-400">
+        <span>Garantia de Confidencialitat</span>
       </div>
     </div>
+  </footer>
 
-    <!-- Колонка 2: Навигация -->
-    <div class="md:col-span-3 space-y-4 text-left">
-      <h4 class="text-xs font-black uppercase text-gray-400 tracking-widest border-b border-gray-800 pb-2">Navegació</h4>
-      <ul class="space-y-2.5 text-xs md:text-sm font-bold">
-        <li><a href="/" class="text-gray-200 hover:text-white transition-colors">Inici</a></li>
-        <li><a href="/que_fem" class="text-gray-200 hover:text-white transition-colors">Què fem</a></li>
-        <li><a href="/participa" class="text-gray-200 hover:text-white transition-colors">Participa</a></li>
-        <li><a href="/actualitat" class="text-gray-200 hover:text-white transition-colors">Actualitat</a></li>
-        <li><a href="/fes_te_socia" class="text-gray-200 hover:text-white transition-colors">Fes-te soci/sòcia</a></li>
-      </ul>
-    </div>
-
-    <!-- Колонка 3: Официальные контакты -->
-    <div class="md:col-span-3 space-y-4 text-left">
-      <h4 class="text-xs font-black uppercase text-gray-400 tracking-widest border-b border-gray-800 pb-2">Contacte Oficial</h4>
-      <ul class="space-y-2.5 text-xs md:text-sm font-bold text-gray-200">
-        <li class="flex flex-col">
-          <span class="text-[10px] text-gray-400 font-black uppercase tracking-wider">Correu electrònic</span>
-          <a href="mailto:info@adocat.es" class="text-white hover:text-emerald-400 transition-colors mt-0.5 text-sm md:text-base">info@adocat.es</a>
-        </li>
-        <li class="flex flex-col">
-          <span class="text-[10px] text-gray-400 font-black uppercase tracking-wider">Telèfon de suport</span>
-          <a href="tel:+34614696489" class="text-white hover:text-emerald-400 transition-colors mt-0.5 text-sm md:text-base">614 696 489</a>
-        </li>
-        <li class="text-[14px] text-gray-400 pt-1 font-semibold">
-          Àmbit territorial: Catalunya
-        </li>
-      </ul>
-    </div>
-
-    <!-- Колонка 4: Юридический блок -->
-    <div class="md:col-span-2 space-y-4 text-left">
-      <h4 class="text-xs font-black uppercase text-gray-400 tracking-widest border-b border-gray-800 pb-2">Suport i Legalitat</h4>
-      <ul class="space-y-2.5 text-xs font-bold">
-        <li>
-          <a href="/denuncies" class="text-gray-300 hover:text-white transition-colors cursor-pointer">
-            Consultes i incidències
-          </a>
-        </li>
-        <li><a href="/legal#avis" class="text-gray-300 hover:text-white transition-colors cursor-pointer">Avís Legal</a></li>
-        <li><a href="/legal#privacitat" class="text-gray-300 hover:text-white transition-colors cursor-pointer">Privacitat</a></li>
-        <li><a href="/legal#cookies" class="text-gray-300 hover:text-white transition-colors cursor-pointer">Cookies</a></li>
-      </ul>
-    </div>
-
-  </div>
-
-  <!-- Тонкая линия и копирайт -->
-  <div class="max-w-7xl mx-auto px-4 md:px-8 mt-12 pt-6 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-semibold text-gray-400">
-    <p class="text-center sm:text-left leading-relaxed max-w-xs sm:max-w-none">
-      &copy; 2026 Associació de Docents Ocupacionals de Catalunya. <span class="block sm:inline mt-0.5 sm:mt-0">Tots els drets reservats.</span>
-    </p>
-    <div class="flex gap-2 items-center text-[10px] font-black uppercase tracking-wider text-gray-400">
-      <span>Garantia de Confidencialitat</span>
-    </div>
-  </div>
-</footer>
- 
+  <!-- СКРИПТЫ СТРАНИЦЫ -->
   <script src="../js/menu.js"></script>
   <script src="../js/info.js"></script>
 </body>
