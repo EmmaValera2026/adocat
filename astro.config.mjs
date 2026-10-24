@@ -40,7 +40,9 @@ export default defineConfig({
       },
       workbox: {
         // Кэшируем файлы сайта в память телефона, чтобы приложение открывалось мгновенно
-        globPatterns: ['**/*.{js,css,html,svg,png,ico,txt}']
+        globPatterns: ['**/*.{js,css,html,svg,png,ico,txt}'],
+        // 🛠 Увеличиваем лимит кэширования для файлов размером больше 2 МБ (например, для emma_grupo.png)
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
       }
     })
   ],
