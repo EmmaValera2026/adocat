@@ -1,7 +1,14 @@
 import { supabase } from './supabaseClient.js';
 
-// Инклюзивное дефолтное имя по Приоритету
 let currentUserName = "DOCENT DE LA COMUNITAT"; 
+
+const btnShowForgot = document.getElementById('btn-show-forgot');
+const btnCancelForgot = document.getElementById('btn-cancel-forgot');
+const forgotBlock = document.getElementById('forgot-password-block');
+const forgotForm = document.getElementById('forgot-form');
+const forgotEmailInput = document.getElementById('forgot-email');
+const forgotMessage = document.getElementById('forgot-message');
+const btnSendForgot = document.getElementById('btn-send-forgot');
 
 if (typeof window !== 'undefined') {
   // 2. Ждем, пока браузер полностью построит HTML-дерево (DOM)
@@ -295,9 +302,30 @@ if (typeof window !== 'undefined') {
       actualizarInterfaz(session);
     });
 
-    // 3. Выход из аккаунта
+    // 3. Выход из аккаунта (с принудительной очисткой всех форм)
     logoutBtn?.addEventListener('click', async () => {
       await supabase.auth.signOut();
+
+      // Очищаем форму входа
+      const authFormEl = document.getElementById('auth-form');
+      if (authFormEl) authFormEl.reset();
+
+      // Очищаем форму регистрации
+      const userRegisterFormEl = document.getElementById('user-register-form');
+      if (userRegisterFormEl) userRegisterFormEl.reset();
+
+      // Очищаем форму восстановления пароля (если была открыта)
+      const forgotFormEl = document.getElementById('forgot-form');
+      if (forgotFormEl) forgotFormEl.reset();
+
+      // Возвращаем переключатель вкладок на «Вход» (tab-login)
+      const tabLogin = document.getElementById('tab-login');
+      if (tabLogin) tabLogin.checked = true;
+
+      // Скрываем все возможные блоки ошибок
+      document.getElementById('register-error')?.classList.add('hidden');
+      document.getElementById('login-error')?.classList.add('hidden');
+      document.getElementById('forgot-password-block')?.classList.add('hidden');
     });
 
     // 4. Логика отправки формы Входа (Accés a l'espai privat)
@@ -329,6 +357,9 @@ if (typeof window !== 'undefined') {
 
           if (error) throw error;
           console.log('Login successful:', data);
+
+          // Очищаем форму после успешного входа
+          authForm.reset();
 
         } catch (err) {
           console.error('Supabase Auth Error:', err.message);
@@ -461,31 +492,65 @@ if (typeof window !== 'undefined') {
             }
           });
 
-          if (authError) throw authError;
+          // Если пользователь уже зарегистрирован — выводим понятное сообщение и останавливаем выполнение
+          if (authError) {
+            if (authError.message.includes('already registered') || authError.status === 422) {
+              if (registerError) {
+                registerError.textContent = "Aquest correu ja està registrat. Si us plau, inicia sessió.";
+                registerError.classList.remove('hidden');
+              }
+              return; // Прерываем выполнение, блок finally вернет кнопку в исходное состояние
+            }
+            throw authError;
+          }
 
-          // Б. Запись в таблицу leads
-          const { error: dbError } = await supabase.from('leads').insert([
+          // Б. Запись в leads через upsert (безопасно, без дублей и падений)
+          const { error: dbError } = await supabase.from('leads').upsert([
             {
               nombre: nameVal,
               email: emailVal,
               telefono: phoneVal,
               modalidad_implicacion: roleVal,
+              app_origen: 'adocat',
               created_at: new Date().toISOString()
             }
-          ]);
-          if (dbError && !dbError.message.includes('duplicate')) throw dbError;
+          ], { onConflict: 'email' });
 
-          // В. Передаем лид в Brevo
-          await fetch('/api/subscribe', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: emailVal, nombre: nameVal, telefono: phoneVal, role: roleVal })
-          });
+          if (dbError) {
+            console.warn('Leads upsert warning:', dbError.message);
+          }
 
-          console.log('Account created and Brevo updated. Opening cabinet directly...');
+          // В. Отправка в Brevo (обернута так, чтобы даже при сбое Brevo пользователь всё равно вошел в кабинет)
+          try {
+            const brevoResponse = await fetch('/api/subscribe', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ 
+                email: emailVal, 
+                nombre: nameVal, 
+                telefono: phoneVal, 
+                role: roleVal 
+              })
+            });
+            if (!brevoResponse.ok) {
+              console.warn('Brevo sync warning: Server responded with status', brevoResponse.status);
+            } else {
+              console.log('Brevo updated successfully.');
+            }
+          } catch (brevoErr) {
+            console.error('Brevo network error:', brevoErr);
+          }
 
-          // Г. Мгновенно открываем личный кабинет по полученной сессии
-          actualizarInterfaz(authData.session);
+          console.log('Registration flow completed. Opening cabinet...');
+
+          // Г. Мгновенно открываем личный кабинет
+          if (authData?.session) {
+            actualizarInterfaz(authData.session);
+          } else {
+            window.location.reload();
+          }
+
+        registerFormAdocat.reset();  
 
         } catch (err) {
           console.error('Registration processing error:', err.message);
@@ -525,3 +590,76 @@ if (typeof window !== 'undefined') {
 
   }); // КОНЕЦ DOMContentLoaded
 } // КОНЕЦ проверки window
+
+// ==========================================
+// ЛОГИКА СБРОСА И ВОССТАНОВЛЕНИЯ ПАРОЛЯ
+// ==========================================
+
+// 1. Показать/Скрыть форму сброса пароля
+if (btnShowForgot && forgotBlock) {
+  btnShowForgot.addEventListener('click', () => {
+    forgotBlock.classList.toggle('hidden');
+    // Если в поле авторизации уже ввели email, сразу копируем его в поле сброса
+    const authEmailVal = document.getElementById('auth-email')?.value || '';
+    if (authEmailVal && forgotEmailInput) {
+      forgotEmailInput.value = authEmailVal;
+    }
+  });
+}
+
+if (btnCancelForgot && forgotBlock) {
+  btnCancelForgot.addEventListener('click', () => {
+    forgotBlock.classList.add('hidden');
+    if (forgotMessage) forgotMessage.classList.add('hidden');
+  });
+}
+
+// 2. Отправка запроса на восстановление в Supabase
+if (forgotForm) {
+  forgotForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const emailVal = forgotEmailInput?.value?.trim();
+
+    if (!emailVal) return;
+
+    if (btnSendForgot) {
+      btnSendForgot.disabled = true;
+      btnSendForgot.textContent = "Enviant...";
+    }
+
+    if (forgotMessage) {
+      forgotMessage.classList.add('hidden');
+      forgotMessage.className = "hidden text-xs p-3 rounded-xs text-center font-bold";
+    }
+
+    try {
+      // Вызов стандартного метода Supabase для сброса пароля
+      const { error } = await supabase.auth.resetPasswordForEmail(emailVal, {
+        redirectTo: `${window.location.origin}/update-password` // Ссылка из письма перенаправит пользователя на страницу смены пароля
+      });
+
+      if (error) throw error;
+
+      // Успешный ответ
+      if (forgotMessage) {
+        forgotMessage.textContent = "T'hem enviat un correu electrònic amb les instruccions per restablir la contrasenya.";
+        forgotMessage.classList.remove('hidden');
+        forgotMessage.classList.add('bg-green-50', 'text-green-700', 'border', 'border-green-200');
+      }
+      if (forgotEmailInput) forgotEmailInput.value = '';
+
+    } catch (err) {
+      console.error('Password reset error:', err.message);
+      if (forgotMessage) {
+        forgotMessage.textContent = `Error: ${err.message}`;
+        forgotMessage.classList.remove('hidden');
+        forgotMessage.classList.add('bg-red-50', 'text-red-600', 'border', 'border-red-200');
+      }
+    } finally {
+      if (btnSendForgot) {
+        btnSendForgot.disabled = false;
+        btnSendForgot.textContent = "Enviar enllaç ➔";
+      }
+    }
+  });
+}
