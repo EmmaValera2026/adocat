@@ -54,16 +54,14 @@ import emmaConversacion from '../imagen/emma_convercasion.png';
       </div>
 
       <!-- Правая часть: Скрепка + Логотип -->
-      <div 
-        class="lg:col-span-5 flex items-center justify-start lg:justify-center -ml-4 lg:ml-0 p-6 lg:p-0 relative rounded-2xl overflow-hidden bg-white text-gray-900"
-        style="color-scheme: light;"
-      >
+      <div class="lg:col-span-5 flex items-center justify-start lg:justify-center -ml-4 lg:ml-0 p-6 lg:p-0 relative rounded-2xl overflow-hidden bg-white">
         
-        <!-- 🖼️ ФОНОВОЕ ФОТО ДЛЯ МОБИЛЬНЫХ -->
-        <div 
-          class="block lg:hidden absolute inset-0 opacity-15 bg-cover bg-top pointer-events-none rounded-2xl" 
-          style={`background-image: url('${fondoHero.src}'); color-scheme: light;`}
-        ></div>
+        <!-- 🖼️ ФОНОВОЕ ФОТО ДЛЯ МОБИЛЬНЫХ (теперь через обычный <img>, который браузер не сможет затемнить) -->
+        <img 
+          src={fondoHero.src} 
+          alt="" 
+          class="block lg:hidden absolute inset-0 w-full h-full object-cover opacity-15 pointer-events-none rounded-2xl"
+        />
 
         <div class="flex items-stretch gap-2 select-none relative z-10">
           <!-- Картинка-скрепка -->
