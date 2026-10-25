@@ -16,11 +16,21 @@ const {
 <!DOCTYPE html>
 <html lang="ca">
 <head>
-    <script is:inline>
-       if (window.location.hash && window.location.hash.includes('invite_token')) {
-       window.location.href = `/admin/${window.location.hash}`;
-    }
-    </script>
+  // Инициализируем виджет, жестко указав API URL вашего проекта на Netlify
+  <script is:inline>
+  // 1. Ваша старая проверка токена приглашения
+  if (window.location.hash && window.location.hash.includes('invite_token')) {
+    window.location.href = `/admin/${window.location.hash}`;
+  }
+
+  // 2. Исправление ошибки CORS для виджета авторизации
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.init({
+      APIUrl: 'socis-adocat.netlify.app'
+    });
+  }
+</script>
+
     <meta charset="UTF-8">
     <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
