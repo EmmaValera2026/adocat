@@ -464,7 +464,7 @@ if (typeof window !== 'undefined') {
         }
 
         // Валидация 2: сложность пароля 
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@\(!\%*?&._-]).{8,}$/;
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._() text-]).{8,}$/;
         if (!passwordRegex.test(passwordVal)) {
           if (registerError) {
             registerError.textContent = "La contrasenya no compleix els requisits de seguretat mencionats.";

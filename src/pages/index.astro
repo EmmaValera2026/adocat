@@ -8,6 +8,8 @@ import user3 from '../imagen/user3.avif';
 import user4 from '../imagen/user4.avif';
 
 import emmaGrupo from '../imagen/emma_grupo.png'; 
+import movileHero from '../imagen/mobile-hero.png'; 
+import logoAdocat from '../imagen/logo-adocat.png'; 
 import emmaConversacion from '../imagen/emma_convercasion.png';
 ---
 
@@ -17,88 +19,122 @@ import emmaConversacion from '../imagen/emma_convercasion.png';
 >
 
   <!-- ========================================== -->
-  <!-- ШАПКА / ГЛАВНЫЙ БАННЕР (HEADER)           -->
+  <!-- ШАПКА / ГЛАВНЫЙ БАННЕР -->
   <!-- ========================================== -->
-  <header class="w-full relative bg-gray-50 border-b border-gray-200 overflow-hidden min-h-120 flex items-center">
+  <!-- ========================================================== -->
+<!-- 🖥️ 1. ДЕСКТОПНАЯ ШАПКА (Видна ТОЛЬКО на ПК от экрана lg) -->
+<!-- ========================================================== -->
+<section class="hidden lg:block w-full relative bg-gray-50 border-b border-gray-200 overflow-hidden min-h-120">
+  
+  <!-- Фоновое фото для десктопа -->
+  <div
+    class="absolute inset-0 opacity-15 bg-cover bg-center pointer-events-none"
+    style={`background-image: url('${fondoHero.src}');`}
+  ></div>
+
+  <!-- Тонкий радиальный градиент -->
+  <div class="absolute inset-0 bg-linear-to-r from-gray-50 via-gray-50/90 to-transparent z-1"></div>
+
+  <div class="max-w-7xl mx-auto grid grid-cols-12 gap-8 items-center px-8 py-16 relative z-10 w-full min-h-120">
     
-    <!-- 🖼️ ФОНОВОЕ ФОТО ДЛЯ ДЕСКТОПА: Растянуто на весь баннер (скрыто на мобильных: hidden lg:block) -->
-    <div 
-      class="hidden lg:block absolute inset-0 opacity-15 bg-cover bg-center pointer-events-none" 
-      style={`background-image: url('${fondoHero.src}');`}
-    ></div>
-
-    <!-- Тонкий радиальный градиент (мягко скрывает фото слева под текстом) -->
-    <div class="absolute inset-0 bg-linear-to-r from-gray-50 via-gray-50/90 to-transparent z-1"></div>
-
-    <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 items-center px-4 md:px-8 py-12 lg:py-16 relative z-10 w-full">
-      
-      <!-- Левая часть: Приветственный текст -->
-      <div class="lg:col-span-7 space-y-6 text-left relative z-10">
-        <div class="inline-flex items-center gap-2 bg-brand-green/10 text-brand-green px-3 py-1 rounded-sm text-xs font-bold uppercase tracking-wider">
-          Comunitat Docent de la Formació per a l'Ocupació
-        </div>
-        <h1 class="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-brand-dark uppercase leading-tight">
-          La docència per a l’ocupació mereix veu, reconeixement i comunitat.
-        </h1>
-        <p class="text-base md:text-lg text-gray-600 font-medium max-w-xl leading-relaxed">
-          A ADOCAT unim el col·lectiu docent de Catalunya per compartir necessitats, impulsar propostes, reforçar el reconeixement professional i contribuir a una formació de qualitat.
-        </p>
-        <div class="pt-2 flex flex-wrap gap-4">
-          <a href="/fes_te_socia" class="bg-brand-green hover:bg-brand-hover text-white font-black text-sm uppercase tracking-widest py-4 px-8 rounded-md shadow-md hover:shadow-lg transition-all inline-block cursor-pointer">
-            Fes-te soci/sòcia
-          </a>
-          <a href="/que_fem" class="bg-transparent hover:bg-gray-100 text-brand-dark border border-gray-300 font-black text-sm uppercase tracking-widest py-4 px-8 rounded-md shadow-md hover:shadow-lg transition-all inline-block cursor-pointer">
-            Coneix ADOCAT
-          </a>
-        </div>
+    <!-- Левая часть (7 колонок) -->
+    <div class="col-span-7 space-y-6 text-left relative z-10">
+      <div class="inline-flex items-center gap-2 bg-brand-green/10 text-brand-green px-3 py-1 rounded-sm text-xs font-bold uppercase tracking-wider">
+        Comunitat Docent de la Formació per a l'Ocupació
       </div>
 
-      <!-- Правая часть -->
-      <div class="lg:col-span-5 flex items-center justify-start lg:justify-center -ml-4 lg:ml-0 p-6 lg:p-0 relative rounded-2xl overflow-hidden bg-white">
-        
-        <!-- 📱 МОБИЛЬНАЯ ВЕРСИЯ: Готовая единая картинка -->
+      <h1 class="text-4xl lg:text-5xl font-black tracking-tight text-brand-dark uppercase leading-tight">
+        La docència per a l’ocupació mereix veu, reconeixement i comunitat.
+      </h1>
+
+      <p class="text-lg text-gray-600 font-medium max-w-xl leading-relaxed">
+        A ADOCAT unim el col·lectiu docent de Catalunya per compartir necessitats, impulsar propostes, reforçar el reconeixement professional i contribuir a una formació de qualitat.
+      </p>
+
+      <div class="pt-2 flex flex-wrap gap-4">
+        <a href="/fes_te_socia" class="bg-brand-green hover:bg-brand-hover text-white font-black text-sm uppercase tracking-widest py-4 px-8 rounded-md shadow-md hover:shadow-lg transition-all inline-block cursor-pointer">
+          Fes-te soci/sòcia
+        </a>
+
+        <a href="/que_fem" class="bg-transparent hover:bg-gray-100 text-brand-dark border border-gray-300 font-black text-sm uppercase tracking-widest py-4 px-8 rounded-md shadow-md hover:shadow-lg transition-all inline-block cursor-pointer">
+          Coneix ADOCAT
+        </a>
+      </div>
+    </div>
+
+    <!-- Правая часть (5 колонок) — Скрепка и текст логотипа -->
+    <div class="col-span-5 flex items-center justify-center p-0 relative rounded-2xl overflow-hidde z-10">
+      <div class="flex items-stretch gap-2 select-none relative z-10">
+        <!-- Картинка-скрепка -->
         <img 
-          src="/img/mobile-hero.png" 
-          alt="ADOCAT Associació de Docents Ocupacionals de Catalunya" 
-          class="block lg:hidden w-full h-auto object-contain rounded-2xl pointer-events-none select-none"
+          src={logoAdocat.src} 
+          alt="Simbol ADOCAT"
+          class="h-auto w-60 md:w-80 lg:w-100 object-contain pointer-events-none filter drop-shadow-sm shrink-0"
+          draggable="false"
         />
 
-        <!-- 💻 ДЕСКТОПНАЯ ВЕРСИЯ: Ваша оригинальная верстка со скрепкой и текстом -->
-        <div class="hidden lg:flex items-stretch gap-2 select-none relative z-10">
-          
-          <!-- Фоновое фото для десктопа -->
-          <div 
-            class="absolute inset-0 opacity-15 bg-cover bg-center pointer-events-none" 
-            style={`background-image: url('${fondoHero.src}');`}
-          ></div>
+        <!-- Текстовый блок логотипа -->
+        <div class="flex flex-col justify-center text-center -ml-25">
+          <span class="text-6xl font-semibold tracking-wide leading-none">
+            <span class="text-[#38bdf8]">AD</span><span class="text-[#f97316]">O</span><span class="text-gray-900">CAT</span>
+          </span>
 
-          <!-- Картинка-скрепка -->
-          <img 
-            src="/img/logo-adocat.png" 
-            alt="Simbol ADOCAT" 
-            class="h-auto w-100 object-contain pointer-events-none filter drop-shadow-sm shrink-0"
-            draggable="false"
-          />
-
-          <!-- Текстовый блок логотипа -->
-          <div class="flex flex-col justify-center text-center -ml-25">
-            <span class="text-6xl font-semibold tracking-wide leading-none">
-              <span class="text-[#38bdf8]">AD</span><span class="text-[#f97316]">O</span><span class="text-gray-900">CAT</span>
-            </span>
-
-            <div class="text-3xl font-semibold text-gray-900 leading-tight">
-              <p>Associació</p>
-              <p>de Docents</p>
-              <p>Ocupacionals</p>
-              <p>de Catalunya</p>
-            </div>
+          <div class="text-3xl font-semibold text-gray-900 leading-tight">
+            <p>Associació</p>
+            <p>de Docents</p>
+            <p>Ocupacionals</p>
+            <p>de Catalunya</p>
           </div>
-
         </div>
       </div>
-
     </div>
-  </header>
+
+  </div>
+</section>
+
+<!-- ========================================================== -->
+<!-- 📱 2. МОБИЛЬНАЯ ШАПКА (Строго скрывается на экранах от lg) -->
+<!-- ========================================================== -->
+<section class="w-full bg-gray-50 border-b border-gray-200 px-4 py-8 relative lg:hidden">
+  <div class="space-y-6">
+    
+    <!-- Текст сверху -->
+    <div class="space-y-4 text-left">
+      <div class="inline-flex items-center gap-2 bg-brand-green/10 text-brand-green px-3 py-1 rounded-sm text-xs font-bold uppercase tracking-wider">
+        Comunitat Docent de la Formació per a l'Ocupació
+      </div>
+
+      <h1 class="text-3xl font-black tracking-tight text-brand-dark uppercase leading-tight">
+        La docència per a l’ocupació mereix veu, reconeixement i comunitat.
+      </h1>
+
+      <p class="text-base text-gray-600 font-medium leading-relaxed">
+        A ADOCAT unim el col·lectiu docent de Catalunya per compartir necessitats, impulsar propostes, reforçar el reconeixement professional i contribuir a una formació de qualitat.
+      </p>
+
+      <div class="pt-2 flex flex-col gap-3">
+        <a href="/fes_te_socia" class="bg-brand-green text-center hover:bg-brand-hover text-white font-black text-sm uppercase tracking-widest py-3 px-6 rounded-md shadow-md transition-all">
+          Fes-te soci/sòcia
+        </a>
+
+        <a href="/que_fem" class="bg-transparent text-center hover:bg-gray-100 text-brand-dark border border-gray-300 font-black text-sm uppercase tracking-widest py-3 px-6 rounded-md shadow-md transition-all">
+          Coneix ADOCAT
+        </a>
+      </div>
+    </div>
+
+    <!-- Картинка movileHero снизу -->
+    <div class="w-full pt-2">
+      <img 
+        src={movileHero.src} 
+        alt="ADOCAT Associació de Docents Ocupacionals de Catalunya" 
+        class="w-full h-auto object-contain rounded-2xl pointer-events-none select-none"
+      />
+    </div>
+
+  </div>
+</section>
+
   <!-- ========================================== -->
   <!-- ОСНОВНОЙ КОНТЕНТ СТРАНИЦЫ (MAIN)          -->
   <!-- ========================================== -->
