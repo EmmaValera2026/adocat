@@ -16,7 +16,9 @@ const {
 <!DOCTYPE html>
 <html lang="ca">
 <head>
-  <script src="/netlify-identity.js"></script>
+  <script is:inline
+    src="/netlify-identity.js">
+  </script>
   <script is:inline>
   // 1. Ваша старая проверка токена приглашения
   if (window.location.hash && window.location.hash.includes('invite_token')) {
