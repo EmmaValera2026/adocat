@@ -18,13 +18,11 @@ jobs:
           node-version: '20'
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 9
+        run: npm install -g pnpm
 
       - name: Install dependencies & Build Astro
         run: |
-          pnpm install --no-frozen-lockfile
+          pnpm install
           pnpm run build
 
       - name: Deploy dist folder to Netlify
