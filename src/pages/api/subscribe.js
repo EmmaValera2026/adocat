@@ -10,7 +10,7 @@ export const prerender = false;
 export const POST = async ({ request }) => {
   try {
     const body = await request.json();
-    console.log('📥 INCOMING QUIZ DATA:', body); // Лог входящих данных для проверки
+    console.log('📥 INCOMING QUIZ DATA:', body);
 
     const { email, nombre, telefono, provincia, role, respuestas } = body;
 
@@ -18,37 +18,42 @@ export const POST = async ({ request }) => {
       return new Response(JSON.stringify({ message: 'Email requerit' }), { status: 400 });
     }
 
-    // 1. Сохраняем полный набор данных в Supabase
+    const cleanEmail = email.trim();
+
+    // 1. Сохраняем в Supabase
     const { error } = await supabase
       .from('leads') 
-      .insert([
-        { 
-          email: email, 
-          nombre: nombre || null,
-          telefono: telefono || null,
-          provincia: provincia || null,
-          modalidad_implicacion: role || 'butlleti',
-          respuestas: respuestas || null,
-          app_origen: 'adocat',
-          created_at: new Date().toISOString()
-        }
-      ]);
+      .upsert(
+        [
+          { 
+            email: cleanEmail, 
+            nombre: nombre || null,
+            telefono: telefono || null,
+            provincia: provincia || null,
+            modalidad_implicacion: role || 'butlleti',
+            respuestas: respuestas || null,
+            app_origen: 'adocat',
+            updated_at: new Date().toISOString()
+          }
+        ],
+        { onConflict: 'email' } // Обновляет запись, если email уже есть
+      );
 
     if (error) {
       console.error('❌ Error guardando en Supabase:', error.message);
     }
 
-    // 2. Добавляем в Brevo
+    // 2. Взаимодействие с Brevo
     const apiKey = import.meta.env.BREVO_API_KEY;
     const listId = Number(import.meta.env.BREVO_LIST_ID) || 3;
 
     if (apiKey) {
+      // --- ШАГ 2.1: Создаем/обновляем контакт в CRM (Изолированный блок) ---
       try {
-        // Разделяем имя и фамилию
         let firstName = '';
         let lastName = '';
         
-        if (nombre) {
+        if (nombre && nombre.trim()) {
           const parts = nombre.trim().split(/\s+/);
           firstName = parts[0] || '';
           lastName = parts.slice(1).join(' ') || '';
@@ -58,7 +63,6 @@ export const POST = async ({ request }) => {
         if (firstName) attributesObj.NOMBRE = firstName;
         if (lastName) attributesObj.APELLIDOS = lastName;
 
-        // Форматирование телефона только если он из 9+ цифр
         if (telefono) {
           const cleanPhone = telefono.replace(/\D/g, '');
           if (cleanPhone.length >= 9) {
@@ -66,9 +70,7 @@ export const POST = async ({ request }) => {
           }
         }
 
-        console.log('📤 SENDING TO BREVO ATTRIBUTES:', attributesObj);
-
-        const brevoRes = await fetch('https://api.brevo.com/v3/contacts', {
+        const brevoContactRes = await fetch('https://api.brevo.com/v3/contacts', {
           method: 'POST',
           headers: {
             'accept': 'application/json',
@@ -76,18 +78,22 @@ export const POST = async ({ request }) => {
             'content-type': 'application/json'
           },
           body: JSON.stringify({
-            email: email,
+            email: cleanEmail,
             attributes: attributesObj,
             listIds: [listId],
             updateEnabled: true
           })
         });
 
-        const brevoData = await brevoRes.json();
-        console.log('🟢 BREVO CONTACT RESPONSE:', JSON.stringify(brevoData));
+        const contactStatus = brevoContactRes.status;
+        console.log(`🟢 BREVO CONTACT STATUS: ${contactStatus}`);
+      } catch (contactErr) {
+        console.error('⚠️ Ошибка создания контакта в Brevo (игнорируем, шлем письмо):', contactErr);
+      }
 
-        // 3. Отправка приветственного транзакционного письма
-        await fetch('https://api.brevo.com/v3/smtp/email', {
+      // --- ШАГ 2.2: Отправка приветственного письма (Выполняется ВСЕГДА) ---
+      try {
+        const mailRes = await fetch('https://api.brevo.com/v3/smtp/email', {
           method: 'POST',
           headers: {
             'accept': 'application/json',
@@ -96,7 +102,7 @@ export const POST = async ({ request }) => {
           },
           body: JSON.stringify({
             sender: { name: 'ADOCAT', email: 'som.adocat@gmail.com' },
-            to: [{ email: email }],
+            to: [{ email: cleanEmail }],
             subject: "✨ Benvingut/da al butlletí oficial d'ADOCAT",
             htmlContent: `
               <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e5e7eb; color: #111827;">
@@ -109,8 +115,11 @@ export const POST = async ({ request }) => {
           })
         });
 
+        const mailData = await mailRes.json();
+        console.log('🟢 BREVO EMAIL RESPONSE:', JSON.stringify(mailData));
+
       } catch (mailErr) {
-        console.error('❌ Brevo error:', mailErr);
+        console.error('❌ Ошибка отправки письма:', mailErr);
       }
     }
 
