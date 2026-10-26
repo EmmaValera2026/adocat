@@ -72,15 +72,20 @@ export class QuizEngine {
 
     saveLeadToDatabase = async (userData) => {
         try {
-            // 1. Оригинальная авторегистрация пользователя в Supabase
-            if (userData.email && userData.telefono.length >= 6) {
+            // Очищаем email и имя от лишних пробелов перед отправкой
+            const cleanEmail = userData.email ? userData.email.trim().toLowerCase() : '';
+            const cleanNombre = userData.nombre ? userData.nombre.trim().replace(/\s+/g, ' ') : '';
+            const cleanTelefono = userData.telefono ? userData.telefono.trim() : '';
+
+            // 1. Авторегистрация пользователя в Supabase Auth
+            if (cleanEmail && cleanTelefono.length >= 6) {
                 try {
                     await supabase.auth.signUp({
-                        email: userData.email,
-                        password: userData.telefono,                        
+                        email: cleanEmail,
+                        password: cleanTelefono,                        
                         options: {
                             data: {
-                                nombre: userData.nombre,
+                                nombre: cleanNombre,
                                 provincia: userData.provincia,
                                 role_implicacion: userData.role
                             }
@@ -91,16 +96,16 @@ export class QuizEngine {
                 }
             }
 
-            // 2. Оriginal прямая запись анкеты и контактов в таблицу leads
+            // 2. Прямая запись анкеты и контактов в таблицу leads (историческая накопительная вставка)
             const { error } = await supabase
                 .from('leads')
                 .insert([
                     {
-                        nombre: userData.nombre,
-                        email: userData.email,
-                        telefono: userData.telefono,
-                        provincia: userData.provincia,
-                        modalidad_implicacion: userData.role,
+                        nombre: cleanNombre,
+                        email: cleanEmail,
+                        telefono: cleanTelefono,
+                        provincia: userData.provincia || null,
+                        modalidad_implicacion: userData.role || 'butlleti',
                         app_origen: 'adocat',
                         respuestas: this.responses
                     }
@@ -108,7 +113,7 @@ export class QuizEngine {
 
             if (error) throw error;
 
-            // 3. Добавляем параллельную интеграцию с Brevo без удаления старого кода
+            // 3. Интеграция с бэкенд-эндпоинтом (/api/subscribe) для писем и Brevo
             try {
                 await fetch('/api/subscribe', {
                     method: 'POST',
@@ -116,9 +121,9 @@ export class QuizEngine {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        email: userData.email,
-                        nombre: userData.nombre,
-                        telefono: userData.telefono,
+                        email: cleanEmail,
+                        nombre: cleanNombre,
+                        telefono: cleanTelefono,
                         provincia: userData.provincia,
                         role: userData.role,
                         respuestas: this.responses
@@ -126,10 +131,9 @@ export class QuizEngine {
                 });
             } catch (brevoErr) {
                 console.error('Brevo sync post-error:', brevoErr.message);
-                // Не прерываем выполнение, если Brevo временно недоступен, так как в Supabase данные уже ушли
             }
 
-            // 4. Ваша original очистка кэша сессии после успешной отправки
+            // 4. Очистка кэша сессии после успешной отправки
             localStorage.removeItem('adocat_answers_session');
             return { success: true };
 

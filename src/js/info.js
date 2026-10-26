@@ -469,22 +469,36 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Перехват формы и отправка данных в режиме запроса интереса
         document.getElementById('lead-form-adocat')?.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const inputProvincia = document.getElementById('lead-provincia');
-            const inputRole = document.getElementById('lead-role');
-            const quizErrorEl = document.getElementById('quiz-error-msg');
+        e.preventDefault();
+        const inputProvincia = document.getElementById('lead-provincia');
+        const inputRole = document.getElementById('lead-role');
+        const quizErrorEl = document.getElementById('quiz-error-msg'); // Блок для ошибки в HTML квиза
 
-            if (quizErrorEl) quizErrorEl.classList.add('hidden');
+        if (quizErrorEl) quizErrorEl.classList.add('hidden');
 
-            const userData = {
-                nombre: DOM_CACHE.inputNombre?.value.trim() || 'No especificat',
-                email: DOM_CACHE.inputEmail?.value.trim() || '',
-                telefono: DOM_CACHE.inputTelefono?.value.replace(/\D/g, '') || '',
-                provincia: inputProvincia ? inputProvincia.value : 'No especificada',
-                role: inputRole ? inputRole.value : 'socio'
-            };
+        // --- КЛИЕНТСКАЯ ПРОВЕРКА EMAIL ---
+        const emailValue = DOM_CACHE.inputEmail?.value.trim() || '';
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-            const result = await engine.saveLeadToDatabase(userData);
+        if (!emailRegex.test(emailValue)) {
+            if (quizErrorEl) {
+                quizErrorEl.textContent = "Si us plau, introdueix un correu electrònic vàlid (ex: tu@email.com)";
+                quizErrorEl.classList.remove('hidden'); // Показываем блок с ошибкой на экране
+            }
+            DOM_CACHE.inputEmail?.focus();
+            return; // Останавливаем отправку формы!
+        }
+        // ---------------------------------
+
+        const userData = {
+            nombre: DOM_CACHE.inputNombre?.value.trim() || 'No especificat',
+            email: emailValue,
+            telefono: DOM_CACHE.inputTelefono?.value.replace(/\D/g, '') || '',
+            provincia: inputProvincia ? inputProvincia.value : 'No especificada',
+            role: inputRole ? inputRole.value : 'socio'
+        };
+
+        const result = await engine.saveLeadToDatabase(userData);
             if (result.success) {
                 if (DOM_CACHE.stepCardForm) DOM_CACHE.stepCardForm.classList.add('hidden');
                 if (DOM_CACHE.stepCardSuccess) {
@@ -937,6 +951,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 listaComplaints = data.filter(c => !c.centre_name || !c.centre_name.includes('CONSULTA DOCENT:'));
                 renderizarComplaints(DOM_CACHE.tbody, DOM_CACHE.mobileList);
             } catch (err) { console.error('Database connection error:', err.message); }
+
         } else if (pestañaActual === 'support') {
             btnSupport?.classList.replace('bg-white', 'bg-brand-green');
             btnSupport?.classList.replace('text-gray-600', 'text-white');

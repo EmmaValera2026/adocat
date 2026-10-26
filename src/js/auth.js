@@ -453,7 +453,17 @@ if (typeof window !== 'undefined') {
         const confirmVal = document.getElementById('acc-password-confirm')?.value || '';
 
         const submitBtnReg = document.getElementById('acc-submit-btn');
-
+        
+        // --- ДОБАВЛЕННАЯ ПРОВЕРКА: Валидация формата email ---
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailVal)) {
+          if (registerError) {
+            registerError.textContent = "Si us plau, introdueix un correu electrònic vàlid.";
+            registerError.classList.remove('hidden');
+          }
+          return;
+        }
+        
         // Валидация 1: совпадение паролей
         if (passwordVal !== confirmVal) {
           if (registerError) {
