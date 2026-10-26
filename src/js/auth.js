@@ -635,7 +635,7 @@ if (forgotForm) {
     try {
       // Вызов стандартного метода Supabase для сброса пароля
       const { error } = await supabase.auth.resetPasswordForEmail(emailVal, {
-        redirectTo: `${window.location.origin}/update-password` // Ссылка из письма перенаправит пользователя на страницу смены пароля
+        redirectTo: `${window.location.origin}/fes_te_socia`
       });
 
       if (error) throw error;
@@ -663,3 +663,102 @@ if (forgotForm) {
     }
   });
 }
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const loginBlock = document.querySelector('.form-login-block');
+  const registerBlock = document.querySelector('.form-register-block');
+  const newPasswordBlock = document.getElementById('new-password-block');
+  const resetForm = document.getElementById('new-password-form');
+  const resetInput = document.getElementById('reset-password-input');
+  const resetConfirmInput = document.getElementById('reset-password-confirm');
+  const resetError = document.getElementById('reset-error');
+
+  // 1. Проверяем токен восстановления от Supabase в ссылке
+  if (window.location.hash && window.location.hash.includes('type=recovery')) {
+    if (loginBlock) loginBlock.style.setProperty('display', 'none', 'important');
+    if (registerBlock) registerBlock.style.setProperty('display', 'none', 'important');
+    if (newPasswordBlock) newPasswordBlock.classList.remove('hidden');
+  }
+
+  // 2. Логика переключения видимости пароля (Глазики)
+  const toggleButtons = document.querySelectorAll('.toggle-reset-password');
+  toggleButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const input = button.previousElementSibling;
+      if (input) {
+        if (input.type === 'password') {
+          input.type = 'text';
+          button.textContent = '🙈';
+        } else {
+          input.type = 'password';
+          button.textContent = '👁️';
+        }
+      }
+    });
+  });
+
+ 
+  // 3. Обрабатываем отправку формы в Supabase
+  if (resetForm) {
+    resetForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+    
+      const newPassword = resetInput.value;
+      const confirmPassword = resetConfirmInput.value;
+    
+      if (resetError) resetError.classList.add('hidden');
+
+      // Проверка №1: Совпадение паролей
+      if (newPassword !== confirmPassword) {
+        if (resetError) {
+          resetError.innerText = "Les contrasenyes no coincideixen.";
+          resetError.classList.remove('hidden');
+        }
+        return;
+      }
+
+      // Проверка №2: Сложность пароля
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._() ]).{8,}$/;
+      if (!passwordRegex.test(newPassword)) {
+        if (resetError) {
+          resetError.innerText = "La contrasenya ha de contenir un mínim de 8 caràcters, incloent lletres majúscules, minúscules, números i símbols.";
+          resetError.classList.remove('hidden');
+        }
+        return;
+      }
+
+      // Извлекаем токен из хэша URL вручную
+      let accessToken = null;
+      if (window.location.hash) {
+        const hashParams = new URLSearchParams(window.location.hash.substring(1));
+        accessToken = hashParams.get('access_token');
+     }
+
+      // Если токена нет вообще в адресе, выводим понятную ошибку вместо падения Supabase
+      if (!accessToken) {
+        if (resetError) {
+          resetError.innerText = "L'enllaç de seguretat ha caducat o no és vàlid. Torna a sol·licitar un restabliment de contrasenya.";
+          resetError.classList.remove('hidden');
+        }
+        return;
+      }
+
+      // Передаем токен напрямую в метод обновления пользователя
+      const { error } = await supabase.auth.updateUser(
+        { password: newPassword },
+        { config: { accessToken: accessToken } }
+      );
+
+      if (error) {
+        if (resetError) {
+          resetError.innerText = "Error: " + error.message;
+          resetError.classList.remove('hidden');
+        }
+      } else {
+        alert('Contrasenya actualitzada correctament! Ja pots iniciar sessió.');
+        window.location.hash = '';
+        window.location.reload();
+      }
+    });
+  }
+});

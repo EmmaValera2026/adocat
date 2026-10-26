@@ -90,7 +90,7 @@ import Layout from "../layouts/Layout.astro";
             <form id="auth-form" class="space-y-3">
               <div>
                 <label for="auth-email" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Correu electrònic</label>
-                <input type="email" id="auth-email" autocomplete="email" required placeholder="mail@example.com" class="w-full border-2 border-gray-100 bg-gray-50/50 p-2.5 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors" />
+                <input autocomplete="new-password" type="email" id="auth-email" autocomplete="email" required placeholder="mail@example.com" class="w-full border-2 border-gray-100 bg-gray-50/50 p-2.5 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors" />
               </div>
               <div>
                 <div class="flex justify-between items-center mb-1">
@@ -100,7 +100,7 @@ import Layout from "../layouts/Layout.astro";
                     Has oblidat la contrasenya?
                   </button>
                 </div>
-                <input type="password" id="auth-password" autocomplete="current-password" required placeholder="********" class="w-full border-2 border-gray-100 bg-gray-50/50 p-2.5 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors" />
+                <input autocomplete="new-password" type="password" id="auth-password" autocomplete="current-password" required placeholder="********" class="w-full border-2 border-gray-100 bg-gray-50/50 p-2.5 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors" />
               </div>
 
               <!-- 🔴 Ошибка авторизации -->
@@ -210,6 +210,46 @@ import Layout from "../layouts/Layout.astro";
 
             </form>
           </div>
+
+          <!-- 🔄 БЛОК СОЗДАНИЯ НОВОГО ПАРОЛЯ (с двойным вводом и глазками) -->
+          <div id="new-password-block" class="hidden space-y-4">
+            <div class="space-y-1">
+              <span class="text-[9px] font-black uppercase text-gray-400 tracking-wider block">Seguretat de l'usuari</span>
+              <h3 class="text-xl font-black text-brand-dark uppercase tracking-tight">Crea una nova contrasenya</h3>
+              <p class="text-xs text-gray-500 font-medium">Introdueix la teva nova contrasenya per poder accedir al teu espai privat.</p>
+            </div>
+
+            <form id="new-password-form" class="space-y-3">
+              <!-- Поле 1: Новый пароль -->
+              <div class="space-y-1.5">
+                <label for="reset-password-input" class="text-[10px] font-black uppercase tracking-wider text-gray-500 block ml-1">Nova Contrasenya</label>
+                <div class="relative flex items-center">
+                  <input autocomplete="new-password" type="password" id="reset-password-input" required class="w-full border-2 border-gray-100 bg-gray-50/50 p-2.5 pr-11 text-sm font-semibold rounded-xs focus:outline-none focus:border-brand-green transition-colors" placeholder="••••••••" />
+                  <button type="button" class="toggle-reset-password absolute right-3 text-gray-400 hover:text-gray-600 focus:outline-none text-base cursor-pointer select-none" aria-label="Mostrar contrasenya">👁️</button>
+                </div>
+              </div>
+
+              <!-- Поле 2: Подтверждение пароля -->
+              <div class="space-y-1.5">
+                <label for="reset-password-confirm" class="text-[10px] font-black uppercase tracking-wider text-gray-500 block ml-1">Confirma la contrasenya</label>
+                <div class="relative flex items-center">
+                  <input autocomplete="new-password" type="password" id="reset-password-confirm" required class="w-full border-2 border-gray-100 bg-gray-50/50 p-2.5 pr-11 text-sm font-semibold rounded-xs focus:outline-none focus:border-brand-green transition-colors" placeholder="••••••••" />
+                  <button type="button" class="toggle-reset-password absolute right-3 text-gray-400 hover:text-gray-600 focus:outline-none text-base cursor-pointer select-none" aria-label="Mostrar contrasenya">👁️</button>
+                </div>
+                <p class="text-[10px] text-gray-400 font-medium ml-1 leading-tight">
+                  * La contrasenya ha de contenir un mínim de 8 caràcters, incloent lletres majúscules, minúscules, números i símbols.
+                </p>
+              </div>
+
+              <!-- 🔴 Ошибка обновления пароля -->
+              <div id="reset-error" class="hidden text-xs text-red-600 font-bold bg-red-50 border border-red-200 p-3 rounded-xs text-center"></div>
+
+              <button type="submit" id="reset-submit-btn" class="w-full bg-brand-green hover:bg-brand-hover text-white font-black text-xs uppercase tracking-widest py-3.5 rounded-xs transition-all mt-2 cursor-pointer">
+                Desar la contrasenya &rarr;
+              </button>
+            </form>
+          </div>
+
         </div>
       </section>
         
