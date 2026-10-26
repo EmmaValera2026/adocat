@@ -24,7 +24,7 @@ jobs:
 
       - name: Install dependencies & Build Astro
         run: |
-          pnpm install
+          pnpm install --no-frozen-lockfile
           pnpm run build
 
       - name: Deploy dist folder to Netlify
