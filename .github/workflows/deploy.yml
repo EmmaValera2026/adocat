@@ -28,7 +28,7 @@ jobs:
           pnpm run build
 
       - name: Deploy dist folder to Netlify
-        uses: nwtgck/actions-netlify@v2.2.0
+        uses: nwtgck/actions-netlify@v2
         with:
           publish-dir: './dist'
           production-deploy: true
