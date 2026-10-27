@@ -17,18 +17,15 @@ import Layout from "../layouts/Layout.astro";
       <!-- ========================================== -->
       <nav class="w-full text-left" aria-label="Breadcrumb">
         <ol class="flex flex-wrap items-center gap-y-1.5 gap-x-1.5 md:gap-x-2 text-[11px] sm:text-[13px] md:text-[15px] font-sans tracking-wider uppercase text-stone-400">
-          <!-- Главная -->
           <li class="inline-flex items-center">
             <a href="/" class="hover:text-stone-900 transition-colors">Inici</a>
           </li>
           
-          <!-- Разделитель-стрелочка -->
           <li class="flex items-center gap-1.5">
             <span class="text-stone-300 font-light">/</span>
             <a href="/eixos_detalls#comunitat" class="hover:text-stone-900 transition-colors">Comunitat i participació</a>
           </li>
           
-          <!-- Текущая страница -->
           <li class="flex items-center gap-1.5">
             <span class="text-stone-300 font-light">/</span>
             <span class="text-stone-600 font-medium select-none">Consultes i incidències</span>
@@ -56,8 +53,9 @@ import Layout from "../layouts/Layout.astro";
       <!-- ========================================== -->
       <section class="bg-gray-50 border-l-4 border-brand-green p-5 rounded-xs text-left space-y-2">
         <h4 class="text-sm font-black text-brand-dark uppercase tracking-wider">Com funciona la gestió de la informació?</h4>
+        <!-- Фраза удалена согласно Пункту 5 -->
         <p class="text-xs md:text-sm text-gray-600 font-medium leading-relaxed text-justify">
-          Les dades recopilades en aquest formulari són trameses de forma segura a l'equip de coordinació d'ADOCAT. S'utilitzaran exclusivament de manera interna per avaluar les necessitats del sector i orientar les nostres prioritats de suport. El tractament de la informació compta com a garanties verificades de privacitat.
+          Les dades recopilades en aquest formulari són trameses de forma segura a l'equip de coordinació d'ADOCAT. S'utilitzaran exclusivament de manera interna per avaluar les necessitats del sector i orientar les nostres prioritats de suport.
         </p>
       </section>
 
@@ -67,7 +65,7 @@ import Layout from "../layouts/Layout.astro";
       <section class="bg-white border border-gray-200 p-6 md:p-8 rounded-xs shadow-xs" id="denuncia-form-container">
         <form id="complaint-secure-form" class="space-y-6 text-left">
           
-          <!-- Селектор: Тип обращения -->
+          <!-- Выбор причины обращения -->
           <div>
             <label for="denuncia-tipus" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Motiu del contacte principal *</label>
             <select 
@@ -82,21 +80,28 @@ import Layout from "../layouts/Layout.astro";
             </select>
           </div>
 
-          <!-- Поле: Название центра -->
+          <!-- Поле: Название учебного центра (СДЕЛАНЫ ОПЦИОНАЛЬНЫМ) -->
           <div>
-            <label for="denuncia-centre" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Nom del centre de formació o entitat vinculada *</label>
+            <label for="denuncia-centre" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">
+              Nom del centre de formació o entitat vinculada <span class="text-gray-400 font-normal">(opcional)</span>
+            </label>
             <input 
               type="text" 
               id="denuncia-centre" 
-              required
               placeholder="Ex: Acadèmia o Centre d'Estudis SL" 
               class="w-full border-2 border-gray-100 bg-gray-50/50 p-3 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors"
             />
           </div>
 
-          <!-- Поле: Подробное описание -->
+          <!-- Поле: Описание + ПРЕДУПРЕЖДЕНИЕ О ЛИЧНЫХ ДАННЫХ -->
           <div>
             <label for="denuncia-descripcio" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Descripció de la consulta o els fets *</label>
+            
+            <!-- ⚠️ Предупреждение о защите данных о здоровье и паспортах -->
+            <p class="text-xs text-amber-700 bg-amber-50 border border-amber-200 p-3 rounded-xs font-medium leading-relaxed mb-2">
+              No incloguis dades de salut, documents d’identitat ni informació personal de terceres persones que no sigui necessària. Si cal ampliar la informació, t’indicarem com fer-ho.
+            </p>
+
             <textarea 
               id="denuncia-descripcio" 
               rows="5" 
@@ -106,7 +111,7 @@ import Layout from "../layouts/Layout.astro";
             ></textarea>
           </div>
 
-          <!-- Поле: Контакты -->
+          <!-- Поле: Контактные данные -->
           <div class="border-t border-gray-100 pt-4 space-y-4">
             <div>
               <h4 class="text-xs font-black text-brand-dark uppercase tracking-wider mb-1">Dades de resposta per al seguiment</h4>
@@ -126,13 +131,28 @@ import Layout from "../layouts/Layout.astro";
             </div>
           </div>
 
-          <!-- 🔒 Обязательный чекбокс защиты данных -->
+          <!-- ⚖️ ЮРИДИЧЕСКИЙ БЛОК ДАННЫХ (Из Пункта 4) -->
+          <div class="bg-gray-50 border border-gray-200 p-3 rounded-xs text-[10px] text-gray-600 space-y-1 mt-2">
+            <p><strong>Responsable:</strong> ADOCAT – Associació de Docents Ocupacionals de Catalunya.</p>
+            <p><strong>Finalitat:</strong> Respondre la consulta.</p>
+            <p><strong>Legitimació:</strong> Consentiment de la persona interessada.</p>
+            <p><strong>Destinataris:</strong> Proveïdors que presten els serveis tècnics necessaris, segons la <a href="/legal#privacitat" class="underline hover:text-brand-green">Política de privacitat</a>.</p>
+            <p><strong>Drets:</strong> Pots exercir els teus drets i retirar el consentiment escrivint a info@adocat.es.</p>
+            <p><strong>Més informació:</strong> Consulta la <a href="/legal#privacitat" class="underline hover:text-brand-green font-bold">Política de privacitat</a>.</p>
+          </div>
+
+          <!-- 🔒 ЧЕКБОКС СОГЛАСИЯ (Из Пункта 4, не отмечен по умолчанию) -->
           <div class="flex items-start gap-2.5 pt-2">
             <input type="checkbox" id="denuncia-rgpd" class="mt-1 w-4 h-4 accent-brand-green cursor-pointer" required />
-            <label for="denuncia-rgpd" class="text-[11px] text-gray-500 font-medium cursor-pointer select-none leading-tight">
-              Accepto la clàusula de <a href="/legal#privacitat" class="underline hover:text-brand-green transition-colors">protecció de dades (RGPD)</a> i autoritzo el tractament de la informació aportada amb total confidencialitat.
+            <label for="denuncia-rgpd" class="text-[11px] text-gray-600 font-medium cursor-pointer select-none leading-tight">
+              Autoritzo el tractament de les dades per respondre la meva consulta, segons la <a href="/legal#privacitat" class="underline hover:text-brand-green transition-colors">Política de privacitat</a>.
             </label>
           </div>
+
+          <!-- 🛑 ЮРИДИЧЕСКАЯ ОГОВОРКА ПЕРЕД КНОПКОЙ (Из Пункта 5) -->
+          <p class="text-xs text-gray-500 bg-gray-50 border border-gray-200 p-3 rounded-xs font-medium leading-relaxed">
+            Aquest formulari no presenta una denúncia davant cap organisme públic, no inicia una representació jurídica i no suspèn els terminis per reclamar.
+          </p>
 
           <!-- Блок ошибки -->
           <div id="complaint-form-error" class="hidden text-xs text-red-600 font-bold bg-red-50 p-3 rounded-xs border border-red-200"></div>
@@ -143,7 +163,7 @@ import Layout from "../layouts/Layout.astro";
               Enviar formulari de contacte &rarr;
             </button>
           </div>
-
+          
         </form>
       </section>
 

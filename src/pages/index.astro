@@ -2,11 +2,6 @@
 import Layout from "../layouts/Layout.astro";
 
 import fondoHero from "../imagen/photo2.png";
-import user1 from '../imagen/user1.avif';
-import user2 from '../imagen/user2.avif';
-import user3 from '../imagen/user3.avif';
-import user4 from '../imagen/user4.avif';
-
 import emmaGrupo from '../imagen/emma_grupo.png'; 
 import movileHero from '../imagen/mobile-hero.png'; 
 import logoAdocat from '../imagen/logo-adocat.png'; 
@@ -153,10 +148,16 @@ import emmaConversacion from '../imagen/emma_convercasion.png';
           />
         </div>
         <div class="space-y-4 text-left">
-          <span class="text-xs font-black text-brand-green uppercase tracking-widest">Mètode 01</span>
+          <span class="inline-block px-3 py-1 text-[10px] font-black uppercase tracking-wider text-amber-700 bg-amber-50 border border-amber-200 rounded-full">
+            EN PREPARACIÓ
+          </span>
+
+          <span class="text-xs font-black text-brand-green uppercase tracking-widest block">Mètode 01</span>
+          
           <h2 class="text-2xl md:text-3xl font-black text-brand-dark uppercase tracking-tight">Acció i Recursos Pedagògics</h2>
+          
           <p class="text-sm md:text-base text-gray-600 leading-relaxed font-medium">
-            Unim forces compartint eines didàctiques d'alt nivell. Accedeix a una base de dades comuna creada per i per a docents, amb programacions modulars adaptades a les exigències del SOC i exàmens ja validats per agilitzar el teu dia a dia.
+            Estem preparant espais per compartir recursos didàctics, bones pràctiques i experiències professionals. Cada recurs o activitat s’anunciarà quan estigui disponible i amb les seves condicions d’accés.
           </p>
         </div>
       </div>
@@ -165,15 +166,20 @@ import emmaConversacion from '../imagen/emma_convercasion.png';
       <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
         <div class="space-y-4 text-left order-2 md:order-1">
           <span class="text-xs font-black text-brand-green uppercase tracking-widest">Mètode 02</span>
-          <h2 class="text-2xl md:text-3xl font-black text-brand-dark uppercase tracking-tight">Presència i Interlocució Legal</h2>
+    
+          <h2 class="text-2xl md:text-3xl font-black text-brand-dark uppercase tracking-tight">
+            DIÀLEG I REPRESENTACIÓ PROFESSIONAL
+          </h2>
+    
           <p class="text-sm md:text-base text-gray-600 leading-relaxed font-medium">
-            Establim ponts ferms amb administracions públiques, sindicats i centres per assegurar de forma efectiva que la qualitat es paga. Rebreu assessorament legal especialitzat per fer front a qualsevol incidència contractual o situació de fals autònom.
+            Recollim les necessitats del col·lectiu docent i promovem el diàleg amb centres, entitats i administracions per impulsar propostes de millora de les condicions professionals i de la qualitat formativa.
           </p>
         </div>
+  
         <div class="w-full h-70 md:h-95 rounded-xs overflow-hidden border border-gray-200 shadow-xs bg-gray-100 order-1 md:order-2">
           <img 
             src={emmaConversacion.src} 
-            alt="Presència i Interlocució Legal - ADOCAT" 
+            alt="Diàleg i Representació Professional - ADOCAT" 
             class="w-full h-full object-cover object-center"
           />
         </div>
@@ -293,96 +299,6 @@ import emmaConversacion from '../imagen/emma_convercasion.png';
         </p>
 
       </div>
-    </section>
-
-    <!-- СЕКЦИЯ: VALORAT PER LA COMUNITAT (ОТЗЫВЫ НА ГЛАВНОЙ) -->
-    <section id="testimonials" class="w-full bg-[#f4f4f3] py-24 border-t border-stone-200/40">
-      <div class="max-w-6xl mx-auto px-6 font-sans">
-        
-        <!-- Заголовок секции со звездами Ugmonk -->
-        <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
-          <!-- Пять золотых звездочек аккуратно по центру -->
-          <div class="flex justify-center text-amber-400 text-lg tracking-wider">
-            ★★★★★
-          </div>
-          <h2 class="text-3xl font-serif font-normal tracking-tight text-stone-950 sm:text-4xl">
-            Valorat per la Comunitat
-          </h2>
-          <p class="text-sm md:text-base text-stone-500 font-light leading-relaxed">
-            El que diuen els docents que ja formen part d'ADOCAT.
-          </p>
-        </div>
-
-        <!-- Сетка из 4-х карточек отзывов с эффектом плавного всплытия -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          
-          <!-- ОТЗЫВ 1: Carlos M. -->
-          <div class="bg-white rounded-xl p-5 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.02)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5 group">
-            <div class="space-y-4">
-              <div class="w-full h-48 overflow-hidden rounded-lg bg-stone-100">
-                <img src={user1.src} alt="Carlos M." class="object-top w-full h-full object-cover grayscale-20 group-hover:scale-103 transition-transform duration-500" />
-              </div>
-              <p class="text-[11px] md:text-xs text-stone-500 font-light leading-relaxed italic text-justify">
-                "Gràcies al suport informatiu i a l'orientació de l'associació, vaig aconseguir entendre millor la meva situació i regularitzar la meva activitat al centre de formació, assolint una major estabilitat professional."
-              </p>
-            </div>
-            <!-- Автор -->
-            <div class="pt-4 border-t border-stone-50 mt-4">
-              <h4 class="text-xs font-bold text-stone-950 uppercase tracking-wide">Carlos M.</h4>
-              <p class="text-[10px] text-stone-400 font-medium uppercase tracking-wider mt-0.5">Professor de FP</p>
-            </div>
-          </div>
-
-          <!-- ОТЗЫВ 2: Laura G. -->
-          <div class="bg-white rounded-xl p-5 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.02)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5 group">
-            <div class="space-y-4">
-              <div class="w-full h-48 overflow-hidden rounded-lg bg-stone-100">
-                <img src={user2.src} alt="Laura G." class="object-top w-full h-full object-cover grayscale-20 group-hover:scale-103 transition-transform duration-500" />
-              </div>
-              <p class="text-[11px] md:text-xs text-stone-500 font-light leading-relaxed italic text-justify">
-                "Un espai excel·lent per compartir recursos pedagògics i bones pràctiques. Sentir-se recolzada per una xarxa sòlida de companys i companyes de professió és una eina que no té preu en el nostre dia a dia."
-              </p>
-            </div>
-            <div class="pt-4 border-t border-stone-50 mt-4">
-              <h4 class="text-xs font-bold text-stone-950 uppercase tracking-wide">Laura G.</h4>
-              <p class="text-[10px] text-stone-400 font-medium uppercase tracking-wider mt-0.5">Formadora Ocupacional</p>
-            </div>
-          </div>
-
-          <!-- ОТЗЫВ 3: David T. -->
-          <div class="bg-white rounded-xl p-5 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.02)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5 group">
-            <div class="space-y-4">
-              <div class="w-full h-48 overflow-hidden rounded-lg bg-stone-100">
-                <img src={user3.src} alt="David T." class="object-top w-full h-full object-cover grayscale-20 group-hover:scale-103 transition-transform duration-500" />
-              </div>
-              <p class="text-[11px] md:text-xs text-stone-500 font-light leading-relaxed italic text-justify">
-                "La interlocució d'ADOCAT amb les institucions públiques i els centres és clau. Per fi tenim una associació transparent que trasllada les nostres necessitats reals i demana millores tangibles per a tot el sector."
-              </p>
-            </div>
-            <div class="pt-4 border-t border-stone-50 mt-4">
-              <h4 class="text-xs font-bold text-stone-950 uppercase tracking-wide">David T.</h4>
-              <p class="text-[10px] text-stone-400 font-medium uppercase tracking-wider mt-0.5">Docent Tècnic</p>
-            </div>
-          </div>
-
-          <!-- ОТЗЫВ 4: Elena R. -->
-          <div class="bg-white rounded-xl p-5 flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.02)] border border-stone-100 transition-transform duration-300 hover:-translate-y-1.5 group">
-            <div class="space-y-4">
-              <div class="w-full h-48 overflow-hidden rounded-lg bg-stone-100">
-                <img src={user4.src} alt="Elena R." class="object-top w-full h-full object-cover grayscale-20 group-hover:scale-103 transition-transform duration-500" />
-              </div>
-              <p class="text-[11px] md:text-xs text-stone-500 font-light leading-relaxed italic text-justify">
-                "Els estudis tècnics i les trobades sectorials que organitzen ens ajuden a entendre els canvis normatius reals, a compartir experiències didàctiques i a defensar de manera conjunta la nostra dignitat professional."
-              </p>
-            </div>
-            <div class="pt-4 border-t border-stone-50 mt-4">
-              <h4 class="text-xs font-bold text-stone-950 uppercase tracking-wide">Elena R.</h4>
-              <p class="text-[10px] text-stone-400 font-medium uppercase tracking-wider mt-0.5">Consultora i Formadora</p>
-            </div>
-          </div>
-
-        </div> 
-      </div> 
     </section>
 
     <!-- 📝 БЛОК КВИЗА (Перенесен во второстепенный блок по Приоритету 1, пункт 3 и Приоритету 2, пункт 8) -->

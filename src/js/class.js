@@ -28,8 +28,18 @@ export class QuizEngine {
         }
     };
 
+    // 🎯 Поддержка сохранения как одиночного ответа, так и массива (для multiple: true)
     saveAnswer = (questionId, value) => {
-        this.responses[questionId] = value;
+        const currentQuestion = QUIZ_QUESTIONS[this.currentIndex];
+
+        if (currentQuestion && currentQuestion.multiple) {
+            // Если это множественный выбор, value — это массив выбранных опций
+            this.responses[questionId] = Array.isArray(value) ? value : [value];
+        } else {
+            // Одиночный выбор (строка)
+            this.responses[questionId] = value;
+        }
+
         const sessionData = {
             timestamp: Date.now(),
             responses: this.responses
@@ -42,7 +52,6 @@ export class QuizEngine {
         const totalSteps = QUIZ_QUESTIONS.length;
         const currentQuestion = this.currentIndex < totalSteps ? QUIZ_QUESTIONS[this.currentIndex] : null;
         
-        // Переводим внутреннее состояние в нейтральный информационный режим 
         return {
             currentIndex: this.currentIndex,
             totalSteps: totalSteps,
@@ -52,7 +61,8 @@ export class QuizEngine {
             isQuizFinished: this.currentIndex >= totalSteps,
             currentQuestion: currentQuestion ? {
                 ...currentQuestion,
-                savedAnswer: this.responses[currentQuestion.id] || null
+                // Передаем сохраненный ответ (строка или массив)
+                savedAnswer: this.responses[currentQuestion.id] || (currentQuestion.multiple ? [] : null)
             } : null,
             result: {
                 isPrecario: false,
@@ -72,7 +82,6 @@ export class QuizEngine {
 
     saveLeadToDatabase = async (userData) => {
         try {
-            // Очищаем email и имя от лишних пробелов перед отправкой
             const cleanEmail = userData.email ? userData.email.trim().toLowerCase() : '';
             const cleanNombre = userData.nombre ? userData.nombre.trim().replace(/\s+/g, ' ') : '';
             const cleanTelefono = userData.telefono ? userData.telefono.trim() : '';
@@ -96,7 +105,7 @@ export class QuizEngine {
                 }
             }
 
-            // 2. Прямая запись анкеты и контактов в таблицу leads (историческая накопительная вставка)
+            // 2. Прямая запись анкеты и контактов в таблицу leads
             const { error } = await supabase
                 .from('leads')
                 .insert([
@@ -113,7 +122,7 @@ export class QuizEngine {
 
             if (error) throw error;
 
-            // 3. Интеграция с бэкенд-эндпоинтом (/api/subscribe) для писем и Brevo
+            // 3. Интеграция с бэкенд-эндпоинтом (/api/subscribe)
             try {
                 await fetch('/api/subscribe', {
                     method: 'POST',
@@ -157,7 +166,9 @@ export class QuizEngine {
                 this.currentIndex = 0;
             } else {
                 this.responses = sessionData.responses || {};
-                this.currentIndex = Object.keys(this.responses).length;
+                // Вычисляем индекс на основе уже отвеченных ключей вопросов
+                const answeredKeys = Object.keys(this.responses);
+                this.currentIndex = answeredKeys.length;
                 
                 if (this.currentIndex > QUIZ_QUESTIONS.length) {
                     this.currentIndex = 0;
@@ -170,5 +181,21 @@ export class QuizEngine {
             this.currentIndex = 0;
         }
     };
-}
 
+    // Сохраняет ответ в память (для multiple), но НЕ вызывает notify и не перерисовывает экран
+    saveAnswerSilent = (questionId, value) => {
+        const currentQuestion = QUIZ_QUESTIONS[this.currentIndex];
+        if (currentQuestion && currentQuestion.multiple) {
+            this.responses[questionId] = Array.isArray(value) ? value : [value];
+        } else {
+            this.responses[questionId] = value;
+        }
+        
+        // Просто обновляем localStorage без перерисовки DOM
+        const sessionData = {
+            timestamp: Date.now(),
+            responses: this.responses
+        };
+        localStorage.setItem('adocat_answers_session', JSON.stringify(sessionData));
+    };
+}

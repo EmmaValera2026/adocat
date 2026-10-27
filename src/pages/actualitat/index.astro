@@ -159,11 +159,21 @@ const sortedNoticies = allNoticies.sort((a: any, b: any) => {
               />
             </div>
 
-            <!-- 🔒 Обязательный чекбокс защиты данных -->
+            <!-- ⚖️ ЮРИДИЧЕСКАЯ ИНФОРМАЦИЯ ДЛЯ РАССЫЛКИ -->
+            <div class="bg-gray-50 border border-gray-200 p-3 rounded-xs text-[10px] text-gray-600 space-y-1 mt-2">
+              <p><strong>Responsable:</strong> ADOCAT – Associació de Docents Ocupacionals de Catalunya.</p>
+              <p><strong>Finalitat:</strong> Enviar el butlletí.</p>
+              <p><strong>Legitimació:</strong> Consentiment de la persona interessada.</p>
+              <p><strong>Destinataris:</strong> Proveïdors que presten els serveis tècnics necessaris, segons la <a href="/legal#privacitat" class="underline hover:text-brand-green">Política de privacitat</a>.</p>
+              <p><strong>Drets:</strong> Pots exercir els teus drets i retirar el consentiment escrivint a info@adocat.es.</p>
+              <p><strong>Més informació:</strong> Consulta la <a href="/legal#privacitat" class="underline hover:text-brand-green font-bold">Política de privacitat</a>.</p>
+            </div>
+
+            <!-- 🔒 ЧЕКБОКС СОГЛАСИЯ ДЛЯ РАССЫЛКИ (НЕ отмечен по умолчанию, точный текст тьютора) -->
             <div class="flex items-start gap-2 pt-1">
               <input type="checkbox" id="sub-rgpd" class="mt-0.5 w-4 h-4 accent-brand-green cursor-pointer" required />
-              <label for="sub-rgpd" class="text-[10px] text-gray-500 font-medium cursor-pointer select-none leading-tight ml-2">
-                Accepto la <a href="/legal#privacitat" class="underline hover:text-brand-green transition-colors">política de privacitat</a> i autoritzo el tractament de les dades.
+              <label for="sub-rgpd" class="text-[10px] text-gray-600 font-medium cursor-pointer select-none leading-tight ml-2">
+                Vull rebre el butlletí d’ADOCAT per correu electrònic. Puc donar-me de baixa en qualsevol moment.
               </label>
             </div>
 
@@ -172,7 +182,7 @@ const sortedNoticies = allNoticies.sort((a: any, b: any) => {
             </button>
           </form>
         </div>
-
+        
       </div>
     </section>
 

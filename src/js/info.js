@@ -382,24 +382,78 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (title) title.textContent = state.currentQuestion.text;
 
+        const isMultiple = state.currentQuestion.multiple === true;
+        const savedAnswers = state.currentQuestion.savedAnswer;
+
         state.currentQuestion.options.forEach(option => {
             const btnClone = DOM_CACHE.buttonTemplate.content.cloneNode(true);
             const btn = btnClone.querySelector('button');
             if (btn) {
                 btn.textContent = option;
-                if (state.currentQuestion.savedAnswer === option) {
+
+                let isSelected = false;
+                if (isMultiple && Array.isArray(savedAnswers)) {
+                    isSelected = savedAnswers.includes(option);
+                } else {
+                    isSelected = (savedAnswers === option);
+                }
+
+                if (isSelected) {
                     btn.setAttribute('data-selected', 'true');
                     btn.style.borderColor = '#00bf63';
                     btn.style.backgroundColor = '#f4fbf7';
                 }
 
                 btn.addEventListener('click', () => {
-                    engine.saveAnswer(state.currentQuestion.id, option);
-                    abrirModalConfirmacion(state.currentProgress);
+                    if (isMultiple) {
+                        // Для множественного выбора: меняем только стили и массив в памяти БЕЗ перезагрузки
+                        let currentSelectedArray = Array.isArray(state.currentQuestion.savedAnswer) 
+                            ? [...state.currentQuestion.savedAnswer] 
+                            : [];
+
+                        if (currentSelectedArray.includes(option)) {
+                            currentSelectedArray = currentSelectedArray.filter(item => item !== option);
+                            btn.removeAttribute('data-selected');
+                            btn.style.borderColor = '';
+                            btn.style.backgroundColor = '';
+                        } else {
+                            currentSelectedArray.push(option);
+                            btn.setAttribute('data-selected', 'true');
+                            btn.style.borderColor = '#00bf63';
+                            btn.style.backgroundColor = '#f4fbf7';
+                        }
+
+                        // Вызываем тихое сохранение без перерисовки DOM
+                        engine.saveAnswerSilent(state.currentQuestion.id, currentSelectedArray);
+                        // Обновляем локальное состояние для текущей сессии рендеринга
+                        state.currentQuestion.savedAnswer = currentSelectedArray;
+
+                    } else {
+                        // Одиночный выбор работает как раньше — с мгновенным переходом
+                        engine.saveAnswer(state.currentQuestion.id, option);
+                        abrirModalConfirmacion(state.currentProgress);
+                    }
                 });
             }
             if (grid) grid.appendChild(btnClone);
         });
+
+        // 🟢 ДЛЯ МНОЖЕСТВЕННОГО ВЫБОРА: Добавляем кнопку подтверждения внизу карточки
+        if (isMultiple) {
+            const confirmBtnContainer = document.createElement('div');
+            confirmBtnContainer.className = "mt-6 pt-4 border-t border-gray-100 flex justify-end w-full";
+            
+            const confirmBtn = document.createElement('button');
+            confirmBtn.className = "bg-[#21bf63] hover:bg-emerald-600 text-white font-bold text-xs uppercase tracking-wider py-3.5 px-6 rounded-xs transition-all cursor-pointer";
+            confirmBtn.textContent = "Confirmar selecció i continuar →";
+            
+            confirmBtn.addEventListener('click', () => {
+                abrirModalConfirmacion(state.currentProgress);
+            });
+
+            confirmBtnContainer.appendChild(confirmBtn);
+            if (grid) grid.parentNode.appendChild(confirmBtnContainer);
+        }
 
         if (cardDiv) cardDiv.classList.add('opacity-0', '-translate-y-6', 'transition-all', 'duration-500');
         if (DOM_CACHE.stepsHolder) DOM_CACHE.stepsHolder.appendChild(cardClone);
@@ -468,51 +522,84 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('go-to-form-btn')?.addEventListener('click', () => revealForm());
         
         // Перехват формы и отправка данных в режиме запроса интереса
-        document.getElementById('lead-form-adocat')?.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const inputProvincia = document.getElementById('lead-provincia');
-        const inputRole = document.getElementById('lead-role');
-        const quizErrorEl = document.getElementById('quiz-error-msg'); // Блок для ошибки в HTML квиза
+document.getElementById('lead-form-adocat')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-        if (quizErrorEl) quizErrorEl.classList.add('hidden');
+    const inputProvincia = document.getElementById('lead-provincia');
+    const inputRole = document.getElementById('lead-role');
+    const quizErrorEl = document.getElementById('quizError'); // 👈 Ссылаемся на наш новый id="quizError" из HTML
 
-        // --- КЛИЕНТСКАЯ ПРОВЕРКА EMAIL ---
-        const emailValue = DOM_CACHE.inputEmail?.value.trim() || '';
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (quizErrorEl) quizErrorEl.classList.add('hidden');
 
-        if (!emailRegex.test(emailValue)) {
-            if (quizErrorEl) {
-                quizErrorEl.textContent = "Si us plau, introdueix un correu electrònic vàlid (ex: tu@email.com)";
-                quizErrorEl.classList.remove('hidden'); // Показываем блок с ошибкой на экране
-            }
-            DOM_CACHE.inputEmail?.focus();
-            return; // Останавливаем отправку формы!
+    // --- КЛИЕНТСКАЯ ПРОВЕРКА EMAIL ---
+    const emailInput = document.getElementById('lead-email'); 
+    const emailValue = emailInput ? emailInput.value.trim() : (DOM_CACHE.inputEmail?.value.trim() || '');
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(emailValue)) {
+        if (quizErrorEl) {
+            quizErrorEl.textContent = "Si us plau, introdueix un correu electrònic vàlid (ex: tu@email.com)";
+            quizErrorEl.classList.remove('hidden'); // Показываем блок с ошибкой на экране
         }
-        // ---------------------------------
+        if (emailInput) emailInput.focus();
+        return; // Останавливаем отправку формы!
+    } else {
+        if (quizErrorEl) {
+            quizErrorEl.classList.add('hidden'); // Прячем ошибку, если всё ок
+        }
+    }
+    // ---------------------------------
 
-        const userData = {
-            nombre: DOM_CACHE.inputNombre?.value.trim() || 'No especificat',
-            email: emailValue,
-            telefono: DOM_CACHE.inputTelefono?.value.replace(/\D/g, '') || '',
-            provincia: inputProvincia ? inputProvincia.value : 'No especificada',
-            role: inputRole ? inputRole.value : 'socio'
-        };
+    // ⚡ Находим кнопку отправки и сохраняем её текст
+    const submitBtn = document.querySelector('#lead-form-adocat button[type="submit"]');
+    const originalBtnText = submitBtn ? submitBtn.innerHTML : '';
 
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.7';
+        submitBtn.style.cursor = 'wait';
+        submitBtn.innerHTML = `
+            <span class="inline-block animate-spin mr-2">⏳</span> 
+            Enviant sol·licitud...
+        `;
+    }
+
+    const userData = {
+        nombre: DOM_CACHE.inputNombre?.value.trim() || 'No especificat',
+        email: emailValue, // Используем проверенный email
+        telefono: DOM_CACHE.inputTelefono?.value.replace(/\D/g, '') || '',
+        provincia: inputProvincia ? inputProvincia.value : 'No especificada',
+        role: inputRole ? inputRole.value : 'socio'
+    };
+
+    try {
         const result = await engine.saveLeadToDatabase(userData);
-            if (result.success) {
-                if (DOM_CACHE.stepCardForm) DOM_CACHE.stepCardForm.classList.add('hidden');
-                if (DOM_CACHE.stepCardSuccess) {
-                    DOM_CACHE.stepCardSuccess.classList.remove('hidden');
-                    setTimeout(() => DOM_CACHE.stepCardSuccess.classList.remove('opacity-0'), 50);
-                }
-            } else {
-                if (quizErrorEl) {
-                    quizErrorEl.textContent = "Hi va haver un problema en processar la teva sol·licitud d'informació. Torna-ho a provar.";
-                    quizErrorEl.classList.remove('hidden');
-                }
+        
+        if (result.success) {
+            if (DOM_CACHE.stepCardForm) DOM_CACHE.stepCardForm.classList.add('hidden');
+            if (DOM_CACHE.stepCardSuccess) {
+                DOM_CACHE.stepCardSuccess.classList.remove('hidden');
+                setTimeout(() => DOM_CACHE.stepCardSuccess.classList.remove('opacity-0'), 50);
             }
-        });
-
+        } else {
+            throw new Error(result.error || "Error");
+        }
+    } catch (err) {
+        if (quizErrorEl) {
+            quizErrorEl.textContent = "Hi va haver un problema en processar la teva sol·licitud d'informació. Torna-ho a provar.";
+            quizErrorEl.classList.remove('hidden');
+        }
+        
+        // 🔄 Возвращаем кнопку в исходное состояние при ошибке
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+            submitBtn.style.cursor = 'pointer';
+            submitBtn.innerHTML = originalBtnText;
+        }
+    }
+});
         // Блок документов: Full de sol·licitud d'informació
         document.getElementById('btn-cta-socio')?.addEventListener('click', () => {
             const htmlSocio = `
@@ -1070,3 +1157,47 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+// ==========================================
+// 🚀 ЛОГИКА ДЛЯ ПУНКТА 7 (Переход из комиссий)
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Проверяем URL на наличие параметра ?role=comissio
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    if (urlParams.get('role') === 'comissio') {
+        const quizSection = document.getElementById('quiz-section');
+        const quizFlowContainer = document.getElementById('quiz-flow-container');
+        const resultCard = document.getElementById('step-card-resultat') || document.getElementById('step-card-result');
+        const formCard = document.getElementById('step-card-form');
+        const inputRole = document.getElementById('lead-role');
+
+        // 2. Показываем главную секцию
+        if (quizSection) {
+            quizSection.classList.remove('hidden');
+            quizSection.classList.add('opacity-100');
+        }
+
+        // 3. Скрываем карточки вопросов и результатов квиза
+        if (quizFlowContainer) quizFlowContainer.classList.add('hidden');
+        if (resultCard) resultCard.classList.add('hidden');
+
+        // 4. Открываем карточку формы
+        if (formCard) {
+            formCard.classList.remove('hidden');
+            formCard.classList.remove('opacity-0');
+            formCard.classList.add('opacity-100');
+        }
+
+        // 5. Предвыбираем роль "comissio"
+        if (inputRole) {
+            inputRole.value = 'comissio';
+        }
+
+        // 6. Плавно скроллим к форме
+        setTimeout(() => {
+            (formCard || quizSection)?.scrollIntoView({ behavior: 'smooth' });
+        }, 150);
+    }
+});
+
