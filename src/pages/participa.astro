@@ -93,8 +93,7 @@ import Layout from "../layouts/Layout.astro";
   <!-- ========================================== -->
   <!-- 3. ОСНОВНОЙ КОНТЕЙНЕР КВИЗА И ФОРМ (MAIN) -->
   <!-- ========================================== -->
-  <!-- Изменяем max-w-6xl на max-w-7xl, чтобы колонки стали шире -->
-  <main id="quiz-section" class="w-full max-w-7xl mx-auto pt-4 pb-12 px-4 md:px-8 flex-col justify-start items-center hidden opacity-0 transition-opacity duration-500">
+  <main id="quiz-section" class="w-full max-w-360 mx-auto pt-4 pb-12 px-4 md:px-8 flex-col justify-start items-center hidden opacity-0 transition-opacity duration-500">
       
     <!-- Заголовок страницы диагностики -->
     <div class="text-center space-y-3 pb-8 border-b border-gray-200 w-full mb-8">
@@ -154,7 +153,7 @@ import Layout from "../layouts/Layout.astro";
         </div>
 
         <!-- 💚 ВЕРТИКАЛЬНАЯ ЛИНИЯ-РАЗДЕЛИТЕЛЬ #21bf63 -->
-        <div class="hidden md:block w-0.5 bg-[#21bf63] rounded-full shrink-0 self-stretch my-2 mx-15"></div>
+        <div class="hidden md:block w-0.5 bg-[#21bf63] rounded-full shrink-0 self-stretch my-2 mx-10"></div>
 
         <!-- ПРАВАЯ КОЛОНКА -->
         <div class="w-full md:w-1/2 space-y-6">
@@ -264,6 +263,7 @@ import Layout from "../layouts/Layout.astro";
                             <div>
                                 <label for="lead-role" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Modalitat d'implicació d'interès</label>
                                 <select id="lead-role" class="w-full border-2 border-gray-100 bg-gray-50/50 p-3 pr-10 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors cursor-pointer appearance-none">
+                                    <option value="" disabled selected>Selecciona modalitat...</option>
                                     <option value="socio">Vull associar-me</option>   
                                     <option value="pada">Vull conèixer les PADA (Persones Amigues d'ADOCAT)</option>   
                                     <option value="comissio">Vull participar en una comissió</option>   
