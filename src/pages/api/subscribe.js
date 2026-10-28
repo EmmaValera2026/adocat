@@ -56,7 +56,7 @@ export const POST = async ({ request }) => {
 
     const apiKey = import.meta.env.BREVO_API_KEY;
     const listId = Number(import.meta.env.BREVO_LIST_ID) || 3;
-    const tutorEmail = import.meta.env.TUTOR_EMAIL || 'som.adocat@gmail.com';
+    const tutorEmail = import.meta.env.TUTOR_EMAIL || 'info@adocat.es';
 
     if (apiKey) {
       const firstName = body.firstname || (cleanNombre ? cleanNombre.split(/\s+/)[0] : 'Docent');
@@ -108,7 +108,7 @@ export const POST = async ({ request }) => {
             'content-type': 'application/json'
           },
           body: JSON.stringify({
-            sender: { name: 'ADOCAT', email: 'som.adocat@gmail.com' },
+            sender: { name: 'ADOCAT', email: 'info@adocat.es' },
             to: [{ email: cleanEmail }],
             subject: "✨ Benvingut/da al butlletí oficial d'ADOCAT",
             htmlContent: `
@@ -126,7 +126,7 @@ export const POST = async ({ request }) => {
         console.error('❌ Ошибка отправки письма пользователю:', err.message);
       }
 
-      // 3. Отправка уведомления ТЬЮТОРУ на som.adocat@gmail.com
+      // 3. Отправка уведомления ТЬЮТОРУ на info@adocat.es
       try {
         await fetch('https://api.brevo.com/v3/smtp/email', {
           method: 'POST',
@@ -136,7 +136,7 @@ export const POST = async ({ request }) => {
             'content-type': 'application/json'
           },
           body: JSON.stringify({
-            sender: { name: 'ADOCAT Bot', email: 'som.adocat@gmail.com' },
+            sender: { name: 'ADOCAT Bot', email: 'info@adocat.es' },
             to: [{ email: tutorEmail }],
             subject: `🔔 Nou test completat: ${cleanNombre || cleanEmail}`,
             htmlContent: `
