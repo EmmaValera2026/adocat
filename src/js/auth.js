@@ -364,7 +364,16 @@ if (typeof window !== 'undefined') {
         } catch (err) {
           console.error('Supabase Auth Error:', err.message);
           if (authError) {
-            authError.textContent = `Error: ${err.message}`;
+            // Проверяем, связана ли ошибка с неверными учетными данными или отсутствием пользователя
+            if (
+              err.message.toLowerCase().includes('invalid login credentials') || 
+              err.message.toLowerCase().includes('invalid grant') ||
+              err.status === 400
+            ) {
+              authError.textContent = "Aquest compte no existeix o la contrasenya és incorrecta. Si us plau, registra't primer.";
+            } else {
+              authError.textContent = `Error d'accés: ${err.message}`;
+            }
             authError.classList.remove('hidden');
           }
         } finally {
