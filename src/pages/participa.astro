@@ -215,69 +215,78 @@ import Layout from "../layouts/Layout.astro";
                 </button>
             </div>
 
-            <!-- 📥 3. ЭКРАН ФИНАЛЬНОЙ ФОРМЫ ЛИДА (С расширенными отступами и кнопкой) -->
-            <div id="step-card-form" class="hidden opacity-0 transition-all duration-500 space-y-6 w-full">
-                <div class="quiz-card w-full p-6 md:p-8 bg-white border border-gray-200 rounded-xs shadow-md space-y-6 text-left">
-                    <div class="text-center space-y-1 pb-4 border-b border-gray-100">
-                        <h3 class="text-xl font-black text-brand-dark uppercase tracking-tight">M’interessa associar-me</h3>
-                        <p class="text-xs font-medium text-gray-500 text-center">Deixa’ns el teu nom i correu electrònic i t’informarem dels passos per formar part d’ADOCAT.</p>
-                    </div>
-                      
-                    <form id="lead-form-adocat" class="space-y-4 pt-2">
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div>
-                                <label for="lead-nombre" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Nom complet</label>
-                                <input type="text" id="lead-nombre" class="w-full border-2 border-gray-100 bg-gray-50/50 p-3 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors" required placeholder="El teu nom i cognoms...">
-                            </div>
-                            <div>
-                                <label for="lead-email" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Correu electrònic</label>
-                                <input type="email" id="lead-email" class="w-full border-2 border-gray-100 bg-gray-50/50 p-3 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors" required placeholder="exemple@correu.com">
-                                <div id="quizError" class="hidden text-red-600 text-sm mt-1"></div>
-                            </div>
-                        </div>
-
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div>
-                                <label for="lead-telefono" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Telèfon de contacte</label>
-                                <input type="tel" id="lead-telefono" class="w-full border-2 border-gray-100 bg-gray-50/50 p-3 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors" required placeholder="600 000 000">
-                            </div>
-                            <div>
-                                <label for="lead-provincia" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Província laboral</label>
-                                <select id="lead-provincia" class="w-full border-2 border-gray-100 bg-gray-50/50 p-3 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors cursor-pointer" required>
-                                    <option value="" disabled selected>Selecciona la teva província...</option>
-                                    <option value="Barcelona">Barcelona</option>
-                                    <option value="Girona">Girona</option>
-                                    <option value="Lleida">Lleida</option>
-                                    <option value="Tarragona">Tarragona</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label for="lead-role" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Modalitat d'implicació d'interès</label>
-                            <select id="lead-role" class="w-full border-2 border-gray-100 bg-gray-50/50 p-3 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors cursor-pointer">
-                                <option value="socio">Vull associar-me</option>   
-                                <option value="pada">Vull conèixer les PADA (Persones Amigues d'ADOCAT)</option>   
-                                <option value="comissio">Vull participar en una comissió</option>   
-                                <option value="entitat">Som una entitat i volem col·laborar</option>
-                            </select>
-                        </div>
-
-                        <!-- Чекбокс GDPR с аккуратным отступом -->
-                        <div class="flex items-start gap-2.5 pt-3 pb-1">
-                            <input type="checkbox" id="lead-rgpd" class="mt-0.5 w-4 h-4 accent-brand-green cursor-pointer shrink-0" required>
-                            <label for="lead-rgpd" class="text-[11px] text-gray-500 font-medium cursor-pointer select-none leading-tight">
-                                Accepto la clàusula de <a href="/legal#privacitat" class="underline hover:text-brand-green transition-colors">protecció de dades (RGPD)</a> i autoritzo el tractament de la informació per part de la comunitat docent.
-                            </label>
-                        </div>
-
-                        <!-- Кнопка отправки с улучшенными отступом и мгновенным откликом -->
-                        <button type="submit" class="btn-primary w-full py-4 text-xs font-black uppercase tracking-widest mt-6 cursor-pointer block">
-                            Enviar sol·licitud d'informació &rarr;
-                        </button>
-                    </form>
+            <!-- 📥 3. ЭКРАН ФИНАЛЬНОЙ ФОРМЫ ЛИДА (Разделены Nom и Cognoms) -->
+<div id="step-card-form" class="hidden opacity-0 transition-all duration-500 space-y-6 w-full">
+    <div class="quiz-card w-full p-6 md:p-8 bg-white border border-gray-200 rounded-xs shadow-md space-y-6 text-left">
+        <div class="text-center space-y-1 pb-4 border-b border-gray-100">
+            <h3 class="text-xl font-black text-brand-dark uppercase tracking-tight">M’interessa associar-me</h3>
+            <p class="text-xs font-medium text-gray-500 text-center">Deixa’ns el teu nom i correu electrònic i t’informarem dels passos per formar part d’ADOCAT.</p>
+        </div>
+          
+        <form id="lead-form-adocat" class="space-y-4 pt-2">
+            <!-- Поля Имени и Фамилии разделены для корректной записи в Brevo и Supabase -->
+            <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                    <label for="lead-nombre" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Nom</label>
+                    <input type="text" id="lead-nombre" name="firstname" class="w-full border-2 border-gray-100 bg-gray-50/50 p-3 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors" required placeholder="p. ex. Nataliya">
+                </div>
+                <div>
+                    <label for="lead-apellido" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Cognoms</label>
+                    <input type="text" id="lead-apellido" name="lastname" class="w-full border-2 border-gray-100 bg-gray-50/50 p-3 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors" required placeholder="p. ex. Yanovich">
                 </div>
             </div>
+
+            <!-- Email и Телефон -->
+            <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                    <label for="lead-email" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Correu electrònic</label>
+                    <input type="email" id="lead-email" class="w-full border-2 border-gray-100 bg-gray-50/50 p-3 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors" required placeholder="exemple@correu.com">
+                    <div id="quizError" class="hidden text-red-600 text-sm mt-1"></div>
+                </div>
+                <div>
+                    <label for="lead-telefono" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Telèfon de contacte</label>
+                    <input type="tel" id="lead-telefono" class="w-full border-2 border-gray-100 bg-gray-50/50 p-3 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors" required placeholder="600 000 000">
+                </div>
+            </div>
+
+            <!-- Провинция и Форма участия -->
+            <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                    <label for="lead-provincia" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Província laboral</label>
+                    <select id="lead-provincia" class="w-full border-2 border-gray-100 bg-gray-50/50 p-3 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors cursor-pointer" required>
+                        <option value="" disabled selected>Selecciona la teva província...</option>
+                        <option value="Barcelona">Barcelona</option>
+                        <option value="Girona">Girona</option>
+                        <option value="Lleida">Lleida</option>
+                        <option value="Tarragona">Tarragona</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="lead-role" class="block text-[10px] font-black uppercase text-gray-500 tracking-wider mb-1">Modalitat d'implicació d'interès</label>
+                    <select id="lead-role" class="w-full border-2 border-gray-100 bg-gray-50/50 p-3 rounded-xs font-semibold text-sm focus:border-brand-green outline-none transition-colors cursor-pointer">
+                        <option value="socio">Vull associar-me</option>   
+                        <option value="pada">Vull conèixer les PADA (Persones Amigues d'ADOCAT)</option>   
+                        <option value="comissio">Vull participar en una comissió</option>   
+                        <option value="entitat">Som una entitat i volem col·laborar</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Чекбокс GDPR -->
+            <div class="flex items-start gap-2.5 pt-3 pb-1">
+                <input type="checkbox" id="lead-rgpd" class="mt-0.5 w-4 h-4 accent-brand-green cursor-pointer shrink-0" required>
+                <label for="lead-rgpd" class="text-[11px] text-gray-500 font-medium cursor-pointer select-none leading-tight">
+                    Accepto la clàusula de <a href="/legal#privacitat" class="underline hover:text-brand-green transition-colors">protecció de dades (RGPD)</a> i autoritzo el tractament de la informació per part de la comunitat docent.
+                </label>
+            </div>
+
+            <!-- Кнопка отправки -->
+            <button type="submit" id="quiz-submit-btn" class="btn-primary w-full py-4 text-xs font-black uppercase tracking-widest mt-6 cursor-pointer block">
+                Enviar sol·licitud d'informació &rarr;
+            </button>
+        </form>
+    </div>
+</div>
 
             <!-- 🎉 4. ЭКРАН УСПЕХА -->
             <div id="step-card-success" class="hidden opacity-0 transition-all duration-500 space-y-6 text-center w-full">

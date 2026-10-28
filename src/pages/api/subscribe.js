@@ -14,12 +14,12 @@ export const POST = async ({ request }) => {
 
     const { email, nombre, telefono, provincia, role, respuestas } = body;
 
-    // 1. Проверяем наличие и базовую валидность email
+    // 1. Валидация email
     if (!email || typeof email !== 'string' || !email.includes('@')) {
       return new Response(JSON.stringify({ message: 'El correu electrònic no és vàlid' }), { status: 400 });
     }
 
-    // 2. Тщательно очищаем все данные от лишних пробелов и мусора
+    // 2. Очистка данных
     const cleanEmail = email.trim().toLowerCase();
     const cleanNombre = nombre ? nombre.trim().replace(/\s+/g, ' ') : null;
     const cleanProvincia = provincia ? provincia.trim() : null;
@@ -34,9 +34,9 @@ export const POST = async ({ request }) => {
       }
     }
 
-    // 3. Сохраняем ПОЛНУЮ ИСТОРИЮ в Supabase (чистый .insert — каждая попытка создаёт новую запись)
+    // 3. Сохранение в Supabase (leads)
     const { error: dbError } = await supabase
-      .from('leads') 
+      .from('leads')
       .insert([
         { 
           email: cleanEmail, 
@@ -51,7 +51,7 @@ export const POST = async ({ request }) => {
       ]);
 
     if (dbError) {
-      console.error('❌ Error guardando historial en Supabase:', dbError.message);
+      console.error('❌ Error guardant a Supabase:', dbError.message);
     }
 
     const apiKey = import.meta.env.BREVO_API_KEY;
@@ -59,46 +59,46 @@ export const POST = async ({ request }) => {
     const tutorEmail = import.meta.env.TUTOR_EMAIL || 'som.adocat@gmail.com';
 
     if (apiKey) {
-      // --- ШАГ 4.1: Синхронизация контакта в Brevo ---
-      try {
-        let firstName = 'Docent';
-        let lastName = '-';
-        
-        if (cleanNombre) {
-          const parts = cleanNombre.split(/\s+/);
-          firstName = parts[0] || 'Docent';
-          lastName = parts.slice(1).join(' ') || '-';
+      const firstName = body.firstname || (cleanNombre ? cleanNombre.split(/\s+/)[0] : 'Docent');
+      const lastName = body.lastname || (cleanNombre ? cleanNombre.split(/\s+/).slice(1).join(' ') : '');
+
+      const attributesObj = {
+        FIRSTNAME: firstName,
+        LASTNAME: lastName,
+        ULTIMA_ACTIVIDAD: new Date().toISOString().split('T')[0]
+      };
+
+      if (cleanProvincia) attributesObj.PROVINCIA = cleanProvincia;
+      if (cleanTelefono && cleanTelefono.startsWith('+')) attributesObj.SMS = cleanTelefono;
+
+      // 1. Добавление контакта в Brevo CRM с полным логированием ответа
+      fetch('https://api.brevo.com/v3/contacts', {
+        method: 'POST',
+        headers: {
+          'accept': 'application/json',
+          'api-key': apiKey,
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: cleanEmail,
+          attributes: attributesObj,
+          listIds: [listId],
+          updateEnabled: true
+        })
+      })
+      .then(async (res) => {
+        const responseText = await res.text();
+        if (res.ok) {
+          console.log('✅ КОНТАКТ УСПЕШНО ДОБАВЛЕН В BREVO:', responseText);
+        } else {
+          console.error('❌ ОШИБКА ОТВЕТА BREVO (КОНТАКТЫ):', res.status, responseText);
         }
+      })
+      .catch(err => {
+        console.error('❌ СЕТЕВАЯ ОШИБКА С FETCH BREVO:', err.message);
+      });
 
-        const attributesObj = {
-          NOMBRE: firstName,
-          APELLIDOS: lastName,
-          ULTIMA_ACTIVIDAD: new Date().toISOString().split('T')[0]
-        };
-
-        if (cleanTelefono) {
-          attributesObj.SMS = cleanTelefono;
-        }
-
-        await fetch('https://api.brevo.com/v3/contacts', {
-          method: 'POST',
-          headers: {
-            'accept': 'application/json',
-            'api-key': apiKey,
-            'content-type': 'application/json'
-          },
-          body: JSON.stringify({
-            email: cleanEmail,
-            attributes: attributesObj,
-            listIds: [listId],
-            updateEnabled: true
-          })
-        });
-      } catch (contactErr) {
-        console.error('⚠️ Ошибка синхронизации с Brevo:', contactErr);
-      }
-
-      // --- ШАГ 4.2: Приветственное письмо пользователю ---
+      // 2. Отправка приветственного письма ПОЛЬЗОВАТЕЛЮ на его личный email
       try {
         await fetch('https://api.brevo.com/v3/smtp/email', {
           method: 'POST',
@@ -113,7 +113,7 @@ export const POST = async ({ request }) => {
             subject: "✨ Benvingut/da al butlletí oficial d'ADOCAT",
             htmlContent: `
               <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e5e7eb; color: #111827;">
-                <h2 style="font-size: 20px; font-weight: 900; text-transform: uppercase; color: #00bf63; border-bottom: 2px solid #111827; padding-bottom: 10px;">ASSOCIACIÓ DE DOCENTS OCUPACIONALS DE CATALUNYA</h2>
+                <h2 style="font-size: 18px; font-weight: 900; text-transform: uppercase; color: #00bf63; border-bottom: 2px solid #111827; padding-bottom: 10px;">ASSOCIACIÓ DE DOCENTS OCUPACIONALS DE CATALUNYA</h2>
                 <p style="font-size: 16px; line-height: 1.6; margin-top: 20px;">Benvingut/da, <strong>${cleanNombre || 'docent'}</strong>.</p>
                 <p style="font-size: 14px; line-height: 1.6; color: #4b5563;">Confirmem que la teva alta o actualització al butlletí oficial s'ha completat amb èxit.</p>
                 <p style="font-size: 12px; color: #9ca3af; margin-top: 30px; border-top: 1px solid #e5e7eb; padding-top: 10px;">ADOCAT — Associació de Docents Ocupacionals de Catalunya</p>
@@ -121,11 +121,12 @@ export const POST = async ({ request }) => {
             `
           })
         });
-      } catch (mailErr) {
-        console.error('❌ Ошибка отправки письма пользователю:', mailErr);
+        console.log('📧 Приветственное письмо отправлено пользователю на:', cleanEmail);
+      } catch (err) {
+        console.error('❌ Ошибка отправки письма пользователю:', err.message);
       }
 
-      // --- ШАГ 4.3: Уведомление тьютору ---
+      // 3. Отправка уведомления ТЬЮТОРУ на som.adocat@gmail.com
       try {
         await fetch('https://api.brevo.com/v3/smtp/email', {
           method: 'POST',
@@ -145,16 +146,16 @@ export const POST = async ({ request }) => {
                 <p><strong>Email:</strong> ${cleanEmail}</p>
                 <p><strong>Telèfon:</strong> ${cleanTelefono || 'No especificat'}</p>
                 <p><strong>Província:</strong> ${cleanProvincia || 'No especificada'}</p>
-                <p><strong>Rol / Modalitat:</strong> ${role || 'butlleti'}</p>
-                <p><strong>Data:</strong> ${new Date().toLocaleString()}</p>
+                <p><strong>Rol:</strong> ${role || 'butlleti'}</p>
                 <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 15px 0;">
                 <p style="font-size: 13px; color: #4b5563;"><strong>Respostes:</strong><br>${JSON.stringify(respuestas, null, 2)}</p>
               </div>
             `
           })
         });
-      } catch (tutorMailErr) {
-        console.error('❌ Ошибка отправки уведомления тьютору:', tutorMailErr);
+        console.log('📩 Уведомление тьютору отправлено!');
+      } catch (err) {
+        console.error('❌ Ошибка отправки уведомления тьютору:', err.message);
       }
     }
 

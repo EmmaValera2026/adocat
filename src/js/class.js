@@ -86,68 +86,36 @@ export class QuizEngine {
             const cleanNombre = userData.nombre ? userData.nombre.trim().replace(/\s+/g, ' ') : '';
             const cleanTelefono = userData.telefono ? userData.telefono.trim() : '';
 
-            // 1. Авторегистрация пользователя в Supabase Auth
-            if (cleanEmail && cleanTelefono.length >= 6) {
-                try {
-                    await supabase.auth.signUp({
-                        email: cleanEmail,
-                        password: cleanTelefono,                        
-                        options: {
-                            data: {
-                                nombre: cleanNombre,
-                                provincia: userData.provincia,
-                                role_implicacion: userData.role
-                            }
-                        }
-                    });
-                } catch (authErr) {
-                    console.warn('Auth auto-signup status:', authErr.message);
-                }
+            // ЕДИНСТВЕННЫЙ ЗАПРОС: передаем все данные на бэкенд (/api/subscribe)
+            // Бэкенд сам запишет 1 строку в leads, отправит письма вам и тьютору, и создаст контакт в Brevo
+            const response = await fetch('/api/subscribe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: cleanEmail,
+                    nombre: cleanNombre,
+                    firstname: userData.firstname, // Имя для Brevo
+                    lastname: userData.lastname,   // Фамилия для Brevo
+                    telefono: cleanTelefono,
+                    provincia: userData.provincia,
+                    role: userData.role,
+                    respuestas: this.responses
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Error en el servidor');
             }
 
-            // 2. Прямая запись анкеты и контактов в таблицу leads
-            const { error } = await supabase
-                .from('leads')
-                .insert([
-                    {
-                        nombre: cleanNombre,
-                        email: cleanEmail,
-                        telefono: cleanTelefono,
-                        provincia: userData.provincia || null,
-                        modalidad_implicacion: userData.role || 'butlleti',
-                        app_origen: 'adocat',
-                        respuestas: this.responses
-                    }
-                ]);
-
-            if (error) throw error;
-
-            // 3. Интеграция с бэкенд-эндпоинтом (/api/subscribe)
-            try {
-                await fetch('/api/subscribe', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email: cleanEmail,
-                        nombre: cleanNombre,
-                        telefono: cleanTelefono,
-                        provincia: userData.provincia,
-                        role: userData.role,
-                        respuestas: this.responses
-                    })
-                });
-            } catch (brevoErr) {
-                console.error('Brevo sync post-error:', brevoErr.message);
-            }
-
-            // 4. Очистка кэша сессии после успешной отправки
+            // Очистка сессии квиза после успешной отправки
             localStorage.removeItem('adocat_answers_session');
             return { success: true };
 
         } catch (err) {
-            console.error('Database error:', err.message);
+            console.error('Error enviant dades:', err.message);
             return { success: false, error: err.message };
         }
     };

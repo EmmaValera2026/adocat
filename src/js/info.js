@@ -527,11 +527,11 @@ document.getElementById('lead-form-adocat')?.addEventListener('submit', async (e
 
     const inputProvincia = document.getElementById('lead-provincia');
     const inputRole = document.getElementById('lead-role');
-    const quizErrorEl = document.getElementById('quizError'); // 👈 Ссылаемся на наш новый id="quizError" из HTML
+    const quizErrorEl = document.getElementById('quizError');
 
     if (quizErrorEl) quizErrorEl.classList.add('hidden');
 
-    // --- КЛИЕНТСКАЯ ПРОВЕРКА EMAIL ---
+    // --- 1. КЛИЕНТСКАЯ ПРОВЕРКА EMAIL ---
     const emailInput = document.getElementById('lead-email'); 
     const emailValue = emailInput ? emailInput.value.trim() : (DOM_CACHE.inputEmail?.value.trim() || '');
 
@@ -551,11 +551,23 @@ document.getElementById('lead-form-adocat')?.addEventListener('submit', async (e
     }
     // ---------------------------------
 
-    // ⚡ Находим кнопку отправки и сохраняем её текст
+    // --- 2. СБОР ИМЕНИ И ФАМИЛИИ (Раздельно и Совместно) ---
+    const inputNombre = document.getElementById('lead-nombre');
+    const inputApellido = document.getElementById('lead-apellido');
+
+    const firstName = inputNombre ? inputNombre.value.trim() : (DOM_CACHE.inputNombre?.value.trim() || 'Docent');
+    const lastName = inputApellido ? inputApellido.value.trim() : '';
+    
+    // Формируем полное имя для поля "nombre" в таблице leads
+    const fullNombre = lastName ? `${firstName} ${lastName}` : firstName;
+    // ----------------------------------------------------
+
+    // ⚡ Находим кнопку отправки и сохраняем её состояние (блокировка от двойного клика)
     const submitBtn = document.querySelector('#lead-form-adocat button[type="submit"]');
     const originalBtnText = submitBtn ? submitBtn.innerHTML : '';
 
     if (submitBtn) {
+        if (submitBtn.disabled) return; // Дополнительная защита: если уже отправляется, ничего не делаем
         submitBtn.disabled = true;
         submitBtn.style.opacity = '0.7';
         submitBtn.style.cursor = 'wait';
@@ -565,15 +577,19 @@ document.getElementById('lead-form-adocat')?.addEventListener('submit', async (e
         `;
     }
 
+    // Собираем полный объект данных
     const userData = {
-        nombre: DOM_CACHE.inputNombre?.value.trim() || 'No especificat',
-        email: emailValue, // Используем проверенный email
-        telefono: DOM_CACHE.inputTelefono?.value.replace(/\D/g, '') || '',
+        nombre: fullNombre,          // Полное имя ("Nataliya Yanovich") для Supabase leads
+        firstname: firstName,       // Имя для Brevo (FIRSTNAME)
+        lastname: lastName,         // Фамилия для Brevo (LASTNAME)
+        email: emailValue,          // Проверенный email
+        telefono: (document.getElementById('lead-telefono')?.value || DOM_CACHE.inputTelefono?.value || '').replace(/\D/g, ''),
         provincia: inputProvincia ? inputProvincia.value : 'No especificada',
         role: inputRole ? inputRole.value : 'socio'
     };
 
     try {
+        // Передаем весь объект в ваш движок engine.saveLeadToDatabase
         const result = await engine.saveLeadToDatabase(userData);
         
         if (result.success) {
@@ -586,6 +602,7 @@ document.getElementById('lead-form-adocat')?.addEventListener('submit', async (e
             throw new Error(result.error || "Error");
         }
     } catch (err) {
+        console.error("Error durant la tramesa del lead:", err);
         if (quizErrorEl) {
             quizErrorEl.textContent = "Hi va haver un problema en processar la teva sol·licitud d'informació. Torna-ho a provar.";
             quizErrorEl.classList.remove('hidden');
